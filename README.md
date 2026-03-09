@@ -1,15 +1,15 @@
-# OpenGL projects skeleton
+# Motor Gráfico C++
 
-This skeleton uses the following libraries:
+Este proyecto es para aprender sobre openGL para la asignatura de informatica grafica de la UCM. Este motor está construido usando **C++**, **OpenGL**, **GLFW** y **GLAD**.
 
-* [glfw](https://www.glfw.org/) for managing OpenGL windows
-* [glm](https://glm.g-truc.net/) for the CPU mathematical operations that follow the specifications of the GPU mathematical operations in OpenGL
-* [glew](https://glew.sourceforge.net/) for loading OpenGL extensions
-* [stb_image](https://github.com/nothings/stb) for loading and saving images
+## Capítulos
+Aquí se muestra una lista de apuntes de OpenGL que he ido haciendo
+* [1. Inicializar Dependencias](@ref init_Dep)
+* [2. Pasos de Renderizado](@ref pasos_render)
+* [3. Shaders](@ref shaders)
+* [4. Transformaciones Vectoriales](@ref transf)
 
-When creating a new project, remember to add the property sheet `IGProjects.props` to it.
-Menu Ver -> Otras ventanas -> Administrador de propiedades -> Agregar hoja de propiedades existente -> IGProjects.props -> Guardar
 
-In order to add a new library, copy its directory into the solution root and update the elements `IncludePath`, `LibraryPath`, `AdditionalDependencies`, and `LocalDebuggerEnvironment` in `IGProjects.props`.
-
-You can also create new property sheets.
+---
+*Nota: Recuerda guardar este archivo con codificación UTF-8 para que las tildes se vean bien.*\n
+**doxygen Doxyfile** *para recargar la documentación*
