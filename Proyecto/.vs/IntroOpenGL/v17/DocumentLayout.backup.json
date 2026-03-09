@@ -1,49 +1,49 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "C:\\Users\\manza\\Desktop\\UNIVERSIDAD\\IG\\Intro OpenGL\\",
+  "WorkspaceRootPath": "C:\\Users\\manza\\Desktop\\UNIVERSIDAD\\GitHub\\MotorC\u002B\u002B\\Proyecto\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{C72F3A79-DA8E-4EC6-A14F-6C59650E8A7E}|IG1App\\IG1App.vcxproj|C:\\Users\\manza\\Desktop\\UNIVERSIDAD\\IG\\Intro OpenGL\\IG1App\\src\\core\\GLApplication.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "AbsoluteMoniker": "D:0:0:{C72F3A79-DA8E-4EC6-A14F-6C59650E8A7E}|IG1App\\IG1App.vcxproj|C:\\Users\\manza\\Desktop\\UNIVERSIDAD\\GitHub\\MotorC\u002B\u002B\\Proyecto\\IG1App\\src\\core\\GLApplication.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
       "RelativeMoniker": "D:0:0:{C72F3A79-DA8E-4EC6-A14F-6C59650E8A7E}|IG1App\\IG1App.vcxproj|solutionrelative:IG1App\\src\\core\\GLApplication.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{C72F3A79-DA8E-4EC6-A14F-6C59650E8A7E}|IG1App\\IG1App.vcxproj|C:\\Users\\manza\\Desktop\\UNIVERSIDAD\\IG\\Intro OpenGL\\IG1App\\src\\core\\mesh\\CubeMesh.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "AbsoluteMoniker": "D:0:0:{C72F3A79-DA8E-4EC6-A14F-6C59650E8A7E}|IG1App\\IG1App.vcxproj|C:\\Users\\manza\\Desktop\\UNIVERSIDAD\\GitHub\\MotorC\u002B\u002B\\Proyecto\\IG1App\\src\\core\\mesh\\CubeMesh.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
       "RelativeMoniker": "D:0:0:{C72F3A79-DA8E-4EC6-A14F-6C59650E8A7E}|IG1App\\IG1App.vcxproj|solutionrelative:IG1App\\src\\core\\mesh\\CubeMesh.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{C72F3A79-DA8E-4EC6-A14F-6C59650E8A7E}|IG1App\\IG1App.vcxproj|C:\\Users\\manza\\Desktop\\UNIVERSIDAD\\IG\\Intro OpenGL\\IG1App\\src\\core\\Camera.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "AbsoluteMoniker": "D:0:0:{C72F3A79-DA8E-4EC6-A14F-6C59650E8A7E}|IG1App\\IG1App.vcxproj|C:\\Users\\manza\\Desktop\\UNIVERSIDAD\\GitHub\\MotorC\u002B\u002B\\Proyecto\\IG1App\\src\\core\\Camera.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
       "RelativeMoniker": "D:0:0:{C72F3A79-DA8E-4EC6-A14F-6C59650E8A7E}|IG1App\\IG1App.vcxproj|solutionrelative:IG1App\\src\\core\\Camera.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{C72F3A79-DA8E-4EC6-A14F-6C59650E8A7E}|IG1App\\IG1App.vcxproj|C:\\Users\\manza\\Desktop\\UNIVERSIDAD\\IG\\Intro OpenGL\\IG1App\\src\\core\\Camera.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "AbsoluteMoniker": "D:0:0:{C72F3A79-DA8E-4EC6-A14F-6C59650E8A7E}|IG1App\\IG1App.vcxproj|C:\\Users\\manza\\Desktop\\UNIVERSIDAD\\GitHub\\MotorC\u002B\u002B\\Proyecto\\IG1App\\src\\core\\Camera.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
       "RelativeMoniker": "D:0:0:{C72F3A79-DA8E-4EC6-A14F-6C59650E8A7E}|IG1App\\IG1App.vcxproj|solutionrelative:IG1App\\src\\core\\Camera.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{C72F3A79-DA8E-4EC6-A14F-6C59650E8A7E}|IG1App\\IG1App.vcxproj|C:\\Users\\manza\\Desktop\\UNIVERSIDAD\\IG\\Intro OpenGL\\IG1App\\src\\core\\mesh\\CubeMesh.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "AbsoluteMoniker": "D:0:0:{C72F3A79-DA8E-4EC6-A14F-6C59650E8A7E}|IG1App\\IG1App.vcxproj|C:\\Users\\manza\\Desktop\\UNIVERSIDAD\\GitHub\\MotorC\u002B\u002B\\Proyecto\\IG1App\\src\\core\\mesh\\CubeMesh.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
       "RelativeMoniker": "D:0:0:{C72F3A79-DA8E-4EC6-A14F-6C59650E8A7E}|IG1App\\IG1App.vcxproj|solutionrelative:IG1App\\src\\core\\mesh\\CubeMesh.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{C72F3A79-DA8E-4EC6-A14F-6C59650E8A7E}|IG1App\\IG1App.vcxproj|C:\\Users\\manza\\Desktop\\UNIVERSIDAD\\IG\\Intro OpenGL\\IG1App\\src\\core\\Mesh.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "AbsoluteMoniker": "D:0:0:{C72F3A79-DA8E-4EC6-A14F-6C59650E8A7E}|IG1App\\IG1App.vcxproj|C:\\Users\\manza\\Desktop\\UNIVERSIDAD\\GitHub\\MotorC\u002B\u002B\\Proyecto\\IG1App\\src\\core\\Mesh.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
       "RelativeMoniker": "D:0:0:{C72F3A79-DA8E-4EC6-A14F-6C59650E8A7E}|IG1App\\IG1App.vcxproj|solutionrelative:IG1App\\src\\core\\Mesh.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{C72F3A79-DA8E-4EC6-A14F-6C59650E8A7E}|IG1App\\IG1App.vcxproj|C:\\Users\\manza\\Desktop\\UNIVERSIDAD\\IG\\Intro OpenGL\\IG1App\\src\\core\\GLApplication.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "AbsoluteMoniker": "D:0:0:{C72F3A79-DA8E-4EC6-A14F-6C59650E8A7E}|IG1App\\IG1App.vcxproj|C:\\Users\\manza\\Desktop\\UNIVERSIDAD\\GitHub\\MotorC\u002B\u002B\\Proyecto\\IG1App\\src\\core\\GLApplication.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
       "RelativeMoniker": "D:0:0:{C72F3A79-DA8E-4EC6-A14F-6C59650E8A7E}|IG1App\\IG1App.vcxproj|solutionrelative:IG1App\\src\\core\\GLApplication.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{C72F3A79-DA8E-4EC6-A14F-6C59650E8A7E}|IG1App\\IG1App.vcxproj|C:\\Users\\manza\\Desktop\\UNIVERSIDAD\\IG\\Intro OpenGL\\IG1App\\src\\core\\Mesh.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "AbsoluteMoniker": "D:0:0:{C72F3A79-DA8E-4EC6-A14F-6C59650E8A7E}|IG1App\\IG1App.vcxproj|C:\\Users\\manza\\Desktop\\UNIVERSIDAD\\GitHub\\MotorC\u002B\u002B\\Proyecto\\IG1App\\src\\core\\Mesh.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
       "RelativeMoniker": "D:0:0:{C72F3A79-DA8E-4EC6-A14F-6C59650E8A7E}|IG1App\\IG1App.vcxproj|solutionrelative:IG1App\\src\\core\\Mesh.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{C72F3A79-DA8E-4EC6-A14F-6C59650E8A7E}|IG1App\\IG1App.vcxproj|C:\\Users\\manza\\Desktop\\UNIVERSIDAD\\IG\\Intro OpenGL\\IG1App\\src\\managers\\ResourceManager.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "AbsoluteMoniker": "D:0:0:{C72F3A79-DA8E-4EC6-A14F-6C59650E8A7E}|IG1App\\IG1App.vcxproj|C:\\Users\\manza\\Desktop\\UNIVERSIDAD\\GitHub\\MotorC\u002B\u002B\\Proyecto\\IG1App\\src\\managers\\ResourceManager.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
       "RelativeMoniker": "D:0:0:{C72F3A79-DA8E-4EC6-A14F-6C59650E8A7E}|IG1App\\IG1App.vcxproj|solutionrelative:IG1App\\src\\managers\\ResourceManager.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{C72F3A79-DA8E-4EC6-A14F-6C59650E8A7E}|IG1App\\IG1App.vcxproj|C:\\Users\\manza\\Desktop\\UNIVERSIDAD\\IG\\Intro OpenGL\\IG1App\\src\\managers\\ResourceManager.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "AbsoluteMoniker": "D:0:0:{C72F3A79-DA8E-4EC6-A14F-6C59650E8A7E}|IG1App\\IG1App.vcxproj|C:\\Users\\manza\\Desktop\\UNIVERSIDAD\\GitHub\\MotorC\u002B\u002B\\Proyecto\\IG1App\\src\\managers\\ResourceManager.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
       "RelativeMoniker": "D:0:0:{C72F3A79-DA8E-4EC6-A14F-6C59650E8A7E}|IG1App\\IG1App.vcxproj|solutionrelative:IG1App\\src\\managers\\ResourceManager.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{C72F3A79-DA8E-4EC6-A14F-6C59650E8A7E}|IG1App\\IG1App.vcxproj|C:\\Users\\manza\\Desktop\\UNIVERSIDAD\\IG\\Intro OpenGL\\IG1App\\main.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "AbsoluteMoniker": "D:0:0:{C72F3A79-DA8E-4EC6-A14F-6C59650E8A7E}|IG1App\\IG1App.vcxproj|C:\\Users\\manza\\Desktop\\UNIVERSIDAD\\GitHub\\MotorC\u002B\u002B\\Proyecto\\IG1App\\main.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
       "RelativeMoniker": "D:0:0:{C72F3A79-DA8E-4EC6-A14F-6C59650E8A7E}|IG1App\\IG1App.vcxproj|solutionrelative:IG1App\\main.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     }
   ],
@@ -60,9 +60,9 @@
               "$type": "Document",
               "DocumentIndex": 0,
               "Title": "GLApplication.cpp",
-              "DocumentMoniker": "C:\\Users\\manza\\Desktop\\UNIVERSIDAD\\IG\\Intro OpenGL\\IG1App\\src\\core\\GLApplication.cpp",
+              "DocumentMoniker": "C:\\Users\\manza\\Desktop\\UNIVERSIDAD\\GitHub\\MotorC\u002B\u002B\\Proyecto\\IG1App\\src\\core\\GLApplication.cpp",
               "RelativeDocumentMoniker": "IG1App\\src\\core\\GLApplication.cpp",
-              "ToolTip": "C:\\Users\\manza\\Desktop\\UNIVERSIDAD\\IG\\Intro OpenGL\\IG1App\\src\\core\\GLApplication.cpp",
+              "ToolTip": "C:\\Users\\manza\\Desktop\\UNIVERSIDAD\\GitHub\\MotorC\u002B\u002B\\Proyecto\\IG1App\\src\\core\\GLApplication.cpp",
               "RelativeToolTip": "IG1App\\src\\core\\GLApplication.cpp",
               "ViewState": "AgIAADYAAAAAAAAAAAAAAEUAAAA7AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
@@ -74,15 +74,14 @@
               "$type": "Document",
               "DocumentIndex": 6,
               "Title": "GLApplication.h",
-              "DocumentMoniker": "C:\\Users\\manza\\Desktop\\UNIVERSIDAD\\IG\\Intro OpenGL\\IG1App\\src\\core\\GLApplication.h",
+              "DocumentMoniker": "C:\\Users\\manza\\Desktop\\UNIVERSIDAD\\GitHub\\MotorC\u002B\u002B\\Proyecto\\IG1App\\src\\core\\GLApplication.h",
               "RelativeDocumentMoniker": "IG1App\\src\\core\\GLApplication.h",
-              "ToolTip": "C:\\Users\\manza\\Desktop\\UNIVERSIDAD\\IG\\Intro OpenGL\\IG1App\\src\\core\\GLApplication.h",
+              "ToolTip": "C:\\Users\\manza\\Desktop\\UNIVERSIDAD\\GitHub\\MotorC\u002B\u002B\\Proyecto\\IG1App\\src\\core\\GLApplication.h",
               "RelativeToolTip": "IG1App\\src\\core\\GLApplication.h",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAACIAAAAjAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
               "WhenOpened": "2026-03-07T15:11:38.864Z",
-              "IsPinned": true,
-              "EditorCaption": ""
+              "IsPinned": true
             },
             {
               "$type": "Bookmark",
@@ -104,128 +103,109 @@
               "$type": "Document",
               "DocumentIndex": 4,
               "Title": "CubeMesh.cpp",
-              "DocumentMoniker": "C:\\Users\\manza\\Desktop\\UNIVERSIDAD\\IG\\Intro OpenGL\\IG1App\\src\\core\\mesh\\CubeMesh.cpp",
+              "DocumentMoniker": "C:\\Users\\manza\\Desktop\\UNIVERSIDAD\\GitHub\\MotorC\u002B\u002B\\Proyecto\\IG1App\\src\\core\\mesh\\CubeMesh.cpp",
               "RelativeDocumentMoniker": "IG1App\\src\\core\\mesh\\CubeMesh.cpp",
-              "ToolTip": "C:\\Users\\manza\\Desktop\\UNIVERSIDAD\\IG\\Intro OpenGL\\IG1App\\src\\core\\mesh\\CubeMesh.cpp",
+              "ToolTip": "C:\\Users\\manza\\Desktop\\UNIVERSIDAD\\GitHub\\MotorC\u002B\u002B\\Proyecto\\IG1App\\src\\core\\mesh\\CubeMesh.cpp",
               "RelativeToolTip": "IG1App\\src\\core\\mesh\\CubeMesh.cpp",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAFkAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
-              "WhenOpened": "2026-03-09T10:40:25.224Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-03-09T10:40:25.224Z"
             },
             {
               "$type": "Document",
               "DocumentIndex": 1,
               "Title": "CubeMesh.h",
-              "DocumentMoniker": "C:\\Users\\manza\\Desktop\\UNIVERSIDAD\\IG\\Intro OpenGL\\IG1App\\src\\core\\mesh\\CubeMesh.h",
+              "DocumentMoniker": "C:\\Users\\manza\\Desktop\\UNIVERSIDAD\\GitHub\\MotorC\u002B\u002B\\Proyecto\\IG1App\\src\\core\\mesh\\CubeMesh.h",
               "RelativeDocumentMoniker": "IG1App\\src\\core\\mesh\\CubeMesh.h",
-              "ToolTip": "C:\\Users\\manza\\Desktop\\UNIVERSIDAD\\IG\\Intro OpenGL\\IG1App\\src\\core\\mesh\\CubeMesh.h",
+              "ToolTip": "C:\\Users\\manza\\Desktop\\UNIVERSIDAD\\GitHub\\MotorC\u002B\u002B\\Proyecto\\IG1App\\src\\core\\mesh\\CubeMesh.h",
               "RelativeToolTip": "IG1App\\src\\core\\mesh\\CubeMesh.h",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAMAAAAnAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
-              "WhenOpened": "2026-03-09T10:39:55.927Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-03-09T10:39:55.927Z"
             },
             {
               "$type": "Document",
               "DocumentIndex": 8,
               "Title": "ResourceManager.cpp",
-              "DocumentMoniker": "C:\\Users\\manza\\Desktop\\UNIVERSIDAD\\IG\\Intro OpenGL\\IG1App\\src\\managers\\ResourceManager.cpp",
+              "DocumentMoniker": "C:\\Users\\manza\\Desktop\\UNIVERSIDAD\\GitHub\\MotorC\u002B\u002B\\Proyecto\\IG1App\\src\\managers\\ResourceManager.cpp",
               "RelativeDocumentMoniker": "IG1App\\src\\managers\\ResourceManager.cpp",
-              "ToolTip": "C:\\Users\\manza\\Desktop\\UNIVERSIDAD\\IG\\Intro OpenGL\\IG1App\\src\\managers\\ResourceManager.cpp",
+              "ToolTip": "C:\\Users\\manza\\Desktop\\UNIVERSIDAD\\GitHub\\MotorC\u002B\u002B\\Proyecto\\IG1App\\src\\managers\\ResourceManager.cpp",
               "RelativeToolTip": "IG1App\\src\\managers\\ResourceManager.cpp",
               "ViewState": "AgIAAB4AAAAAAAAAAAAAAD8AAAAzAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
-              "WhenOpened": "2026-03-09T09:59:59.113Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-03-09T09:59:59.113Z"
             },
             {
               "$type": "Document",
               "DocumentIndex": 9,
               "Title": "ResourceManager.h",
-              "DocumentMoniker": "C:\\Users\\manza\\Desktop\\UNIVERSIDAD\\IG\\Intro OpenGL\\IG1App\\src\\managers\\ResourceManager.h",
+              "DocumentMoniker": "C:\\Users\\manza\\Desktop\\UNIVERSIDAD\\GitHub\\MotorC\u002B\u002B\\Proyecto\\IG1App\\src\\managers\\ResourceManager.h",
               "RelativeDocumentMoniker": "IG1App\\src\\managers\\ResourceManager.h",
-              "ToolTip": "C:\\Users\\manza\\Desktop\\UNIVERSIDAD\\IG\\Intro OpenGL\\IG1App\\src\\managers\\ResourceManager.h",
+              "ToolTip": "C:\\Users\\manza\\Desktop\\UNIVERSIDAD\\GitHub\\MotorC\u002B\u002B\\Proyecto\\IG1App\\src\\managers\\ResourceManager.h",
               "RelativeToolTip": "IG1App\\src\\managers\\ResourceManager.h",
               "ViewState": "AgIAAAYAAAAAAAAAAAAqwCgAAABYAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
-              "WhenOpened": "2026-03-09T09:58:46.337Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-03-09T09:58:46.337Z"
             },
             {
               "$type": "Document",
               "DocumentIndex": 3,
               "Title": "Camera.cpp",
-              "DocumentMoniker": "C:\\Users\\manza\\Desktop\\UNIVERSIDAD\\IG\\Intro OpenGL\\IG1App\\src\\core\\Camera.cpp",
+              "DocumentMoniker": "C:\\Users\\manza\\Desktop\\UNIVERSIDAD\\GitHub\\MotorC\u002B\u002B\\Proyecto\\IG1App\\src\\core\\Camera.cpp",
               "RelativeDocumentMoniker": "IG1App\\src\\core\\Camera.cpp",
-              "ToolTip": "C:\\Users\\manza\\Desktop\\UNIVERSIDAD\\IG\\Intro OpenGL\\IG1App\\src\\core\\Camera.cpp",
+              "ToolTip": "C:\\Users\\manza\\Desktop\\UNIVERSIDAD\\GitHub\\MotorC\u002B\u002B\\Proyecto\\IG1App\\src\\core\\Camera.cpp",
               "RelativeToolTip": "IG1App\\src\\core\\Camera.cpp",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAACoAAAAPAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
-              "WhenOpened": "2026-03-09T09:19:13.104Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-03-09T09:19:13.104Z"
             },
             {
               "$type": "Document",
               "DocumentIndex": 2,
               "Title": "Camera.h",
-              "DocumentMoniker": "C:\\Users\\manza\\Desktop\\UNIVERSIDAD\\IG\\Intro OpenGL\\IG1App\\src\\core\\Camera.h",
+              "DocumentMoniker": "C:\\Users\\manza\\Desktop\\UNIVERSIDAD\\GitHub\\MotorC\u002B\u002B\\Proyecto\\IG1App\\src\\core\\Camera.h",
               "RelativeDocumentMoniker": "IG1App\\src\\core\\Camera.h",
-              "ToolTip": "C:\\Users\\manza\\Desktop\\UNIVERSIDAD\\IG\\Intro OpenGL\\IG1App\\src\\core\\Camera.h",
+              "ToolTip": "C:\\Users\\manza\\Desktop\\UNIVERSIDAD\\GitHub\\MotorC\u002B\u002B\\Proyecto\\IG1App\\src\\core\\Camera.h",
               "RelativeToolTip": "IG1App\\src\\core\\Camera.h",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAALAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
-              "WhenOpened": "2026-03-09T09:16:49.041Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-03-09T09:16:49.041Z"
             },
             {
               "$type": "Document",
               "DocumentIndex": 7,
               "Title": "Mesh.cpp",
-              "DocumentMoniker": "C:\\Users\\manza\\Desktop\\UNIVERSIDAD\\IG\\Intro OpenGL\\IG1App\\src\\core\\Mesh.cpp",
+              "DocumentMoniker": "C:\\Users\\manza\\Desktop\\UNIVERSIDAD\\GitHub\\MotorC\u002B\u002B\\Proyecto\\IG1App\\src\\core\\Mesh.cpp",
               "RelativeDocumentMoniker": "IG1App\\src\\core\\Mesh.cpp",
-              "ToolTip": "C:\\Users\\manza\\Desktop\\UNIVERSIDAD\\IG\\Intro OpenGL\\IG1App\\src\\core\\Mesh.cpp",
+              "ToolTip": "C:\\Users\\manza\\Desktop\\UNIVERSIDAD\\GitHub\\MotorC\u002B\u002B\\Proyecto\\IG1App\\src\\core\\Mesh.cpp",
               "RelativeToolTip": "IG1App\\src\\core\\Mesh.cpp",
               "ViewState": "AgIAAB8AAAAAAAAAAAAqwDcAAAARAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
-              "WhenOpened": "2026-03-08T15:49:35.89Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-03-08T15:49:35.89Z"
             },
             {
               "$type": "Document",
               "DocumentIndex": 5,
               "Title": "Mesh.h",
-              "DocumentMoniker": "C:\\Users\\manza\\Desktop\\UNIVERSIDAD\\IG\\Intro OpenGL\\IG1App\\src\\core\\Mesh.h",
+              "DocumentMoniker": "C:\\Users\\manza\\Desktop\\UNIVERSIDAD\\GitHub\\MotorC\u002B\u002B\\Proyecto\\IG1App\\src\\core\\Mesh.h",
               "RelativeDocumentMoniker": "IG1App\\src\\core\\Mesh.h",
-              "ToolTip": "C:\\Users\\manza\\Desktop\\UNIVERSIDAD\\IG\\Intro OpenGL\\IG1App\\src\\core\\Mesh.h",
+              "ToolTip": "C:\\Users\\manza\\Desktop\\UNIVERSIDAD\\GitHub\\MotorC\u002B\u002B\\Proyecto\\IG1App\\src\\core\\Mesh.h",
               "RelativeToolTip": "IG1App\\src\\core\\Mesh.h",
               "ViewState": "AgIAAAkAAAAAAAAAAAAAAC4AAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
-              "WhenOpened": "2026-03-08T14:10:55.706Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-03-08T14:10:55.706Z"
             },
             {
               "$type": "Document",
               "DocumentIndex": 10,
               "Title": "main.cpp",
-              "DocumentMoniker": "C:\\Users\\manza\\Desktop\\UNIVERSIDAD\\IG\\Intro OpenGL\\IG1App\\main.cpp",
+              "DocumentMoniker": "C:\\Users\\manza\\Desktop\\UNIVERSIDAD\\GitHub\\MotorC\u002B\u002B\\Proyecto\\IG1App\\main.cpp",
               "RelativeDocumentMoniker": "IG1App\\main.cpp",
-              "ToolTip": "C:\\Users\\manza\\Desktop\\UNIVERSIDAD\\IG\\Intro OpenGL\\IG1App\\main.cpp",
+              "ToolTip": "C:\\Users\\manza\\Desktop\\UNIVERSIDAD\\GitHub\\MotorC\u002B\u002B\\Proyecto\\IG1App\\main.cpp",
               "RelativeToolTip": "IG1App\\main.cpp",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAIAAAATAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
-              "WhenOpened": "2026-03-07T00:51:30.081Z",
-              "EditorCaption": ""
-            }
-          ]
-        },
-        {
-          "DockedWidth": 2169,
-          "SelectedChildIndex": -1,
-          "Children": [
-            {
-              "$type": "Bookmark",
-              "Name": "ST:0:0:{a80febb4-e7e0-4147-b476-21aaf2453969}"
+              "WhenOpened": "2026-03-07T00:51:30.081Z"
             }
           ]
         }

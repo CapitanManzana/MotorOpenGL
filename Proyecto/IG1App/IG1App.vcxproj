@@ -81,6 +81,7 @@ if %errorlevel% leq 7 exit 0</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Scene.cpp" />
     <ClCompile Include="src\core\Camera.cpp" />
     <ClCompile Include="src\core\mesh\CubeMesh.cpp" />
     <ClCompile Include="src\core\mesh\QuadMesh.cpp" />
@@ -99,6 +100,7 @@ if %errorlevel% leq 7 exit 0</Command>
     <ClInclude Include="src\core\GLApplication.h" />
     <ClInclude Include="src\core\Mesh.h" />
     <ClInclude Include="src\core\mesh\TriangleMesh.h" />
+    <ClInclude Include="src\core\Scene.h" />
     <ClInclude Include="src\core\Shader.h" />
     <ClInclude Include="src\managers\ResourceManager.h" />
     <ClInclude Include="src\utils\logger.h" />
