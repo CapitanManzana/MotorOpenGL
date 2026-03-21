@@ -7,10 +7,6 @@
 class Shader;
 class Mesh;
 
-struct CameraAxis {
-
-};
-
 /// @brief Clase que controla el punto de vista del la ventana, almacena la matriz de vista y la de proyeccion. Se puede configurar para que la camara renderice en formato perspectiva u ortografico.
 class Camera
 {

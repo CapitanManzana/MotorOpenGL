@@ -93,12 +93,14 @@ if %errorlevel% leq 7 exit 0</Command>
     <ClCompile Include="external\imgui\imgui_tables.cpp" />
     <ClCompile Include="external\imgui\imgui_widgets.cpp" />
     <ClCompile Include="src\component\MeshRenderer.cpp" />
+    <ClCompile Include="src\core\ui\UIManager.cpp" />
     <ClCompile Include="src\core\Scene.cpp" />
     <ClCompile Include="src\core\Camera.cpp" />
     <ClCompile Include="src\core\mesh\CubeMesh.cpp" />
     <ClCompile Include="src\core\mesh\QuadMesh.cpp" />
     <ClCompile Include="src\core\Mesh.cpp" />
     <ClCompile Include="src\core\mesh\TriangleMesh.cpp" />
+    <ClCompile Include="src\core\ui\windows\InspectorWindow.cpp" />
     <ClCompile Include="src\managers\ResourceManager.cpp" />
     <ClCompile Include="src\core\Shader.cpp" />
     <ClCompile Include="src\glad\glad.c" />
@@ -123,6 +125,8 @@ if %errorlevel% leq 7 exit 0</Command>
     <ClInclude Include="src\component\MeshRenderer.h" />
     <ClInclude Include="src\component\Transform.h" />
     <ClInclude Include="src\core\Camera.h" />
+    <ClInclude Include="src\core\ui\UIGroups.h" />
+    <ClInclude Include="src\core\ui\UIManager.h" />
     <ClInclude Include="src\core\mesh\CubeMesh.h" />
     <ClInclude Include="src\core\mesh\QuadMesh.h" />
     <ClInclude Include="src\core\GLApplication.h" />
@@ -130,6 +134,8 @@ if %errorlevel% leq 7 exit 0</Command>
     <ClInclude Include="src\core\mesh\TriangleMesh.h" />
     <ClInclude Include="src\core\Scene.h" />
     <ClInclude Include="src\core\Shader.h" />
+    <ClInclude Include="src\core\ui\Window.h" />
+    <ClInclude Include="src\core\ui\windows\InspectorWindow.h" />
     <ClInclude Include="src\ec\component.h" />
     <ClInclude Include="src\ec\ec.h" />
     <ClInclude Include="src\ec\entity.h" />

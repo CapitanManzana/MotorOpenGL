@@ -5,10 +5,6 @@
 #include <glm/vec4.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
-#include <imgui.h>
-#include <imgui_impl_glfw.h>
-#include <imgui_impl_opengl3.h>
-
 #include "GLApplication.h"
 #include <utils/logger.h>
 
@@ -16,6 +12,7 @@
 #include <managers/SceneManager.h>
 #include <core/Scene.h>
 #include <core/Camera.h>
+#include <core/ui/UIManager.h>
 
 GLApplication::~GLApplication() {
 	if (ResourceManager::HasInstance()) {
@@ -25,11 +22,7 @@ GLApplication::~GLApplication() {
 	if (SceneManager::HasInstance()) {
 		SceneManager::Release();
 	}
-
-	ImGui_ImplOpenGL3_Shutdown();
-	ImGui_ImplGlfw_Shutdown();
-	ImGui::DestroyContext();
-
+	delete _interface;
 	glfwTerminate();
 }
 
@@ -39,12 +32,21 @@ bool GLApplication::init() {
 		return false;
 	}
 
-	_window = glfwCreateWindow(_width, _height, "LearnOpenGL", NULL, NULL);
+	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
+	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+
+	glfwWindowHint(GLFW_MAXIMIZED, GLFW_TRUE);
+	_window = glfwCreateWindow(_width, _height, "Manza Engine", NULL, NULL);
 	if (_window == NULL)
 	{
 		LOG_ERROR("Failed to create GLFW window");
 		return false;
 	}
+	int w = 0, h = 0;
+	glfwGetWindowSize(_window, &w, &h);
+	_width = w;
+	_height = h;
 
 	glfwMakeContextCurrent(_window);
 	// Inicializad GLAD que carga los punteros a las funciones
@@ -62,19 +64,10 @@ bool GLApplication::init() {
 		gla()._height = height;
 
 		sceneM().activeScene()->getCamera()->buildProjectionMat();
-	});
-
-	if (!loadManagers()) return false;
-
+		});
 	glfwSetCursorPosCallback(_window, mouseCallback);
 
-	//Init Imgui
-	IMGUI_CHECKVERSION();
-	ImGui::CreateContext();
-	ImGuiIO& io = ImGui::GetIO(); (void)io;
-	ImGui::StyleColorsDark();
-	ImGui_ImplGlfw_InitForOpenGL(_window, true);
-	ImGui_ImplOpenGL3_Init("#version 330");
+	if (!loadManagers()) return false;
 
 	return true;
 }
@@ -87,6 +80,12 @@ bool GLApplication::loadManagers() {
 
 	if (!SceneManager::Init()) {
 		LOG_ERROR("Error al inicializar el Scene Manager");
+		return false;
+	}
+
+	_interface = new capiEngine::ui::UIManager();
+	if (!_interface->initCoreUI(_window)) {
+		LOG_ERROR("Error al inicializar la interfaz del motor");
 		return false;
 	}
 
@@ -103,25 +102,13 @@ void GLApplication::start() {
 	{
 		processInput(_window, sceneM().activeScene()->getCamera());
 
-		glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
+		glClearColor(0.3f, 0.3f, 0.31f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		glEnable(GL_DEPTH_TEST);
 
 		sceneM().update();
 		sceneM().render();
-
-		ImGui_ImplOpenGL3_NewFrame();
-		ImGui_ImplGlfw_NewFrame();
-		ImGui::NewFrame();
-
-		ImGui::Begin("Inspector");
-		ImGui::Text("Delta Time: %.3f", _deltaTime);
-		glm::vec3 pos = sceneM().activeScene()->getCamera()->getPosition();
-		ImGui::Text("Camera position: X: %.2f  Y: %.2f  Z: %.2f", pos.x, pos.y, pos.z);
-		ImGui::End();
-
-		ImGui::Render();
-		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+		_interface->render();
 
 		glfwSwapBuffers(_window);
 		glfwPollEvents();
@@ -150,7 +137,12 @@ void GLApplication::processInput(GLFWwindow* window, Camera* cam)
 
 		glfwSetInputMode(_window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 
-		const float cameraSpeed = 2.5f * _deltaTime; // adjust accordingly
+		float cameraSpeed = 0.0f;
+		if (glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS)
+			cameraSpeed = 5.0f * _deltaTime;
+		if (glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_RELEASE)
+			cameraSpeed = 2.5f * _deltaTime;
+
 		if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
 			cameraPos += cameraSpeed * cameraFront;
 		if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)

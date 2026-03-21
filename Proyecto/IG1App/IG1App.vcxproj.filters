@@ -22,6 +22,8 @@
     <ClCompile Include="external\imgui\imgui_impl_opengl3.cpp" />
     <ClCompile Include="external\imgui\imgui_tables.cpp" />
     <ClCompile Include="external\imgui\imgui_widgets.cpp" />
+    <ClCompile Include="src\core\ui\UIManager.cpp" />
+    <ClCompile Include="src\core\ui\windows\InspectorWindow.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\core\Camera.h" />
@@ -51,5 +53,9 @@
     <ClInclude Include="external\imgui\imstb_rectpack.h" />
     <ClInclude Include="external\imgui\imstb_textedit.h" />
     <ClInclude Include="external\imgui\imstb_truetype.h" />
+    <ClInclude Include="src\core\ui\UIManager.h" />
+    <ClInclude Include="src\core\ui\Window.h" />
+    <ClInclude Include="src\core\ui\UIGroups.h" />
+    <ClInclude Include="src\core\ui\windows\InspectorWindow.h" />
   </ItemGroup>
 </Project>

@@ -7,6 +7,9 @@
 struct GLFWwindow;
 class Camera;
 class Scene;
+namespace capiEngine::ui {
+	class UIManager;
+};
 
 /**
  * @brief Clase principal que maneja el ciclo de vida de la aplicación.
@@ -18,6 +21,7 @@ class GLApplication : public Singleton<GLApplication>
 	friend class Singleton<GLApplication>;
 private:
 	GLFWwindow* _window = nullptr;		// Puntero a la ventana de openGL
+	capiEngine::ui::UIManager* _interface = nullptr;		// Puntero a la interfaz del motor
 	float _width = 800;
 	float _height = 600;
 
