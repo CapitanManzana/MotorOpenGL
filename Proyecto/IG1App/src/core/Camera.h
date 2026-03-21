@@ -33,8 +33,8 @@ private:
 	/// @brief Distancia donde se dejan de ver las cosas
 	float _farDistance = 100.0f;
 
-	float _yaw = -90.0f;	// Respecto al eje y (desde arriba)
-	float _pitch = 0.0f;	// Respecto al eje x (desde un lado)
+	float _yaw = -132.0f;	// Respecto al eje y (desde arriba)
+	float _pitch = -37.0f;	// Respecto al eje x (desde un lado)
 	float _lastX = 0.0f;
 	float _lastY = 0.0f;
 
@@ -65,6 +65,9 @@ public:
 	const glm::vec3& getPosition() const { return _cameraPos; }
 	const glm::vec3& getCameraFront() const { return _cameraDirection; }
 	const glm::vec3& getCameraUp() const { return _cameraUp; }
+
+	float getYaw() const { return _yaw; }
+	float getPitch() const { return _pitch; }
 
 	void setPosition(const glm::vec3& pos) { 
 		_cameraPos = pos; 

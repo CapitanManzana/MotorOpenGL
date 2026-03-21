@@ -10,7 +10,7 @@ namespace capiEngine::ui {
 	UIManager::UIManager() {
 		_windows.resize(groupID::NUM_GROUP);
 
-		WindowFrame inspectorFrame = { 10,10,200,200 };
+		WindowFrame inspectorFrame = { 0,18,500,150 };
 		addWindow<InspectorWindow>("Inspector", inspectorFrame);
 	}
 

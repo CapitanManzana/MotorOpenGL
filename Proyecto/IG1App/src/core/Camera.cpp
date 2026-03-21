@@ -6,11 +6,18 @@
 #include <core/Mesh.h>
 
 Camera::Camera() {
-	buildProjectionMat();
-	_view = glm::lookAt(_cameraPos, _cameraPos + _cameraDirection, _cameraUp);
-
 	_lastX = gla().width() / 2;
 	_lastY = gla().height() / 2;
+
+	setPosition(glm::vec3(4, 4, 4));
+	glm::vec3 direction;
+	direction.x = cos(glm::radians(_yaw)) * cos(glm::radians(_pitch));
+	direction.y = sin(glm::radians(_pitch));
+	direction.z = sin(glm::radians(_yaw)) * cos(glm::radians(_pitch));
+	_cameraDirection = glm::normalize(direction);
+
+	buildProjectionMat();
+	_view = glm::lookAt(_cameraPos, _cameraPos + _cameraDirection, _cameraUp);
 }
 
 void Camera::buildProjectionMat() {

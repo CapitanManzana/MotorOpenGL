@@ -37,7 +37,7 @@ bool GLApplication::init() {
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
 	glfwWindowHint(GLFW_MAXIMIZED, GLFW_TRUE);
-	_window = glfwCreateWindow(_width, _height, "Manza Engine", NULL, NULL);
+	_window = glfwCreateWindow(_width, _height, "Capi Engine", NULL, NULL);
 	if (_window == NULL)
 	{
 		LOG_ERROR("Failed to create GLFW window");

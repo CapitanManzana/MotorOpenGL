@@ -32,5 +32,5 @@ void SceneManager::loadScenes() {
 	auto tr = cube->addComponent<Transform>();
 	cube->addComponent<MeshRenderer>(new CubeMesh(rscrM().getShader("default")));
 
-	tr->setPosition(glm::vec3(0, 0, -3));
+	tr->setPosition(glm::vec3(0, 0, 0));
 }
