@@ -9,15 +9,17 @@
 #include <utils/logger.h>
 
 #include <managers/ResourceManager.h>
-#include "mesh/CubeMesh.h"
+#include <managers/SceneManager.h>
 #include <core/Scene.h>
-#include <ec/entity.h>
-#include <component/Transform.h>
-#include <component/MeshRenderer.h>
+#include <core/Camera.h>
 
 GLApplication::~GLApplication() {
 	if (ResourceManager::HasInstance()) {
 		ResourceManager::Release();
+	}
+
+	if (SceneManager::HasInstance()) {
+		SceneManager::Release();
 	}
 
 	glfwTerminate();
@@ -51,6 +53,9 @@ bool GLApplication::init() {
 
 	if (!loadManagers()) return false;
 
+	glfwSetInputMode(_window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+	glfwSetCursorPosCallback(_window, mouseCallback);
+
 	return true;
 }
 
@@ -60,38 +65,62 @@ bool GLApplication::loadManagers() {
 		return false;
 	}
 
+	if (!SceneManager::Init()) {
+		LOG_ERROR("Error al inicializar el Scene Manager");
+		return false;
+	}
+
 	return true;
 }
 
 void GLApplication::start() {
-	Scene* scene = new Scene();
+	sceneM().loadScenes();
 
-	auto cube = scene->addGameObject(scene);
-	auto tr =cube->addComponent<Transform>();
-	cube->addComponent<MeshRenderer>(new CubeMesh(rscrM().getShader("default")));
-
-	tr->setPosition(glm::vec3(0, 0, -3));
 	float angle = 0.0f;
 	while (!glfwWindowShouldClose(_window))
 	{
-		processInput(_window);
+		processInput(_window, sceneM().activeScene()->getCamera());
 
 		glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		glEnable(GL_DEPTH_TEST);
 
-		tr->setRotation(glm::vec3(0, angle++, angle));
-		scene->render();
+		sceneM().update();
+		sceneM().render();
 
 		glfwSwapBuffers(_window);
 		glfwPollEvents();
-	}
 
-	delete scene;
+		float currentFrame = glfwGetTime();
+		_deltaTime = currentFrame - _lastFrame;
+		_lastFrame = currentFrame;
+	}
 }
 
-void GLApplication::processInput(GLFWwindow* window)
+void GLApplication::processInput(GLFWwindow* window, Camera* cam)
 {
+	glm::vec3 cameraPos = cam->getPosition();
+	glm::vec3 cameraFront = cam->getCameraFront();
+	glm::vec3 cameraUp = cam->getCameraUp();
+
 	if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
 		glfwSetWindowShouldClose(window, true);
+
+	const float cameraSpeed = 2.5f * _deltaTime; // adjust accordingly
+	if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
+		cameraPos += cameraSpeed * cameraFront;
+	if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
+		cameraPos -= cameraSpeed * cameraFront;
+	if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
+		cameraPos -= glm::normalize(glm::cross(cameraFront, cameraUp)) *
+		cameraSpeed;
+	if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
+		cameraPos += glm::normalize(glm::cross(cameraFront, cameraUp)) *
+		cameraSpeed;
+
+	cam->setPosition(cameraPos);
+}
+
+void GLApplication::mouseCallback(GLFWwindow* window, double xpos, double ypos) {
+	sceneM().activeScene()->getCamera()->setCameraLookAt(xpos, ypos);
 }

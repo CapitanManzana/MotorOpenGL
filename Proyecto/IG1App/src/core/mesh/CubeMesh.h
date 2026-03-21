@@ -6,6 +6,7 @@ class CubeMesh : public Mesh
 {
 public:
 	CubeMesh();
+	~CubeMesh() {}
 	CubeMesh(Shader* shader);
 
 	void generateMesh() override;

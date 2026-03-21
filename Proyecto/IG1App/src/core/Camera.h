@@ -7,6 +7,10 @@
 class Shader;
 class Mesh;
 
+struct CameraAxis {
+
+};
+
 /// @brief Clase que controla el punto de vista del la ventana, almacena la matriz de vista y la de proyeccion. Se puede configurar para que la camara renderice en formato perspectiva u ortografico.
 class Camera
 {
@@ -16,6 +20,14 @@ private:
 	/// @brief Matriz de pryección
 	glm::mat4 _projection;
 
+	glm::vec3 _cameraPos = glm::vec3(0.0f, 0.0f, 3.0f);
+	glm::vec3 _cameraTarget = glm::vec3(0.0f, 0.0f, 0.0f);
+	glm::vec3 _cameraDirection = glm::normalize(_cameraPos - _cameraTarget);
+
+	glm::vec3 _cameraRight = glm::normalize(glm::cross(glm::vec3(0.0f, 1.0f, 0.0f), _cameraDirection));
+
+	glm::vec3 _cameraUp = glm::cross(_cameraDirection, _cameraRight);
+
 	/// @brief Defide si se usa perspectiva (true) o si ortografico (false)
 	bool _usePerspective = true;
 	/// @brief El fiel of view de la camara
@@ -24,6 +36,11 @@ private:
 	float _nearDistance = 0.1f;
 	/// @brief Distancia donde se dejan de ver las cosas
 	float _farDistance = 100.0f;
+
+	float _yaw = -90.0f;	// Respecto al eje y (desde arriba)
+	float _pitch = 0.0f;	// Respecto al eje x (desde un lado)
+	float _lastX = 0.0f;
+	float _lastY = 0.0f;
 public:
 	Camera();
 
@@ -38,6 +55,21 @@ public:
 	/// @brief Establece la matriz de vista
 	/// @param view La nueva matriz
 	void setViewMat(glm::mat4 view) { _view = view; }
+
+	/// @brief Modifica el yaw y el pitch para que la camara gire, se usa para el movimiento del raton
+	/// @param xOffset El desplazamiento en el eje X del raton en ese frame
+	/// @param yOffset El desplazamiento en el eje Y del raton en ese frame
+	void setCameraLookAt(float xOffset, float yOffset);
+
+	const glm::vec3& getPosition() const { return _cameraPos; }
+	const glm::vec3& getCameraFront() const { return _cameraDirection; }
+	const glm::vec3& getCameraUp() const { return _cameraUp; }
+
+	void setPosition(const glm::vec3& pos) { 
+		_cameraPos = pos; 
+		_view = glm::lookAt(_cameraPos, _cameraPos + _cameraDirection, _cameraUp);
+	}
+
 private:
 	/// @brief Se encarga de construir la matriz de proyeccion de dependiedo de los parametros
 	void buildProjectionMat();

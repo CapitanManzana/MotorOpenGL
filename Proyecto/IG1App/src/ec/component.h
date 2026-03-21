@@ -55,6 +55,7 @@ namespace ec
 	protected:
 		RenderIterator _renderIterator;
 	public:
+		virtual ~RenderComponent() {}
 		virtual void render() const = 0;
 	};
 

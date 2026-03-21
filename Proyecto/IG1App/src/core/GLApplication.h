@@ -2,6 +2,8 @@
 #include <utils/Singleton.h>
 
 struct GLFWwindow;
+class Camera;
+class Scene;
 
 /**
  * @brief Clase principal que maneja el ciclo de vida de la aplicación.
@@ -15,6 +17,9 @@ private:
 	GLFWwindow* _window = nullptr;		// Puntero a la ventana de openGL
 	float _width = 800;
 	float _height = 600;
+
+	float _deltaTime = 0.0f;
+	float _lastFrame = 0.0f;
 public:
 	virtual ~GLApplication();
 
@@ -33,7 +38,10 @@ public:
 	/// @brief El alto de la pantalla
 	/// @return El alto de la pantalla
 	float height() { return _height; }
-
+	/// @brief Devuelve la diferencia de tiempo entre frames
+	/// @return El delta time
+	float deltaTime() { return _deltaTime; }
+	
 private:
 	GLApplication() = default;
 
@@ -43,7 +51,12 @@ private:
 	bool loadManagers();
 	/// @brief Procesa los inputs durante la ejecución
 	/// @param window La ventana de los inputs
-	void processInput(GLFWwindow* window);
+	void processInput(GLFWwindow* window, Camera* cam);
+	/// @brief Procesa el input del raton, se llama omo callback
+	/// @param window LA ventana
+	/// @param xpos La posicion del raton en el eje X
+	/// @param ypos La posicion del raton en el eje Y
+	static void mouseCallback(GLFWwindow* window, double xpos, double ypos);
 };
 
 /// @brief Obtiene la instancia de la clase

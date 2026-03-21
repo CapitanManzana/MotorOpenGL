@@ -7,6 +7,10 @@
 
 #include <component/Transform.h>
 
+MeshRenderer::~MeshRenderer() {
+	delete _mesh; // Esto invocará Mesh::~Mesh() y liberará VBOs/VAOs y memoria
+}
+
 void MeshRenderer::render() const {
 	_mesh->setModelMatrix(_tr->getModelMatrix());
 

@@ -14,9 +14,7 @@ public:
 	__CMPID_DECL__(ec::comp::MESH_RENDERER)
 
 	MeshRenderer(Mesh* mesh) : _mesh(mesh) {}
-	virtual ~MeshRenderer() {
-		delete _mesh;
-	}
+	~MeshRenderer();
 
 	void render() const override;
 

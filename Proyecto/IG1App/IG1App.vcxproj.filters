@@ -14,6 +14,7 @@
     <ClCompile Include="src\core\Scene.cpp" />
     <ClCompile Include="src\pch.cpp" />
     <ClCompile Include="src\component\MeshRenderer.cpp" />
+    <ClCompile Include="src\managers\SceneManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\core\Camera.h" />
@@ -33,5 +34,6 @@
     <ClInclude Include="src\pch.h" />
     <ClInclude Include="src\component\Transform.h" />
     <ClInclude Include="src\component\MeshRenderer.h" />
+    <ClInclude Include="src\managers\SceneManager.h" />
   </ItemGroup>
 </Project>
