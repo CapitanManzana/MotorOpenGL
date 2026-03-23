@@ -7,14 +7,17 @@
 #include <iostream>
 #endif // _DEBUG
 
+#include <core/serialize/Serializable.h>
+#include <core/serialize/JsonSerializer.h>
+
 class Scene;
 namespace ec
 {
 	class EntityManager;
-	class Entity
+	class Entity : public capiEngine::Serializable
 	{
 	public:
-		Entity(ent::groupID groupID, Scene* _scenePtr)
+		Entity(ent::groupID groupID, Scene* _scenePtr, std::string name)
 			: _alive(true)
 			, _active(true)
 			, _groupID(ec::ent::None)
@@ -22,9 +25,10 @@ namespace ec
 			, _updateComponents(0, nullptr)
 			, _renderComponents(0, nullptr)
 			, _components(ec::comp::NUM_COMPONENTS, nullptr)
+			, _name(name)
 		{
 #ifdef _DEBUG
-			std::cout << "Creating entity" << std::endl;
+			LOG_INFO("Creating entity");
 #endif // _DEBUG
 			_groupID = groupID;
 		};
@@ -36,9 +40,6 @@ namespace ec
 			_updateComponents.clear();
 			_renderComponents.clear();
 			_components.clear();
-#ifdef _DEBUG
-			std::cout << "deleting entity" << std::endl;
-#endif // _DEBUG
 		}
 
 		/// @brief No se permite duplicar un entidad
@@ -55,8 +56,9 @@ namespace ec
 		bool _alive;
 		bool _active;
 		Scene* _scene;
-	public:
 
+		std::string _name;
+	public:
 		/// @breif componentes que tienen update 
 		std::vector<UpdateComponent*> _updateComponents;
 
@@ -65,6 +67,8 @@ namespace ec
 
 		/// @brief vector del todos los componentes
 		std::vector<Component*> _components;
+
+		std::string& name() { return _name; }
 
 		inline void update() {
 			for (auto* comp : _updateComponents) {
@@ -76,6 +80,14 @@ namespace ec
 			for (auto* comp : _renderComponents) {
 				comp->render();
 			}
+		}
+
+		void serialize(capiEngine::JsonSerializer& s) const {
+			
+		}
+
+		void deserialize(capiEngine::JsonSerializer& s) {
+			
 		}
 		
 		/// @brief Añadir un componente a la entidad
@@ -185,7 +197,7 @@ namespace ec
 
 		/// @brief Getter si el componente esta activo
 		/// @return 
-		bool isActive() { return _active; }
+		bool& active() { return _active; }
 
 		/// @brief Getter del la lista de componentes que tiene update
 		/// @return la lista de componentes que tiene update

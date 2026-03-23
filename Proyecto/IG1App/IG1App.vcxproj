@@ -85,6 +85,8 @@ if %errorlevel% leq 7 exit 0</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\component\Transform.cpp" />
+    <ClCompile Include="src\core\serialize\JsonSerializer.cpp" />
     <ClCompile Include="src\core\ui\windows\ConsoleWindow.cpp" />
     <ClCompile Include="external\imgui\imgui.cpp" />
     <ClCompile Include="external\imgui\imgui_demo.cpp" />
@@ -116,6 +118,9 @@ if %errorlevel% leq 7 exit 0</Command>
     <ClCompile Include="src\core\ui\windows\ViewportWindow.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\core\mesh\MeshID.h" />
+    <ClInclude Include="src\core\serialize\Serializable.h" />
+    <ClInclude Include="src\core\serialize\JsonSerializer.h" />
     <ClInclude Include="src\core\ui\windows\ConsoleWindow.h" />
     <ClInclude Include="external\imgui\imconfig.h" />
     <ClInclude Include="external\imgui\imgui.h" />
@@ -147,6 +152,7 @@ if %errorlevel% leq 7 exit 0</Command>
     <ClInclude Include="src\managers\ResourceManager.h" />
     <ClInclude Include="src\managers\SceneManager.h" />
     <ClInclude Include="src\pch.h" />
+    <ClInclude Include="src\utils\json.hpp" />
     <ClInclude Include="src\utils\logger.h" />
     <ClInclude Include="src\utils\Singleton.h" />
     <ClInclude Include="src\core\ui\windows\ViewportWindow.h" />

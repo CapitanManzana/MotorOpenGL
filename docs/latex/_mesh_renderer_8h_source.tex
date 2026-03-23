@@ -1,0 +1,28 @@
+\doxysection{Mesh\+Renderer.\+h}
+\hypertarget{_mesh_renderer_8h_source}{}\label{_mesh_renderer_8h_source}\index{C:/Users/manza/Desktop/UNIVERSIDAD/GitHub/MotorC++/Proyecto/IG1App/src/component/MeshRenderer.h@{C:/Users/manza/Desktop/UNIVERSIDAD/GitHub/MotorC++/Proyecto/IG1App/src/component/MeshRenderer.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#include\ <ec/component.h>}}
+\DoxyCodeLine{00003\ }
+\DoxyCodeLine{00004\ \textcolor{keyword}{class\ }\doxymbox{\hyperlink{class_mesh}{Mesh}};}
+\DoxyCodeLine{00005\ \textcolor{keyword}{class\ }\doxymbox{\hyperlink{class_camera}{Camera}};}
+\DoxyCodeLine{00006\ \textcolor{keyword}{class\ }Transform;}
+\DoxyCodeLine{00007\ }
+\DoxyCodeLine{00008\ \textcolor{keyword}{class\ }MeshRenderer\ :\ \textcolor{keyword}{public}\ \doxymbox{\hyperlink{classec_1_1_component}{ec::Component}},\ \textcolor{keyword}{public}\ \doxymbox{\hyperlink{classec_1_1_render_component}{ec::RenderComponent}}\ \{}
+\DoxyCodeLine{00009\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00010\ \ \ \ \ Mesh*\ \_mesh;}
+\DoxyCodeLine{00011\ \ \ \ \ Camera*\ \_cam;}
+\DoxyCodeLine{00012\ \ \ \ \ Transform*\ \_tr;}
+\DoxyCodeLine{00013\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00014\ \ \ \ \ \_\_CMPID\_DECL\_\_(ec::comp::MESH\_RENDERER)}
+\DoxyCodeLine{00015\ }
+\DoxyCodeLine{00016\ \ \ \ \ MeshRenderer(Mesh*\ mesh)\ :\ \_mesh(mesh)\ \{\}}
+\DoxyCodeLine{00017\ \ \ \ \ \string~MeshRenderer();}
+\DoxyCodeLine{00018\ }
+\DoxyCodeLine{00019\ \ \ \ \ \textcolor{keywordtype}{void}\ render()\ \textcolor{keyword}{const\ override};}
+\DoxyCodeLine{00020\ }
+\DoxyCodeLine{00021\ \ \ \ \ \textcolor{keywordtype}{void}\ initComponent()\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00022\ \};}
+
+\end{DoxyCode}

@@ -3,22 +3,27 @@
 #include <vector>
 #include <functional>
 #include <ec/ec.h>
+#include <string>
 
 class Camera;
 
 class Scene
 {
-protected:
+private:
 	/// @param gameObjectsByLayer vectores de objetos según la layer a la que pertencen
 	/// El vector de gameObjectsByLayer[n] tendría todos los objetos pertencientes a la layer n 
 	std::array<std::vector<ec::entity_t>, ec::ent::maxGroupLayer> _gameObjectsByGroup;
+
+	std::vector<ec::entity_t> _gizmos;
 
 	/// @brief inicializa la escena creando todos los objetos que vayan a haber en la misma
 	virtual void init() {};
 
 	Camera* _cam = nullptr;
+	std::string _name = "Scene";
+
 public:
-	Scene();
+	Scene(std::string name);
 
 	virtual ~Scene();
 
@@ -36,9 +41,12 @@ public:
 
 	/// @brief permite añadir objetos a la escena
 	/// @param grID Grupo al que añadir al objeto creado
-	ec::entity_t addGameObject(Scene* scene, ec::ent::groupID grID = ec::ent::None);
+	ec::entity_t addGameObject(Scene* scene, std::string name, ec::ent::groupID grID = ec::ent::None);
+	ec::entity_t addGizmos();
 
 	const std::array<std::vector<ec::entity_t>, ec::ent::maxGroupLayer>& getSceneObjects() { return _gameObjectsByGroup; }
 	Camera* getCamera() { return _cam; }
+
+	std::string name() { return _name; }
 };
 

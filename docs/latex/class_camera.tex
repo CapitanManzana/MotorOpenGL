@@ -16,8 +16,18 @@ void \doxymbox{\hyperlink{class_camera_aa8cb527cd242049a7afbc876f1e32a64}{upload
 \begin{DoxyCompactList}\small\item\em Manda a la GPU las matrices de proyeccion y vista. \end{DoxyCompactList}\item 
 glm::\+mat4 \doxymbox{\hyperlink{class_camera_aa77dcf47815f0549e40111baf0998771}{view\+Matrix}} ()
 \begin{DoxyCompactList}\small\item\em La matriz de vista de la camara. \end{DoxyCompactList}\item 
+\Hypertarget{class_camera_a5d2c38d3175d2b007a862571c25cb9c6}\label{class_camera_a5d2c38d3175d2b007a862571c25cb9c6} 
+void {\bfseries build\+Projection\+Mat} ()
+\begin{DoxyCompactList}\small\item\em Se encarga de construir la matriz de proyeccion de dependiedo de los parametros. \end{DoxyCompactList}\item 
 void \doxymbox{\hyperlink{class_camera_a673ff998420587e5e8ec08fb15732502}{set\+View\+Mat}} (glm::\+mat4 view)
-\begin{DoxyCompactList}\small\item\em Establece la matriz de vista. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Establece la matriz de vista. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{class_camera_a4f97f0a1eaa4da72da69c63247387ee4}{set\+Camera\+Look\+At}} (float x\+Offset, float y\+Offset)
+\begin{DoxyCompactList}\small\item\em Modifica el yaw y el pitch para que la camara gire, se usa para el movimiento del raton. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{class_camera_ab3ea65bf7500fc429964b8a9f9f4f0e0}{on\+Resize}} (float w, float h)
+\begin{DoxyCompactList}\small\item\em Cuando se hace resize del viewport. \end{DoxyCompactList}\item 
+\Hypertarget{class_camera_aeec8e675e8b67b6be75c05f9b14e25f5}\label{class_camera_aeec8e675e8b67b6be75c05f9b14e25f5} 
+void {\bfseries first\+Move} ()
+\begin{DoxyCompactList}\small\item\em Establece que que es la primera vez que se mueve la camara. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
 \doxysubsection{Descripción detallada}
@@ -26,6 +36,40 @@ Clase que controla el punto de vista del la ventana, almacena la matriz de vista
 \label{doc-func-members}
 \Hypertarget{class_camera_doc-func-members}
 \doxysubsection{Documentación de funciones miembro}
+\Hypertarget{class_camera_ab3ea65bf7500fc429964b8a9f9f4f0e0}\index{Camera@{Camera}!onResize@{onResize}}
+\index{onResize@{onResize}!Camera@{Camera}}
+\doxysubsubsection{\texorpdfstring{onResize()}{onResize()}}
+{\footnotesize\ttfamily \label{class_camera_ab3ea65bf7500fc429964b8a9f9f4f0e0} 
+void Camera::\+on\+Resize (\begin{DoxyParamCaption}\item[{float}]{w}{, }\item[{float}]{h}{}\end{DoxyParamCaption})}
+
+
+
+Cuando se hace resize del viewport. 
+
+
+\begin{DoxyParams}{Parámetros}
+{\em w} & El nuevo width \\
+\hline
+{\em h} & El nuevo height \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_camera_a4f97f0a1eaa4da72da69c63247387ee4}\index{Camera@{Camera}!setCameraLookAt@{setCameraLookAt}}
+\index{setCameraLookAt@{setCameraLookAt}!Camera@{Camera}}
+\doxysubsubsection{\texorpdfstring{setCameraLookAt()}{setCameraLookAt()}}
+{\footnotesize\ttfamily \label{class_camera_a4f97f0a1eaa4da72da69c63247387ee4} 
+void Camera::\+set\+Camera\+Look\+At (\begin{DoxyParamCaption}\item[{float}]{x\+Offset}{, }\item[{float}]{y\+Offset}{}\end{DoxyParamCaption})}
+
+
+
+Modifica el yaw y el pitch para que la camara gire, se usa para el movimiento del raton. 
+
+
+\begin{DoxyParams}{Parámetros}
+{\em x\+Offset} & El desplazamiento en el eje X del raton en ese frame \\
+\hline
+{\em y\+Offset} & El desplazamiento en el eje Y del raton en ese frame \\
+\hline
+\end{DoxyParams}
 \Hypertarget{class_camera_a673ff998420587e5e8ec08fb15732502}\index{Camera@{Camera}!setViewMat@{setViewMat}}
 \index{setViewMat@{setViewMat}!Camera@{Camera}}
 \doxysubsubsection{\texorpdfstring{setViewMat()}{setViewMat()}}

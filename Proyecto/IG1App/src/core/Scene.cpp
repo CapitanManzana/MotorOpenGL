@@ -7,7 +7,7 @@
 #include <component/MeshRenderer.h>
 #include <core/mesh/QuadMesh.h>
 
-Scene::Scene() {
+Scene::Scene(std::string name) : _name(name) {
 	_cam = new Camera();
 	createGrid();
 }
@@ -18,6 +18,10 @@ Scene::~Scene() {
 		for (ec::Entity* gObj : _gameObjectsByGroup[i]) {
 			delete gObj;
 		}
+	}
+
+	for (auto& go : _gizmos) {
+		delete go;
 	}
 
 	delete _cam;
@@ -44,29 +48,39 @@ void Scene::refresh() {
 void Scene::render() const {
 	for (int i = 0; i < ec::ent::maxGroupLayer; i++) {
 		for (ec::entity_t gObj : _gameObjectsByGroup[i]) {
-			gObj->render();
+			if (gObj->active()) gObj->render();
 		}
+	}
+
+	for (auto& go : _gizmos) {
+		go->render();
 	}
 }
 
 void Scene::update() {
 	for (int i = 0; i < ec::ent::maxGroupLayer; i++) {
 		for (ec::entity_t gObj : _gameObjectsByGroup[i]) {
-			gObj->update();
+			if (gObj->active()) gObj->update();
 		}
 	}
 };
 
-ec::entity_t Scene::addGameObject(Scene* scene, ec::ent::groupID grID) {
-	ec::entity_t gObj = new ec::Entity(grID, scene);
+ec::entity_t Scene::addGameObject(Scene* scene, std::string name, ec::ent::groupID grID) {
+	ec::entity_t gObj = new ec::Entity(grID, scene, name);
 	_gameObjectsByGroup[grID].push_back(gObj);
+	return gObj;
+}
+
+ec::entity_t Scene::addGizmos() {
+	ec::entity_t gObj = new ec::Entity((ec::ent::groupID)0, this, "");
+	_gizmos.push_back(gObj);
 	return gObj;
 }
 
 void Scene::createGrid() {
 	Shader* gridShader = rscrM().getShader("grid");
 	// 2. Crear la entidad
-	ec::entity_t gridEntity = addGameObject(this, ec::ent::TRANSPARENT );
+	ec::entity_t gridEntity = addGizmos();
 
 	// 3. Añadirle el Transform (escala grande, ej. 100x100)
 	auto tr = gridEntity->addComponent<Transform>();

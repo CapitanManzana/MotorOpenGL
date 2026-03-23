@@ -8,15 +8,23 @@
 #include <core/ui/windows/ViewportWindow.h>
 #include <core/ui/windows/SceneWindow.h>
 #include <core/ui/windows/ConsoleWindow.h>
-
+#include <utils/logger.h>
 namespace capiEngine::ui {
 	UIManager::UIManager() {
 		_windows.resize(windowGroupID::NUM_GROUP);
 
-		addWindow<InspectorWindow>("Inspector");
+		auto inspector = addWindow<InspectorWindow>("Inspector");
 		addWindow<ViewportWindow>("Viewport");
-		addWindow<SceneWindow>("Scene");
-		addWindow<ConsoleWindow>("Console");
+		auto hierarchy = addWindow<SceneWindow>("Scene");
+		auto console = addWindow<ConsoleWindow>("Console");
+
+		hierarchy->setCallback([inspector](ec::entity_t e) {
+			inspector->changeDisplayEntity(e);
+		});
+
+		logger().setCallback([console](const std::string& msg) {
+			console->addLog(msg);
+		});
 	}
 
 	UIManager::~UIManager() {
@@ -37,7 +45,6 @@ namespace capiEngine::ui {
 		ImGui::CreateContext();
 		ImGuiIO& io = ImGui::GetIO(); (void)io;
 		io.IniFilename = "imgui.ini";
-		io.ConfigFlags |= ImGuiConfigFlags_NoKeyboard;
 		io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
 		io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;
 
@@ -76,6 +83,8 @@ namespace capiEngine::ui {
 		ImGui_ImplGlfw_NewFrame();
 		ImGui::NewFrame();
 
+		// RENDER DE LOS PANELES
+
 		ImGuiViewport* viewport = ImGui::GetMainViewport();
 		ImGui::SetNextWindowPos(viewport->Pos);
 		ImGui::SetNextWindowSize(viewport->Size);
@@ -88,33 +97,32 @@ namespace capiEngine::ui {
 			ImGuiWindowFlags_NoResize |
 			ImGuiWindowFlags_NoMove |
 			ImGuiWindowFlags_NoBringToFrontOnFocus |
-			ImGuiWindowFlags_NoNavFocus;
+			ImGuiWindowFlags_NoNavFocus |
+			ImGuiWindowFlags_MenuBar;
 
 		ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0, 0));
 		ImGui::Begin("DockSpace", nullptr, flags);
 		ImGui::PopStyleVar();
 		ImGui::DockSpace(ImGui::GetID("MainDockSpace"));
+		if (ImGui::BeginMainMenuBar())
+		{
+			if (ImGui::BeginMenu("File"))
+			{
+				ImGui::EndMenu();
+			}
+			if (ImGui::BeginMenu("Edit"))
+			{
+				if (ImGui::MenuItem("Undo", "Ctrl+Z")) {}
+				if (ImGui::MenuItem("Redo", "Ctrl+Y", false, false)) {} // Disabled item
+				ImGui::Separator();
+				if (ImGui::MenuItem("Cut", "Ctrl+X")) {}
+				if (ImGui::MenuItem("Copy", "Ctrl+C")) {}
+				if (ImGui::MenuItem("Paste", "Ctrl+V")) {}
+				ImGui::EndMenu();
+			}
+			ImGui::EndMainMenuBar();
+		}
 		ImGui::End();
-
-		// RENDER DE LOS PANELES
-		//if (ImGui::BeginMainMenuBar())
-		//{
-		//	if (ImGui::BeginMenu("File"))
-		//	{
-		//		ImGui::EndMenu();
-		//	}
-		//	if (ImGui::BeginMenu("Edit"))
-		//	{
-		//		if (ImGui::MenuItem("Undo", "Ctrl+Z")) {}
-		//		if (ImGui::MenuItem("Redo", "Ctrl+Y", false, false)) {} // Disabled item
-		//		ImGui::Separator();
-		//		if (ImGui::MenuItem("Cut", "Ctrl+X")) {}
-		//		if (ImGui::MenuItem("Copy", "Ctrl+C")) {}
-		//		if (ImGui::MenuItem("Paste", "Ctrl+V")) {}
-		//		ImGui::EndMenu();
-		//	}
-		//	ImGui::EndMainMenuBar();
-		//}
 
 		for (auto& win : _windows) {
 			if (win) win->render();

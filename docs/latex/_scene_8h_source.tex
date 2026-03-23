@@ -1,0 +1,41 @@
+\doxysection{Scene.\+h}
+\hypertarget{_scene_8h_source}{}\label{_scene_8h_source}\index{C:/Users/manza/Desktop/UNIVERSIDAD/GitHub/MotorC++/Proyecto/IG1App/src/core/Scene.h@{C:/Users/manza/Desktop/UNIVERSIDAD/GitHub/MotorC++/Proyecto/IG1App/src/core/Scene.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#include\ <array>}}
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ <vector>}}
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ <functional>}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ <ec/ec.h>}}
+\DoxyCodeLine{00006\ }
+\DoxyCodeLine{00007\ \textcolor{keyword}{class\ }\doxymbox{\hyperlink{class_camera}{Camera}};}
+\DoxyCodeLine{00008\ }
+\DoxyCodeLine{00009\ \textcolor{keyword}{class\ }Scene}
+\DoxyCodeLine{00010\ \{}
+\DoxyCodeLine{00011\ \textcolor{keyword}{protected}:}
+\DoxyCodeLine{00014\ \ \ \ \ std::array<std::vector<ec::entity\_t>,\ ec::ent::maxGroupLayer>\ \_gameObjectsByGroup;}
+\DoxyCodeLine{00015\ }
+\DoxyCodeLine{00017\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ init()\ \{\};}
+\DoxyCodeLine{00018\ }
+\DoxyCodeLine{00019\ \ \ \ \ Camera*\ \_cam\ =\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{00020\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00021\ \ \ \ \ Scene();}
+\DoxyCodeLine{00022\ }
+\DoxyCodeLine{00023\ \ \ \ \ \textcolor{keyword}{virtual}\ \string~Scene();}
+\DoxyCodeLine{00024\ }
+\DoxyCodeLine{00026\ \ \ \ \ \textcolor{keywordtype}{void}\ render()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00027\ }
+\DoxyCodeLine{00029\ \ \ \ \ \textcolor{keywordtype}{void}\ update();}
+\DoxyCodeLine{00030\ }
+\DoxyCodeLine{00032\ \ \ \ \ \textcolor{keywordtype}{void}\ refresh();}
+\DoxyCodeLine{00033\ }
+\DoxyCodeLine{00035\ \ \ \ \ \textcolor{keywordtype}{void}\ createGrid();}
+\DoxyCodeLine{00036\ }
+\DoxyCodeLine{00039\ \ \ \ \ ec::entity\_t\ addGameObject(Scene*\ scene,\ ec::ent::groupID\ grID\ =\ ec::ent::None);}
+\DoxyCodeLine{00040\ }
+\DoxyCodeLine{00041\ \ \ \ \ \textcolor{keyword}{const}\ std::array<std::vector<ec::entity\_t>,\ ec::ent::maxGroupLayer>\&\ getSceneObjects()\ \{\ \textcolor{keywordflow}{return}\ \_gameObjectsByGroup;\ \}}
+\DoxyCodeLine{00042\ \ \ \ \ Camera*\ getCamera()\ \{\ \textcolor{keywordflow}{return}\ \_cam;\ \}}
+\DoxyCodeLine{00043\ \};}
+\DoxyCodeLine{00044\ }
+
+\end{DoxyCode}

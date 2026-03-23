@@ -27,10 +27,14 @@ void SceneManager::render() const {
 }
 
 void SceneManager::loadScenes() {
-	_currentScene = new Scene();
-	auto cube = _currentScene->addGameObject(_currentScene);
+	_currentScene = new Scene("Escena 1");
+	auto cube = _currentScene->addGameObject(_currentScene, "Cube");
 	auto tr = cube->addComponent<Transform>();
 	cube->addComponent<MeshRenderer>(new CubeMesh(rscrM().getShader("default")));
 
 	tr->setPosition(glm::vec3(0, 0, 0));
+}
+
+void saveActiveScene(std::string& path) {
+
 }

@@ -23,6 +23,10 @@ GLApplication::~GLApplication() {
 		SceneManager::Release();
 	}
 
+	if (capiEngine::Logger::HasInstance()) {
+		capiEngine::Logger::Release();
+	}
+
 	delete _interface;
 	glfwDestroyWindow(_window);
 	glfwTerminate();
@@ -82,6 +86,11 @@ bool GLApplication::loadManagers() {
 
 	if (!SceneManager::Init()) {
 		LOG_ERROR("Error al inicializar el Scene Manager");
+		return false;
+	}
+
+	if (!capiEngine::Logger::Init()) {
+		LOG_ERROR("Error al inicializar el Logger");
 		return false;
 	}
 

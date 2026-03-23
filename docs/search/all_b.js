@@ -1,6 +1,8 @@
 var searchData=
 [
-  ['formato_20de_20datos_0',['Detalles del formato de datos',['../pasos_render.html#autotoc_md14',1,'']]],
-  ['fragment_20shader_1',['2.4 Fragment Shader',['../pasos_render.html#autotoc_md11',1,'']]],
-  ['fragmentshaderpath_2',['fragmentShaderPath',['../struct_shader_creation_data.html#aada9ab2bbe83a8690742a483de158b91',1,'ShaderCreationData']]]
+  ['ebo_0',['2.7 EBO',['../pasos_render.html#autotoc_md16',1,'']]],
+  ['entre_20shaders_1',['3.3 Comunicación entre Shaders',['../shaders.html#autotoc_md20',1,'']]],
+  ['escalar_20dot_20product_2',['Producto escalar (dot product)',['../transf.html#autotoc_md23',1,'']]],
+  ['estructura_20de_20las_20etapas_3',['2.1 Estructura de las Etapas',['../pasos_render.html#autotoc_md6',1,'']]],
+  ['etapas_4',['2.1 Estructura de las Etapas',['../pasos_render.html#autotoc_md6',1,'']]]
 ];

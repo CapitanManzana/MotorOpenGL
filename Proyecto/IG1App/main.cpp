@@ -10,7 +10,6 @@
 int main(int argc, char* argv[]) {
 	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
 
-	//_CrtSetBreakAlloc(834);
 	std::filesystem::path rutaExe = std::filesystem::absolute(argv[0]);
 	std::filesystem::path carpetaExe = rutaExe.parent_path();
 	std::filesystem::current_path(carpetaExe);
@@ -21,6 +20,7 @@ int main(int argc, char* argv[]) {
 	}
 	gla().start();
 	gla().Release();
+
 	return 0;
 }
 

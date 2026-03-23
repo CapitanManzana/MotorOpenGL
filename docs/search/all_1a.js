@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['_7eshader_0',['~Shader',['../class_shader.html#a08345855be88781faf704487119af9a8',1,'Shader']]]
+  ['width_0',['width',['../class_g_l_application.html#abe06b9760ed2a2ccb5b61b081887e249',1,'GLApplication']]],
+  ['window_1',['Window',['../classcapi_engine_1_1ui_1_1_window.html',1,'capiEngine::ui']]]
 ];

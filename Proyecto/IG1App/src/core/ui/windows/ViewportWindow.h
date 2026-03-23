@@ -27,6 +27,6 @@ namespace capiEngine::ui {
 		void initFBO();
 		void resizeFBO(float w, float h);
 	protected:
-		virtual void renderWindowContent() const override;
+		virtual void renderWindowContent() override;
 	};
 }

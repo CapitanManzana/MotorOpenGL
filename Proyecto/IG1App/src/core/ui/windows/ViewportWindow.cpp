@@ -43,7 +43,7 @@ namespace capiEngine::ui {
         glBindFramebuffer(GL_FRAMEBUFFER, 0);
     }
 
-    void ViewportWindow::renderWindowContent() const {
+    void ViewportWindow::renderWindowContent() {
         ImVec2 size = ImGui::GetContentRegionAvail();
 
         // Si la ventana cambia de tamaño, redimensionar el FBO

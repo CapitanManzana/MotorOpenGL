@@ -1,0 +1,41 @@
+\doxysection{Scene\+Manager.\+h}
+\hypertarget{_scene_manager_8h_source}{}\label{_scene_manager_8h_source}\index{C:/Users/manza/Desktop/UNIVERSIDAD/GitHub/MotorC++/Proyecto/IG1App/src/managers/SceneManager.h@{C:/Users/manza/Desktop/UNIVERSIDAD/GitHub/MotorC++/Proyecto/IG1App/src/managers/SceneManager.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#include\ <utils/Singleton.h>}}
+\DoxyCodeLine{00003\ }
+\DoxyCodeLine{00004\ \textcolor{keyword}{class\ }Scene;}
+\DoxyCodeLine{00005\ }
+\DoxyCodeLine{00006\ \textcolor{keyword}{class\ }SceneManager\ :\ \textcolor{keyword}{public}\ Singleton<SceneManager>}
+\DoxyCodeLine{00007\ \{}
+\DoxyCodeLine{00008\ \ \ \ \ \textcolor{keyword}{friend}\ \textcolor{keyword}{class\ }Singleton<SceneManager>;}
+\DoxyCodeLine{00009\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00010\ \ \ \ \ Scene*\ \_currentScene\ =\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{00011\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00012\ \ \ \ \ \textcolor{keyword}{virtual}\ \string~SceneManager();}
+\DoxyCodeLine{00013\ }
+\DoxyCodeLine{00014\ \ \ \ \ \textcolor{keywordtype}{void}\ update();}
+\DoxyCodeLine{00015\ \ \ \ \ \textcolor{keywordtype}{void}\ render()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00016\ }
+\DoxyCodeLine{00017\ \ \ \ \ \textcolor{keywordtype}{void}\ loadScenes();}
+\DoxyCodeLine{00018\ }
+\DoxyCodeLine{00021\ \ \ \ \ Scene*\ activeScene()\ \{\ \textcolor{keywordflow}{return}\ \_currentScene;\ \}}
+\DoxyCodeLine{00022\ }
+\DoxyCodeLine{00023\ \ \ \ \ \textcolor{comment}{//\ cannot\ copy/move}}
+\DoxyCodeLine{00024\ \ \ \ \ SceneManager(SceneManager\&)\ =\ \textcolor{keyword}{delete};}
+\DoxyCodeLine{00025\ \ \ \ \ SceneManager(SceneManager\&\&)\ =\ \textcolor{keyword}{delete};}
+\DoxyCodeLine{00026\ \ \ \ \ SceneManager\&\ operator=(SceneManager\&)\ =\ \textcolor{keyword}{delete};}
+\DoxyCodeLine{00027\ \ \ \ \ SceneManager\&\ operator=(SceneManager\&\&)\ =\ \textcolor{keyword}{delete};}
+\DoxyCodeLine{00028\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00029\ \ \ \ \ SceneManager()\ =\ \textcolor{keywordflow}{default};}
+\DoxyCodeLine{00030\ }
+\DoxyCodeLine{00031\ \ \ \ \ \textcolor{keywordtype}{bool}\ init();}
+\DoxyCodeLine{00032\ \};}
+\DoxyCodeLine{00033\ }
+\DoxyCodeLine{00034\ \textcolor{keyword}{inline}\ SceneManager\&\ sceneM()\ \{}
+\DoxyCodeLine{00035\ \ \ \ \ \textcolor{keywordflow}{return}\ *SceneManager::Instance();}
+\DoxyCodeLine{00036\ \}}
+\DoxyCodeLine{00037\ }
+
+\end{DoxyCode}

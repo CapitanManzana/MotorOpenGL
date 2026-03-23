@@ -5,40 +5,56 @@
 \DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
 \DoxyCodeLine{00002\ \textcolor{preprocessor}{\#include\ <utils/Singleton.h>}}
 \DoxyCodeLine{00003\ }
-\DoxyCodeLine{00004\ \textcolor{keyword}{struct\ }GLFWwindow;}
-\DoxyCodeLine{00005\ }
-\DoxyCodeLine{00011\ \textcolor{keyword}{class\ }GLApplication\ :\ \textcolor{keyword}{public}\ Singleton<GLApplication>}
-\DoxyCodeLine{00012\ \{}
-\DoxyCodeLine{00013\ \ \ \ \ \textcolor{keyword}{friend}\ \textcolor{keyword}{class\ }Singleton<GLApplication>;}
-\DoxyCodeLine{00014\ \textcolor{keyword}{private}:}
-\DoxyCodeLine{00015\ \ \ \ \ GLFWwindow*\ \_window\ =\ \textcolor{keyword}{nullptr};\ \ \ \ \ \ \textcolor{comment}{//\ Puntero\ a\ la\ ventana\ de\ openGL}}
-\DoxyCodeLine{00016\ \ \ \ \ \textcolor{keywordtype}{float}\ \_width\ =\ 800;}
-\DoxyCodeLine{00017\ \ \ \ \ \textcolor{keywordtype}{float}\ \_height\ =\ 600;}
-\DoxyCodeLine{00018\ \textcolor{keyword}{public}:}
-\DoxyCodeLine{00019\ \ \ \ \ \textcolor{keyword}{virtual}\ \string~GLApplication();}
-\DoxyCodeLine{00020\ }
-\DoxyCodeLine{00021\ \ \ \ \ \textcolor{comment}{//\ cannot\ copy/move}}
-\DoxyCodeLine{00022\ \ \ \ \ GLApplication(GLApplication\&)\ =\ \textcolor{keyword}{delete};}
-\DoxyCodeLine{00023\ \ \ \ \ GLApplication(GLApplication\&\&)\ =\ \textcolor{keyword}{delete};}
-\DoxyCodeLine{00024\ \ \ \ \ GLApplication\&\ operator=(GLApplication\&)\ =\ \textcolor{keyword}{delete};}
-\DoxyCodeLine{00025\ \ \ \ \ GLApplication\&\ operator=(GLApplication\&\&)\ =\ \textcolor{keyword}{delete};}
-\DoxyCodeLine{00026\ }
-\DoxyCodeLine{00028\ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_g_l_application_a0927f73e61e1eec59176b3b2a9c1e75b}{start}}();}
-\DoxyCodeLine{00029\ }
-\DoxyCodeLine{00032\ \ \ \ \ \textcolor{keywordtype}{float}\ \doxymbox{\hyperlink{class_g_l_application_abe06b9760ed2a2ccb5b61b081887e249}{width}}()\ \{\ \textcolor{keywordflow}{return}\ \_width;\ \}}
-\DoxyCodeLine{00035\ \ \ \ \ \textcolor{keywordtype}{float}\ \doxymbox{\hyperlink{class_g_l_application_a28109b86e91c1fdd2e9bfc7ab3a8a79d}{height}}()\ \{\ \textcolor{keywordflow}{return}\ \_height;\ \}}
-\DoxyCodeLine{00036\ }
-\DoxyCodeLine{00037\ \textcolor{keyword}{private}:}
-\DoxyCodeLine{00038\ \ \ \ \ \doxymbox{\hyperlink{class_g_l_application}{GLApplication}}()\ =\ \textcolor{keywordflow}{default};}
-\DoxyCodeLine{00039\ }
-\DoxyCodeLine{00040\ \ \ \ \ \textcolor{keywordtype}{bool}\ init();}
-\DoxyCodeLine{00043\ \ \ \ \ \textcolor{keywordtype}{bool}\ loadManagers();}
-\DoxyCodeLine{00046\ \ \ \ \ \textcolor{keywordtype}{void}\ processInput(GLFWwindow*\ window);}
-\DoxyCodeLine{00047\ \};}
-\DoxyCodeLine{00048\ }
-\DoxyCodeLine{00051\ \textcolor{keyword}{inline}\ \doxymbox{\hyperlink{class_g_l_application}{GLApplication}}\&\ gla()\ \{}
-\DoxyCodeLine{00052\ \ \ \ \ \textcolor{keywordflow}{return}\ *GLApplication::Instance();}
-\DoxyCodeLine{00053\ \}}
-\DoxyCodeLine{00054\ }
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#define\ GLA\_MODE\_NORMAL\ 0}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#define\ GLA\_MODE\_MOVING\ 1}}
+\DoxyCodeLine{00006\ }
+\DoxyCodeLine{00007\ \textcolor{keyword}{struct\ }GLFWwindow;}
+\DoxyCodeLine{00008\ \textcolor{keyword}{class\ }\doxymbox{\hyperlink{class_camera}{Camera}};}
+\DoxyCodeLine{00009\ \textcolor{keyword}{class\ }Scene;}
+\DoxyCodeLine{00010\ \textcolor{keyword}{namespace\ }capiEngine::ui\ \{}
+\DoxyCodeLine{00011\ \ \ \ \ \textcolor{keyword}{class\ }\doxymbox{\hyperlink{classcapi_engine_1_1ui_1_1_u_i_manager}{UIManager}};}
+\DoxyCodeLine{00012\ \};}
+\DoxyCodeLine{00013\ }
+\DoxyCodeLine{00019\ \textcolor{keyword}{class\ }GLApplication\ :\ \textcolor{keyword}{public}\ Singleton<GLApplication>}
+\DoxyCodeLine{00020\ \{}
+\DoxyCodeLine{00021\ \ \ \ \ \textcolor{keyword}{friend}\ \textcolor{keyword}{class\ }Singleton<GLApplication>;}
+\DoxyCodeLine{00022\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00023\ \ \ \ \ GLFWwindow*\ \_window\ =\ \textcolor{keyword}{nullptr};\ \ \ \ \ \ \textcolor{comment}{//\ Puntero\ a\ la\ ventana\ de\ openGL}}
+\DoxyCodeLine{00024\ \ \ \ \ \doxymbox{\hyperlink{classcapi_engine_1_1ui_1_1_u_i_manager}{capiEngine::ui::UIManager}}*\ \_interface\ =\ \textcolor{keyword}{nullptr};\ \ \ \ \ \ \ \ \textcolor{comment}{//\ Puntero\ a\ la\ interfaz\ del\ motor}}
+\DoxyCodeLine{00025\ \ \ \ \ \textcolor{keywordtype}{float}\ \_width\ =\ 800;}
+\DoxyCodeLine{00026\ \ \ \ \ \textcolor{keywordtype}{float}\ \_height\ =\ 600;}
+\DoxyCodeLine{00027\ }
+\DoxyCodeLine{00028\ \ \ \ \ \textcolor{keywordtype}{float}\ \_deltaTime\ =\ 0.0f;}
+\DoxyCodeLine{00029\ \ \ \ \ \textcolor{keywordtype}{float}\ \_lastFrame\ =\ 0.0f;}
+\DoxyCodeLine{00030\ }
+\DoxyCodeLine{00031\ \ \ \ \ \textcolor{keywordtype}{int}\ \_glaState\ =\ GLA\_MODE\_NORMAL;}
+\DoxyCodeLine{00032\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00033\ \ \ \ \ \textcolor{keyword}{virtual}\ \string~GLApplication();}
+\DoxyCodeLine{00034\ }
+\DoxyCodeLine{00035\ \ \ \ \ \textcolor{comment}{//\ cannot\ copy/move}}
+\DoxyCodeLine{00036\ \ \ \ \ GLApplication(GLApplication\&)\ =\ \textcolor{keyword}{delete};}
+\DoxyCodeLine{00037\ \ \ \ \ GLApplication(GLApplication\&\&)\ =\ \textcolor{keyword}{delete};}
+\DoxyCodeLine{00038\ \ \ \ \ GLApplication\&\ operator=(GLApplication\&)\ =\ \textcolor{keyword}{delete};}
+\DoxyCodeLine{00039\ \ \ \ \ GLApplication\&\ operator=(GLApplication\&\&)\ =\ \textcolor{keyword}{delete};}
+\DoxyCodeLine{00040\ }
+\DoxyCodeLine{00042\ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_g_l_application_a0927f73e61e1eec59176b3b2a9c1e75b}{start}}();}
+\DoxyCodeLine{00043\ }
+\DoxyCodeLine{00046\ \ \ \ \ \textcolor{keywordtype}{float}\ \doxymbox{\hyperlink{class_g_l_application_abe06b9760ed2a2ccb5b61b081887e249}{width}}()\ \{\ \textcolor{keywordflow}{return}\ \_width;\ \}}
+\DoxyCodeLine{00049\ \ \ \ \ \textcolor{keywordtype}{float}\ \doxymbox{\hyperlink{class_g_l_application_a28109b86e91c1fdd2e9bfc7ab3a8a79d}{height}}()\ \{\ \textcolor{keywordflow}{return}\ \_height;\ \}}
+\DoxyCodeLine{00052\ \ \ \ \ \textcolor{keywordtype}{float}\ \doxymbox{\hyperlink{class_g_l_application_a97e5530959c5bdd9ac99f973e28871af}{deltaTime}}()\ \{\ \textcolor{keywordflow}{return}\ \_deltaTime;\ \}}
+\DoxyCodeLine{00053\ \ \ \ \ }
+\DoxyCodeLine{00054\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00055\ \ \ \ \ \doxymbox{\hyperlink{class_g_l_application}{GLApplication}}()\ =\ \textcolor{keywordflow}{default};}
+\DoxyCodeLine{00056\ }
+\DoxyCodeLine{00057\ \ \ \ \ \textcolor{keywordtype}{bool}\ init();}
+\DoxyCodeLine{00060\ \ \ \ \ \textcolor{keywordtype}{bool}\ loadManagers();}
+\DoxyCodeLine{00063\ \ \ \ \ \textcolor{keywordtype}{void}\ processInput(GLFWwindow*\ window,\ \doxymbox{\hyperlink{class_camera}{Camera}}*\ cam);}
+\DoxyCodeLine{00068\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ mouseCallback(GLFWwindow*\ window,\ \textcolor{keywordtype}{double}\ xpos,\ \textcolor{keywordtype}{double}\ ypos);}
+\DoxyCodeLine{00069\ \};}
+\DoxyCodeLine{00070\ }
+\DoxyCodeLine{00073\ \textcolor{keyword}{inline}\ \doxymbox{\hyperlink{class_g_l_application}{GLApplication}}\&\ gla()\ \{}
+\DoxyCodeLine{00074\ \ \ \ \ \textcolor{keywordflow}{return}\ *GLApplication::Instance();}
+\DoxyCodeLine{00075\ \}}
+\DoxyCodeLine{00076\ }
 
 \end{DoxyCode}

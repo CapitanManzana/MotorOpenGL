@@ -27,6 +27,8 @@
     <ClCompile Include="src\core\ui\windows\ViewportWindow.cpp" />
     <ClCompile Include="src\core\ui\windows\SceneWindow.cpp" />
     <ClCompile Include="src\core\ui\windows\ConsoleWindow.cpp" />
+    <ClCompile Include="src\core\serialize\JsonSerializer.cpp" />
+    <ClCompile Include="src\component\Transform.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\core\Camera.h" />
@@ -63,5 +65,9 @@
     <ClInclude Include="src\core\ui\windows\ViewportWindow.h" />
     <ClInclude Include="src\core\ui\windows\SceneWindow.h" />
     <ClInclude Include="src\core\ui\windows\ConsoleWindow.h" />
+    <ClInclude Include="src\utils\json.hpp" />
+    <ClInclude Include="src\core\serialize\JsonSerializer.h" />
+    <ClInclude Include="src\core\serialize\Serializable.h" />
+    <ClInclude Include="src\core\mesh\MeshID.h" />
   </ItemGroup>
 </Project>

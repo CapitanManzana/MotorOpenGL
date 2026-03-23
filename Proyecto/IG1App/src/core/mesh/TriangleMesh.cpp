@@ -4,6 +4,8 @@
 TriangleMesh::TriangleMesh() {
 	generateMesh();
 	initBuffers();
+
+	_id = capiEngine::TRIANGLE;
 }
 
 TriangleMesh::TriangleMesh(Shader* shader) : TriangleMesh() { 

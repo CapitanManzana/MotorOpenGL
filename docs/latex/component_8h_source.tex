@@ -1,0 +1,71 @@
+\doxysection{component.\+h}
+\hypertarget{component_8h_source}{}\label{component_8h_source}\index{C:/Users/manza/Desktop/UNIVERSIDAD/GitHub/MotorC++/Proyecto/IG1App/src/ec/component.h@{C:/Users/manza/Desktop/UNIVERSIDAD/GitHub/MotorC++/Proyecto/IG1App/src/ec/component.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ }
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ <iostream>}}
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ "{}ec.h"{}}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ <functional>}}
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ <array>}}
+\DoxyCodeLine{00007\ }
+\DoxyCodeLine{00008\ }
+\DoxyCodeLine{00009\ \textcolor{keyword}{class\ }Transform;}
+\DoxyCodeLine{00010\ \textcolor{keyword}{class\ }Scene;}
+\DoxyCodeLine{00011\ \textcolor{keyword}{namespace\ }ec}
+\DoxyCodeLine{00012\ \{}
+\DoxyCodeLine{00014\ \ \ \ \ \textcolor{keyword}{class\ }\doxymbox{\hyperlink{classec_1_1_component_a269f3b4724b1e3f08c8eb7dc1bb0419b}{Component}}}
+\DoxyCodeLine{00015\ \ \ \ \ \{}
+\DoxyCodeLine{00016\ \ \ \ \ \ \ \ \ \textcolor{keyword}{using\ }Iterator\ =\ std::vector<Component*>::iterator;}
+\DoxyCodeLine{00017\ \ \ \ \ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00018\ }
+\DoxyCodeLine{00020\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{classec_1_1_component_a269f3b4724b1e3f08c8eb7dc1bb0419b}{Component}}()\ :\ \_entity(nullptr)\ \{}
+\DoxyCodeLine{00021\ \textcolor{preprocessor}{\#ifdef\ \_DEBUG}}
+\DoxyCodeLine{00022\ \ \ \ \ \ \ \ \ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}Creating\ base\ component"{}}\ <<\ std::endl;}
+\DoxyCodeLine{00023\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ \_DEBUG}}
+\DoxyCodeLine{00024\ \ \ \ \ \ \ \ \ \};}
+\DoxyCodeLine{00025\ }
+\DoxyCodeLine{00027\ \ \ \ \ \ \ \ \ \textcolor{keyword}{virtual}\ \doxymbox{\hyperlink{classec_1_1_component_a610d8a5de51e1a42e22f9eb471d01c9e}{\string~Component}}()\ \{}
+\DoxyCodeLine{00028\ \textcolor{preprocessor}{\#ifdef\ \_DEBUG}}
+\DoxyCodeLine{00029\ \ \ \ \ \ \ \ \ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}deleting\ base\ component"{}}\ <<\ std::endl;}
+\DoxyCodeLine{00030\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ \_DEBUG}}
+\DoxyCodeLine{00031\ \ \ \ \ \ \ \ \ \};}
+\DoxyCodeLine{00032\ }
+\DoxyCodeLine{00033\ \ \ \ \ \ \ \ \ \textcolor{keyword}{protected}:}
+\DoxyCodeLine{00034\ \ \ \ \ \ \ \ \ \ \ \ \ entity\_t\ \_entity;}
+\DoxyCodeLine{00035\ \ \ \ \ \ \ \ \ \ \ \ \ Iterator\ \_iterator;}
+\DoxyCodeLine{00036\ }
+\DoxyCodeLine{00037\ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00038\ }
+\DoxyCodeLine{00041\ \ \ \ \ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{classec_1_1_component_acd6dbc169b7c2c1de5384eb4d80dd746}{setContext}}(ec::entity\_t\ ent)}
+\DoxyCodeLine{00042\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00043\ \ \ \ \ \ \ \ \ \ \ \ \ \_entity\ =\ ent;}
+\DoxyCodeLine{00044\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00045\ }
+\DoxyCodeLine{00046\ \ \ \ \ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ initComponent()\ \{\}}
+\DoxyCodeLine{00047\ }
+\DoxyCodeLine{00048\ \ \ \ \ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ start()\ \{\}}
+\DoxyCodeLine{00049\ \ \ \ \ \};}
+\DoxyCodeLine{00050\ }
+\DoxyCodeLine{00051\ }
+\DoxyCodeLine{00053\ \ \ \ \ \textcolor{keyword}{class\ }\doxymbox{\hyperlink{classec_1_1_render_component}{RenderComponent}}\ \{}
+\DoxyCodeLine{00054\ \ \ \ \ \ \ \ \ \textcolor{keyword}{using\ }RenderIterator\ =\ std::vector<RenderComponent*>::iterator;}
+\DoxyCodeLine{00055\ \ \ \ \ \textcolor{keyword}{protected}:}
+\DoxyCodeLine{00056\ \ \ \ \ \ \ \ \ RenderIterator\ \_renderIterator;}
+\DoxyCodeLine{00057\ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00058\ \ \ \ \ \ \ \ \ \textcolor{keyword}{virtual}\ \doxymbox{\hyperlink{classec_1_1_render_component}{\string~RenderComponent}}()\ \{\}}
+\DoxyCodeLine{00059\ \ \ \ \ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ render()\ \textcolor{keyword}{const}\ =\ 0;}
+\DoxyCodeLine{00060\ \ \ \ \ \};}
+\DoxyCodeLine{00061\ }
+\DoxyCodeLine{00063\ \ \ \ \ \textcolor{keyword}{class\ }\doxymbox{\hyperlink{classec_1_1_update_component}{UpdateComponent}}\ \{}
+\DoxyCodeLine{00064\ \ \ \ \ \ \ \ \ \textcolor{keyword}{using\ }UpdateIterator\ =\ std::vector<UpdateComponent*>::iterator;}
+\DoxyCodeLine{00065\ \ \ \ \ \textcolor{keyword}{protected}:}
+\DoxyCodeLine{00066\ \ \ \ \ \ \ \ \ UpdateIterator\ \_updateIterator;}
+\DoxyCodeLine{00067\ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00068\ \ \ \ \ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ update()\ =\ \ 0;}
+\DoxyCodeLine{00069\ \ \ \ \ \ \ \ \ \textcolor{keyword}{inline}\ UpdateIterator\&\ getUpdateIterator()\ \{\ \textcolor{keywordflow}{return}\ \_updateIterator;\ \}\ \textcolor{comment}{//\ deberia\ haber\ aqui\ un\ assert}}
+\DoxyCodeLine{00070\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ setUpdateIterator(UpdateIterator\ it)\ \{\ \_updateIterator\ =\ it;\ \}}
+\DoxyCodeLine{00071\ \ \ \ \ \};}
+\DoxyCodeLine{00072\ \}}
+
+\end{DoxyCode}

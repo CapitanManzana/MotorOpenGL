@@ -16,14 +16,15 @@ namespace capiEngine::ui {
 	public:
 		Window(const char* name, ImGuiWindowFlags flags = ImGuiWindowFlags_NoCollapse)
 			: _name(name), _flags(flags) {}
+		virtual ~Window() {}
 
-		void render() const {
+		void render() {
 			ImGui::Begin(_name.c_str(), 0, _flags);
 			renderWindowContent();
 			ImGui::End();
 		}
 
 	protected:
-		virtual void renderWindowContent() const = 0;
+		virtual void renderWindowContent() = 0;
 	};
 }

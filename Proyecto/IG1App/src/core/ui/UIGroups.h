@@ -12,7 +12,6 @@ namespace capiEngine::ui {
 
 	template<typename T>
 	constexpr windowGroupID_t getWindowID = T::id;
-
 }
 
 #define WINDOW_ID(cId) constexpr static capiEngine::ui::windowGroupID_t id = cId;

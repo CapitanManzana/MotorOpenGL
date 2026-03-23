@@ -1,0 +1,34 @@
+\doxysection{Window.\+h}
+\hypertarget{_window_8h_source}{}\label{_window_8h_source}\index{C:/Users/manza/Desktop/UNIVERSIDAD/GitHub/MotorC++/Proyecto/IG1App/src/core/ui/Window.h@{C:/Users/manza/Desktop/UNIVERSIDAD/GitHub/MotorC++/Proyecto/IG1App/src/core/ui/Window.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#include\ <imgui.h>}}
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ <imgui\_impl\_glfw.h>}}
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ <imgui\_impl\_opengl3.h>}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ <core/ui/UIGroups.h>}}
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ <functional>}}
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ <string>}}
+\DoxyCodeLine{00008\ }
+\DoxyCodeLine{00009\ \textcolor{keyword}{namespace\ }capiEngine::ui\ \{}
+\DoxyCodeLine{00011\ \ \ \ \ \textcolor{keyword}{class\ }Window}
+\DoxyCodeLine{00012\ \ \ \ \ \{}
+\DoxyCodeLine{00013\ \ \ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00014\ \ \ \ \ \ \ \ \ std::string\ \_name;}
+\DoxyCodeLine{00015\ \ \ \ \ \ \ \ \ ImGuiWindowFlags\ \_flags;}
+\DoxyCodeLine{00016\ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00017\ \ \ \ \ \ \ \ \ Window(\textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ name,\ ImGuiWindowFlags\ flags\ =\ ImGuiWindowFlags\_NoCollapse)}
+\DoxyCodeLine{00018\ \ \ \ \ \ \ \ \ \ \ \ \ :\ \_name(name),\ \_flags(flags)\ \{\}}
+\DoxyCodeLine{00019\ }
+\DoxyCodeLine{00020\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ render()\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00021\ \ \ \ \ \ \ \ \ \ \ \ \ ImGui::Begin(\_name.c\_str(),\ 0,\ \_flags);}
+\DoxyCodeLine{00022\ \ \ \ \ \ \ \ \ \ \ \ \ renderWindowContent();}
+\DoxyCodeLine{00023\ \ \ \ \ \ \ \ \ \ \ \ \ ImGui::End();}
+\DoxyCodeLine{00024\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00025\ }
+\DoxyCodeLine{00026\ \ \ \ \ \textcolor{keyword}{protected}:}
+\DoxyCodeLine{00027\ \ \ \ \ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ renderWindowContent()\ \textcolor{keyword}{const}\ =\ 0;}
+\DoxyCodeLine{00028\ \ \ \ \ \};}
+\DoxyCodeLine{00029\ \}}
+
+\end{DoxyCode}

@@ -1,8 +1,10 @@
 <map id="C:/Users/manza/Desktop/UNIVERSIDAD/GitHub/MotorC++/Proyecto/IG1App/src" name="C:/Users/manza/Desktop/UNIVERSIDAD/GitHub/MotorC++/Proyecto/IG1App/src">
-<area shape="rect" id="node2" href="dir_e28c76814c9e4939ae21330db397ac66.html" title="core" alt="" coords="101,64,147,91"/>
-<area shape="rect" id="node3" href="dir_d9299e9f7ad8e7a9713783d3b33da973.html" title="glad" alt="" coords="171,64,216,91"/>
-<area shape="rect" id="node4" href="dir_945b415e389fafd75f34f9874defa344.html" title="managers" alt="" coords="240,64,318,91"/>
-<area shape="rect" id="node5" href="dir_64b8d3481d05c7c1ad75d23e53abe061.html" title="utils" alt="" coords="341,64,387,91"/>
-<area shape="rect" id="clust2" href="dir_6833837afe68773acab637ea4a1a76d9.html" alt="" coords="27,53,397,101"/>
-<area shape="rect" id="clust1" href="dir_6ce82f23e3335efb159b38157ffed961.html" title="IG1App" alt="" coords="16,16,408,112"/>
+<area shape="rect" id="node2" href="dir_f5d5110563e1768e06dc45f849340a34.html" title="component" alt="" coords="101,64,187,91"/>
+<area shape="rect" id="node3" href="dir_e28c76814c9e4939ae21330db397ac66.html" title="core" alt="" coords="210,64,256,91"/>
+<area shape="rect" id="node4" href="dir_ada86f277bfecae7b9c4545caeb77207.html" title="ec" alt="" coords="281,64,319,91"/>
+<area shape="rect" id="node5" href="dir_d9299e9f7ad8e7a9713783d3b33da973.html" title="glad" alt="" coords="343,64,388,91"/>
+<area shape="rect" id="node6" href="dir_945b415e389fafd75f34f9874defa344.html" title="managers" alt="" coords="412,64,490,91"/>
+<area shape="rect" id="node7" href="dir_64b8d3481d05c7c1ad75d23e53abe061.html" title="utils" alt="" coords="513,64,559,91"/>
+<area shape="rect" id="clust2" href="dir_6833837afe68773acab637ea4a1a76d9.html" alt="" coords="27,53,569,101"/>
+<area shape="rect" id="clust1" href="dir_6ce82f23e3335efb159b38157ffed961.html" title="IG1App" alt="" coords="16,16,580,112"/>
 </map>

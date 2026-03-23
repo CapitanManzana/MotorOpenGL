@@ -4,7 +4,7 @@
 #include "ec.h"
 #include <functional>
 #include <array>
-
+#include <utils/logger.h>
 
 class Transform;
 class Scene;
@@ -19,16 +19,12 @@ namespace ec
 		/// @brief Constructor
 		Component() : _entity(nullptr) {
 #ifdef _DEBUG
-			std::cout << "Creating base component" << std::endl;
+			LOG_INFO("Creating base component");
 #endif // _DEBUG
 		};
 
 		/// @brief Destructor
-		virtual ~Component() {
-#ifdef _DEBUG
-			std::cout << "deleting base component" << std::endl;
-#endif // _DEBUG
-		};
+		virtual ~Component() { };
 
 		protected:
 			entity_t _entity;
@@ -46,6 +42,7 @@ namespace ec
 		inline virtual void initComponent() {}
 
 		inline virtual void start() {}
+
 	};
 
 

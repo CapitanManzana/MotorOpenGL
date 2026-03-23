@@ -1,3 +1,3 @@
 <map id="Gráfico de jerarquía de clases" name="Gráfico de jerarquía de clases">
-<area shape="rect" id="Node000000" href="$class_resource_manager.html" title="Se encarga de la gesiton de recursos del proyecto, desde shaders hasta imagenes. Utiliza el patron Si..." alt="" coords="5,5,133,32"/>
+<area shape="rect" id="Node000000" href="$classec_1_1_component.html" title="Declaracion adelantada, para evitar dependencia circular." alt="" coords="5,5,116,32"/>
 </map>
