@@ -53,6 +53,8 @@ namespace cme {
 		/// @return El delta time
 		float deltaTime() { return _deltaTime; }
 
+		GLFWwindow* window() { return _window; }
+
 	private:
 		GLApplication() = default;
 

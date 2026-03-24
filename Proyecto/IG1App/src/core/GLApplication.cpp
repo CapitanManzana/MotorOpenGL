@@ -10,6 +10,7 @@
 
 #include <managers/ResourceManager.h>
 #include <managers/SceneManager.h>
+#include <managers/InputManager.h>
 #include <core/Scene.h>
 #include <core/Camera.h>
 #include <core/ui/UIManager.h>
@@ -30,6 +31,10 @@ namespace cme {
 
 		if (Logger::HasInstance()) {
 			Logger::Release();
+		}
+
+		if (InputManager::HasInstance()) {
+			InputManager::Release();
 		}
 
 		delete _interface;
@@ -84,6 +89,11 @@ namespace cme {
 	}
 
 	bool GLApplication::loadManagers() {
+		if (!Logger::Init()) {
+			LOG_ERROR("Error al inicializar el Logger");
+			return false;
+		}
+
 		if (!ResourceManager::Init()) {
 			LOG_ERROR("Error al inicializar el Resource Manager");
 			return false;
@@ -94,8 +104,8 @@ namespace cme {
 			return false;
 		}
 
-		if (!Logger::Init()) {
-			LOG_ERROR("Error al inicializar el Logger");
+		if (!InputManager::Init()) {
+			LOG_ERROR("Error al inicializar el Scene Manager");
 			return false;
 		}
 
@@ -126,7 +136,8 @@ namespace cme {
 
 		while (!glfwWindowShouldClose(_window))
 		{
-			processInput(_window, sceneM().activeScene()->getCamera());
+			//processInput(_window, sceneM().activeScene()->getCamera());
+			inpM().proccessInput();
 
 			glClearColor(0.3f, 0.3f, 0.31f, 1.0f);
 			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -180,8 +191,7 @@ namespace cme {
 			if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
 				cameraPos -= cameraSpeed * cameraFront;
 			if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
-				cameraPos -= glm::normalize(glm::cross(cameraFront, cameraUp)) *
-				cameraSpeed;
+				cameraPos -= glm::normalize(glm::cross(cameraFront, cameraUp)) * cameraSpeed;
 			if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
 				cameraPos += glm::normalize(glm::cross(cameraFront, cameraUp)) *
 				cameraSpeed;
