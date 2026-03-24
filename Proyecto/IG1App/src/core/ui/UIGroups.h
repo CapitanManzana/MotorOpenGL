@@ -14,4 +14,4 @@ namespace cme::ui {
 	constexpr windowGroupID_t getWindowID = T::id;
 }
 
-#define WINDOW_ID(cId) constexpr static cme::ui::windowGroupID_t id = cId;
+#define WINDOW_ID(cId) constexpr static ui::windowGroupID_t id = cId;

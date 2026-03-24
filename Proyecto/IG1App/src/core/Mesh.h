@@ -7,53 +7,54 @@
 #include <glad/glad.h>
 #include <core/mesh/MeshID.h>
 
-class Shader;
+namespace cme {
+	class Shader;
 
-/// @brief Clase abstracta que sirve como padre para crear todo tipo de mallas distintas
-class Mesh
-{
-protected:
-	Shader* _shader = nullptr;
+	/// @brief Clase abstracta que sirve como padre para crear todo tipo de mallas distintas
+	class Mesh
+	{
+	protected:
+		Shader* _shader = nullptr;
 
-	std::vector<glm::vec3> _vertices;
-	std::vector<glm::vec4> _vColor;
-	std::vector<glm::uvec3> _indices;
+		std::vector<glm::vec3> _vertices;
+		std::vector<glm::vec4> _vColor;
+		std::vector<glm::uvec3> _indices;
 
-	GLuint mPrimitive = GL_TRIANGLES;
+		GLuint mPrimitive = GL_TRIANGLES;
 
-	GLuint _VAO = 0;	// Vertex Array Object
-	GLuint _VBO = 0;	// Vertex Buffer Object
-	GLuint _CBO = 0;	// Color Buffer Object
-	GLuint _EBO = 0;	// Element Bueffer Object
+		GLuint _VAO = 0;	// Vertex Array Object
+		GLuint _VBO = 0;	// Vertex Buffer Object
+		GLuint _CBO = 0;	// Color Buffer Object
+		GLuint _EBO = 0;	// Element Bueffer Object
 
-	glm::mat4 _model = glm::mat4(1.0f); // La matriz de modelado del mesh, que guarda su posición rotacion y escala en el mundo
+		glm::mat4 _model = glm::mat4(1.0f); // La matriz de modelado del mesh, que guarda su posición rotacion y escala en el mundo
 
-	cme::meshID _id = cme::None;
-public:
-	/// @brief Constructor por defecto
-	Mesh() = default;
-	virtual ~Mesh();
+		meshID _id = None;
+	public:
+		/// @brief Constructor por defecto
+		Mesh() = default;
+		virtual ~Mesh();
 
-	/// @brief Genera el mesh colocando los vértices, colores, etc...
-	virtual void generateMesh() = 0;
-	/// @brief Renderiza el mesh
-	virtual void render() const;
+		/// @brief Genera el mesh colocando los vértices, colores, etc...
+		virtual void generateMesh() = 0;
+		/// @brief Renderiza el mesh
+		virtual void render() const;
 
-	/// @brief Cambia el shader que utiliza la mesh
-	/// @param shader El shader a poner
-	void setShader(Shader* shader) { _shader = shader; }
-	/// @brief Establece la matriz de modelado de la malla
-	/// @param model La nueva matriz
-	void setModelMatrix(glm::mat4 model) { _model = model; }
-	/// @brief La matriz de modelado del mesh, que guarda su posición rotacion y escala en el mundo
-	/// @return La matriz de modelado
-	glm::mat4 modelMatrix() { return _model; }
-	/// @brief El shader que esta usando la mesh
-	/// @return Un puntero al shader
-	Shader* shader() { return _shader; }
+		/// @brief Cambia el shader que utiliza la mesh
+		/// @param shader El shader a poner
+		void setShader(Shader* shader) { _shader = shader; }
+		/// @brief Establece la matriz de modelado de la malla
+		/// @param model La nueva matriz
+		void setModelMatrix(glm::mat4 model) { _model = model; }
+		/// @brief La matriz de modelado del mesh, que guarda su posición rotacion y escala en el mundo
+		/// @return La matriz de modelado
+		glm::mat4 modelMatrix() { return _model; }
+		/// @brief El shader que esta usando la mesh
+		/// @return Un puntero al shader
+		Shader* shader() { return _shader; }
 
-	cme::meshID id() { return _id; }
-protected:
-	void initBuffers();
-};
-
+		meshID id() { return _id; }
+	protected:
+		void initBuffers();
+	};
+}

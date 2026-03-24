@@ -8,144 +8,146 @@
 #include <core/mesh/QuadMesh.h>
 #include <core/mesh/CubeMesh.h>
 
-Scene::Scene(std::string name) : _name(name) {
-	_cam = new Camera();
-	createGrid();
-}
+namespace cme {
+	Scene::Scene(std::string name) : _name(name) {
+		_cam = new Camera();
+		createGrid();
+	}
 
-Scene::~Scene() {
+	Scene::~Scene() {
 
-	for (int i = 0; i < ec::ent::maxGroupLayer; i++) {
-		for (ec::Entity* gObj : _gameObjectsByGroup[i]) {
-			delete gObj;
+		for (int i = 0; i < ec::ent::maxGroupLayer; i++) {
+			for (ec::Entity* gObj : _gameObjectsByGroup[i]) {
+				delete gObj;
+			}
+		}
+
+		for (auto& go : _gizmos) {
+			delete go;
+		}
+
+		delete _cam;
+	}
+
+	void Scene::refresh() {
+		for (ec::groupID_t gId = 0; gId < ec::ent::maxGroupLayer; gId++) {
+			auto& grpEnts = _gameObjectsByGroup[gId];
+			grpEnts.erase(
+				std::remove_if(grpEnts.begin(), grpEnts.end(),
+					[](ec::entity_t e) {
+						if (e->isAlive()) {
+							return false;
+						}
+						else {
+							delete e;
+							return true;
+						}
+					}),
+				grpEnts.end());
 		}
 	}
 
-	for (auto& go : _gizmos) {
-		delete go;
-	}
+	void Scene::render() const {
+		for (int i = 0; i < ec::ent::maxGroupLayer; i++) {
+			for (ec::entity_t gObj : _gameObjectsByGroup[i]) {
+				if (gObj->active()) gObj->render();
+			}
+		}
 
-	delete _cam;
-}
-
-void Scene::refresh() {
-	for (ec::groupID_t gId = 0; gId < ec::ent::maxGroupLayer; gId++) {
-		auto& grpEnts = _gameObjectsByGroup[gId];
-		grpEnts.erase(
-			std::remove_if(grpEnts.begin(), grpEnts.end(),
-				[](ec::entity_t e) {
-					if (e->isAlive()) {
-						return false;
-					}
-					else {
-						delete e;
-						return true;
-					}
-				}),
-			grpEnts.end());
-	}
-}
-
-void Scene::render() const {
-	for (int i = 0; i < ec::ent::maxGroupLayer; i++) {
-		for (ec::entity_t gObj : _gameObjectsByGroup[i]) {
-			if (gObj->active()) gObj->render();
+		for (auto& go : _gizmos) {
+			go->render();
 		}
 	}
 
-	for (auto& go : _gizmos) {
-		go->render();
-	}
-}
-
-void Scene::update() {
-	for (int i = 0; i < ec::ent::maxGroupLayer; i++) {
-		for (ec::entity_t gObj : _gameObjectsByGroup[i]) {
-			if (gObj->active()) gObj->update();
+	void Scene::update() {
+		for (int i = 0; i < ec::ent::maxGroupLayer; i++) {
+			for (ec::entity_t gObj : _gameObjectsByGroup[i]) {
+				if (gObj->active()) gObj->update();
+			}
 		}
+	};
+
+	ec::entity_t Scene::addGameObject(Scene* scene, std::string name, ec::ent::groupID grID) {
+		ec::entity_t gObj = new ec::Entity(grID, scene, name);
+		_gameObjectsByGroup[grID].push_back(gObj);
+		return gObj;
 	}
-};
 
-ec::entity_t Scene::addGameObject(Scene* scene, std::string name, ec::ent::groupID grID) {
-	ec::entity_t gObj = new ec::Entity(grID, scene, name);
-	_gameObjectsByGroup[grID].push_back(gObj);
-	return gObj;
-}
+	ec::entity_t Scene::addGizmos() {
+		ec::entity_t gObj = new ec::Entity((ec::ent::groupID)0, this, "");
+		_gizmos.push_back(gObj);
+		return gObj;
+	}
 
-ec::entity_t Scene::addGizmos() {
-	ec::entity_t gObj = new ec::Entity((ec::ent::groupID)0, this, "");
-	_gizmos.push_back(gObj);
-	return gObj;
-}
+	void Scene::createGrid() {
+		Shader* gridShader = rscrM().getShader("grid");
+		// 2. Crear la entidad
+		ec::entity_t gridEntity = addGizmos();
 
-void Scene::createGrid() {
-	Shader* gridShader = rscrM().getShader("grid");
-	// 2. Crear la entidad
-	ec::entity_t gridEntity = addGizmos();
+		auto tr = gridEntity->addComponent<Transform>();
+		tr->setPosition(glm::vec3(0.0f, 0.0f, 0.0f));
+		tr->setScale(glm::vec3(500.0f, 500.0f, 1.0f)); // Un plano muy grande
+		tr->setRotation(glm::vec3(-90.0f, 0.0f, 0.0f)); // Rotarlo para que acueste en Y=0 (depende de tu QuadMesh)
 
-	auto tr = gridEntity->addComponent<Transform>();
-	tr->setPosition(glm::vec3(0.0f, 0.0f, 0.0f));
-	tr->setScale(glm::vec3(500.0f, 500.0f, 1.0f)); // Un plano muy grande
-	tr->setRotation(glm::vec3(-90.0f, 0.0f, 0.0f)); // Rotarlo para que acueste en Y=0 (depende de tu QuadMesh)
+		gridEntity->addComponent<MeshRenderer>(new QuadMesh(gridShader));
+	}
 
-	gridEntity->addComponent<MeshRenderer>(new QuadMesh(gridShader));
-}
+	void Scene::addCubeToScene() {
+		auto c = addGameObject(this, "Cube", ec::ent::None);
+		auto tr = c->addComponent<Transform>();
+		tr->setPosition(glm::vec3(0.0f, 0.0f, 0.0f));
+		tr->setScale(glm::vec3(1.0f, 1.0f, 1.0f));
+		tr->setRotation(glm::vec3(0.0f, 0.0f, 0.0f));
 
-void Scene::addCubeToScene() {
-	auto c =addGameObject(this, "Cube", ec::ent::None);
-	auto tr = c->addComponent<Transform>();
-	tr->setPosition(glm::vec3(0.0f, 0.0f, 0.0f));
-	tr->setScale(glm::vec3(1.0f, 1.0f, 1.0f));
-	tr->setRotation(glm::vec3(0.0f, 0.0f, 0.0f));
+		c->addComponent<MeshRenderer>(new CubeMesh(rscrM().getShader("default")));
+	}
 
-	c->addComponent<MeshRenderer>(new CubeMesh(rscrM().getShader("default")));
-}
+	// --------- SERIALIZACION ------------
 
-// --------- SERIALIZACION ------------
-
-void Scene::serialize(cme::JsonSerializer& s) const {
-	s.write("name", _name);
-	s.beginArray("entities_groups");
-	for (int i = 0; i < ec::ent::maxGroupLayer; i++) {
-		s.pushObjectToArray();
-		s.write("group", i);
-		s.beginArray("entities");
-		for (ec::entity_t gObj : _gameObjectsByGroup[i]) {
-			gObj->serialize(s);
+	void Scene::serialize(JsonSerializer& s) const {
+		s.write("name", _name);
+		s.beginArray("entities_groups");
+		for (int i = 0; i < ec::ent::maxGroupLayer; i++) {
+			s.pushObjectToArray();
+			s.write("group", i);
+			s.beginArray("entities");
+			for (ec::entity_t gObj : _gameObjectsByGroup[i]) {
+				gObj->serialize(s);
+			}
+			s.endScope(); // El del array de entidades
 		}
-		s.endScope(); // El del array de entidades
+
+		s.endScope(); // El array de grupos
 	}
 
-	s.endScope(); // El array de grupos
-}
+	void Scene::deserialize(JsonSerializer& s) {
+		_name = s.readString("name");
+		s.beginArray("entities_groups");
+		size_t numGroups = s.getArraySize();
 
-void Scene::deserialize(cme::JsonSerializer& s) {
-	_name = s.readString("name");
-	s.beginArray("entities_groups");
-	size_t numGroups = s.getArraySize();
-
-	if (numGroups >= ec::ent::maxGroupLayer) {
-		LOG_ERROR("Hay mas grupos de entidades de los permitidos en el archivo de escena a cargar");
-		return;
-	}
-
-	for (size_t i = 0; i < numGroups; i++) {
-		s.enterElement(i);
-		ec::groupID_t grpID = s.readInt("group");
-		s.beginArray("entities");
-
-		size_t numEntities = s.getArraySize();
-		for (size_t j = 0; j < numEntities; j++) {
-			s.enterElement(j);
-			std::string entityName = s.readString("name");
-			auto ent = addGameObject(this, entityName, (ec::ent::groupID)grpID);
-			ent->deserialize(s);
-
-			s.endScope(); // Salimos de la entidad j
+		if (numGroups >= ec::ent::maxGroupLayer) {
+			LOG_ERROR("Hay mas grupos de entidades de los permitidos en el archivo de escena a cargar");
+			return;
 		}
-		s.endScope(); // Salimos del array entities
-		s.endScope(); // Salimos del grupo 1
-	}
 
-	s.endScope();
+		for (size_t i = 0; i < numGroups; i++) {
+			s.enterElement(i);
+			ec::groupID_t grpID = s.readInt("group");
+			s.beginArray("entities");
+
+			size_t numEntities = s.getArraySize();
+			for (size_t j = 0; j < numEntities; j++) {
+				s.enterElement(j);
+				std::string entityName = s.readString("name");
+				auto ent = addGameObject(this, entityName, (ec::ent::groupID)grpID);
+				ent->deserialize(s);
+
+				s.endScope(); // Salimos de la entidad j
+			}
+			s.endScope(); // Salimos del array entities
+			s.endScope(); // Salimos del grupo 1
+		}
+
+		s.endScope();
+	}
 }

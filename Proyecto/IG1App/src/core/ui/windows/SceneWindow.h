@@ -8,7 +8,7 @@ namespace cme::ui {
 	private:
 		std::function<void(ec::entity_t)> _selectedEntCallback = nullptr;
 	public:
-		WINDOW_ID(cme::ui::windowGroupID::SCENE)
+		WINDOW_ID(ui::windowGroupID::SCENE)
 
 		SceneWindow(const char* name, ImGuiWindowFlags flags = ImGuiWindowFlags_NoCollapse) :
 			Window(name, flags) {

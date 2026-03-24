@@ -43,56 +43,58 @@
  *
  */
 
-template<typename T>
-class Singleton {
-protected:
-	Singleton() {
-	}
-
-public:
-
-	// Cannot copy objects of this type
-	Singleton<T>& operator=(const Singleton<T>& o) = delete;
-	Singleton(const Singleton<T>& o) = delete;
-
-	virtual ~Singleton() {
-	}
-
-	// Initialization of the Singleton object. Should be called at
-	// the beginning of the class.
-	//
-	template<typename ...Targs>
-	inline static bool Init(Targs &&...args) {
-		assert(!_instance);
-		T* tmp = new T();
-		if (tmp->init(std::forward<Targs>(args)...)) {
-			_instance = tmp;
-			return true; // all OK
+namespace cme {
+	template<typename T>
+	class Singleton {
+	protected:
+		Singleton() {
 		}
-		else { // Something went wrong
-			delete tmp;
-			return false;
+
+	public:
+
+		// Cannot copy objects of this type
+		Singleton<T>& operator=(const Singleton<T>& o) = delete;
+		Singleton(const Singleton<T>& o) = delete;
+
+		virtual ~Singleton() {
 		}
-	}
 
-	inline static T* Instance() {
-		assert(_instance != nullptr);
-		return _instance;
-	}
+		// Initialization of the Singleton object. Should be called at
+		// the beginning of the class.
+		//
+		template<typename ...Targs>
+		inline static bool Init(Targs &&...args) {
+			assert(!_instance);
+			T* tmp = new T();
+			if (tmp->init(std::forward<Targs>(args)...)) {
+				_instance = tmp;
+				return true; // all OK
+			}
+			else { // Something went wrong
+				delete tmp;
+				return false;
+			}
+		}
 
-	inline static bool HasInstance() {
-		return _instance != nullptr;
-	}
+		inline static T* Instance() {
+			assert(_instance != nullptr);
+			return _instance;
+		}
 
-	inline static void Release() {
-		assert(_instance);
-		delete _instance;
-		_instance = nullptr;
-	}
+		inline static bool HasInstance() {
+			return _instance != nullptr;
+		}
 
-private:
-	static T* _instance;
-};
+		inline static void Release() {
+			assert(_instance);
+			delete _instance;
+			_instance = nullptr;
+		}
 
-template<typename T> T* Singleton<T>::_instance = nullptr;
+	private:
+		static T* _instance;
+	};
 
+	template<typename T> T* Singleton<T>::_instance = nullptr;
+
+}

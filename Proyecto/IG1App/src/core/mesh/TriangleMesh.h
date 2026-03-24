@@ -1,15 +1,16 @@
 #pragma once
 #include <core/Mesh.h>
 
-class Shader;
+namespace cme {
+	class Shader;
 
-/// @brief Genera el mesh de un triangulo
-class TriangleMesh : public Mesh
-{
-public:
-	TriangleMesh();
-	TriangleMesh(Shader* shader);
+	/// @brief Genera el mesh de un triangulo
+	class TriangleMesh : public Mesh
+	{
+	public:
+		TriangleMesh();
+		TriangleMesh(Shader* shader);
 
-	void generateMesh() override;
-};
-
+		void generateMesh() override;
+	};
+}

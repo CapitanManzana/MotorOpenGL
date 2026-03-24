@@ -18,184 +18,187 @@
 #include <component/Transform.h>
 #include <component/MeshRenderer.h>
 
-GLApplication::~GLApplication() {
-	if (ResourceManager::HasInstance()) {
-		ResourceManager::Release();
-	}
-
-	if (SceneManager::HasInstance()) {
-		SceneManager::Release();
-	}
-
-	if (cme::Logger::HasInstance()) {
-		cme::Logger::Release();
-	}
-
-	delete _interface;
-	glfwDestroyWindow(_window);
-	glfwTerminate();
-}
-
-bool GLApplication::init() {
-	// inicializar GLFW
-	if (glfwInit() == GLFW_FALSE) {
-		return false;
-	}
-
-	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
-	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
-	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-
-	glfwWindowHint(GLFW_MAXIMIZED, GLFW_TRUE);
-	_window = glfwCreateWindow(_width, _height, "Capi Engine", NULL, NULL);
-	if (_window == NULL)
-	{
-		LOG_ERROR("Failed to create GLFW window");
-		return false;
-	}
-	int w = 0, h = 0;
-	glfwGetWindowSize(_window, &w, &h);
-	_width = w;
-	_height = h;
-
-	glfwMakeContextCurrent(_window);
-	// Inicializad GLAD que carga los punteros a las funciones
-	if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
-	{
-		LOG_ERROR("Failed to initialize GLAD");
-		return false;
-	}
-
-	// Init viewPort
-	glViewport(0, 0, _width, _height);
-	glfwSetFramebufferSizeCallback(_window, [](GLFWwindow* window, int width, int height) {
-		glViewport(0, 0, width, height);
-		gla()._width = width;
-		gla()._height = height;
-
-		sceneM().activeScene()->getCamera()->buildProjectionMat();
-		});
-	glfwSetCursorPosCallback(_window, mouseCallback);
-
-	if (!loadManagers()) return false;
-
-	return true;
-}
-
-bool GLApplication::loadManagers() {
-	if (!ResourceManager::Init()) {
-		LOG_ERROR("Error al inicializar el Resource Manager");
-		return false;
-	}
-
-	if (!SceneManager::Init()) {
-		LOG_ERROR("Error al inicializar el Scene Manager");
-		return false;
-	}
-
-	if (!cme::Logger::Init()) {
-		LOG_ERROR("Error al inicializar el Logger");
-		return false;
-	}
-
-	_interface = new cme::ui::UIManager();
-	if (!_interface->initCoreUI(_window)) {
-		LOG_ERROR("Error al inicializar la interfaz del motor");
-		return false;
-	}
-
-	// Registrar Componentes
-	cme::ComponentRegistry::registerComponent<Transform>("Transform");
-	cme::ComponentRegistry::registerComponent<MeshRenderer>("MeshRenderer");
-
-	// Registrar Callbacks interfaz
-	_interface->setCreateCubeCallback([]() {
-		sceneM().activeScene()->addCubeToScene();
-	});
-
-	return true;
-}
-
-void GLApplication::start() {
-	std::string name = "";
-	sceneM().loadScenes(name);
-
-	glEnable(GL_BLEND);
-	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-
-	while (!glfwWindowShouldClose(_window))
-	{
-		processInput(_window, sceneM().activeScene()->getCamera());
-
-		glClearColor(0.3f, 0.3f, 0.31f, 1.0f);
-		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-		glEnable(GL_DEPTH_TEST);
-
-		sceneM().update();
-
-		// Se hace bind y un bind para que se renderice en el FBO
-		_interface->bind();
-		sceneM().render();
-		_interface->unbind();
-
-		// Se renderiza la interfaz
-		_interface->render();
-
-		glfwSwapBuffers(_window);
-		glfwPollEvents();
-
-		float currentFrame = glfwGetTime();
-		_deltaTime = currentFrame - _lastFrame;
-		_lastFrame = currentFrame;
-	}
-}
-
-void GLApplication::processInput(GLFWwindow* window, Camera* cam)
-{
-	glm::vec3 cameraPos = cam->getPosition();
-	glm::vec3 cameraFront = cam->getCameraFront();
-	glm::vec3 cameraUp = cam->getCameraUp();
-
-	if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
-		glfwSetWindowShouldClose(window, true);
-
-	if (glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_RIGHT) == GLFW_PRESS) {
-		if (_glaState == GLA_MODE_NORMAL) {
-			cam->firstMove();
+namespace cme {
+	GLApplication::~GLApplication() {
+		if (ResourceManager::HasInstance()) {
+			ResourceManager::Release();
 		}
 
-		_glaState = GLA_MODE_MOVING;
+		if (SceneManager::HasInstance()) {
+			SceneManager::Release();
+		}
 
-		glfwSetInputMode(_window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+		if (Logger::HasInstance()) {
+			Logger::Release();
+		}
 
-		float cameraSpeed = 0.0f;
-		if (glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS)
-			cameraSpeed = 5.0f * _deltaTime;
-		if (glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_RELEASE)
-			cameraSpeed = 2.5f * _deltaTime;
-
-		if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
-			cameraPos += cameraSpeed * cameraFront;
-		if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
-			cameraPos -= cameraSpeed * cameraFront;
-		if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
-			cameraPos -= glm::normalize(glm::cross(cameraFront, cameraUp)) *
-			cameraSpeed;
-		if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
-			cameraPos += glm::normalize(glm::cross(cameraFront, cameraUp)) *
-			cameraSpeed;
+		delete _interface;
+		glfwDestroyWindow(_window);
+		glfwTerminate();
 	}
 
-	if (glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_RIGHT) == GLFW_RELEASE) {
-		_glaState = GLA_MODE_NORMAL;
-		glfwSetInputMode(_window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
+	bool GLApplication::init() {
+		// inicializar GLFW
+		if (glfwInit() == GLFW_FALSE) {
+			return false;
+		}
+
+		glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+		glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
+		glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+
+		glfwWindowHint(GLFW_MAXIMIZED, GLFW_TRUE);
+		_window = glfwCreateWindow(_width, _height, "Capi Engine", NULL, NULL);
+		if (_window == NULL)
+		{
+			LOG_ERROR("Failed to create GLFW window");
+			return false;
+		}
+		int w = 0, h = 0;
+		glfwGetWindowSize(_window, &w, &h);
+		_width = w;
+		_height = h;
+
+		glfwMakeContextCurrent(_window);
+		// Inicializad GLAD que carga los punteros a las funciones
+		if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
+		{
+			LOG_ERROR("Failed to initialize GLAD");
+			return false;
+		}
+
+		// Init viewPort
+		glViewport(0, 0, _width, _height);
+		glfwSetFramebufferSizeCallback(_window, [](GLFWwindow* window, int width, int height) {
+			glViewport(0, 0, width, height);
+			gla()._width = width;
+			gla()._height = height;
+
+			sceneM().activeScene()->getCamera()->buildProjectionMat();
+			});
+		glfwSetCursorPosCallback(_window, mouseCallback);
+
+		if (!loadManagers()) return false;
+
+		return true;
 	}
 
-	cam->setPosition(cameraPos);
-}
+	bool GLApplication::loadManagers() {
+		if (!ResourceManager::Init()) {
+			LOG_ERROR("Error al inicializar el Resource Manager");
+			return false;
+		}
 
-void GLApplication::mouseCallback(GLFWwindow* window, double xpos, double ypos) {
-	if (gla()._glaState == GLA_MODE_MOVING) {
-		sceneM().activeScene()->getCamera()->setCameraLookAt(xpos, ypos);
+		if (!SceneManager::Init()) {
+			LOG_ERROR("Error al inicializar el Scene Manager");
+			return false;
+		}
+
+		if (!Logger::Init()) {
+			LOG_ERROR("Error al inicializar el Logger");
+			return false;
+		}
+
+		_interface = new ui::UIManager();
+		if (!_interface->initCoreUI(_window)) {
+			LOG_ERROR("Error al inicializar la interfaz del motor");
+			return false;
+		}
+
+		// Registrar Componentes
+		ComponentRegistry::registerComponent<Transform>("Transform");
+		ComponentRegistry::registerComponent<MeshRenderer>("MeshRenderer");
+
+		// Registrar Callbacks interfaz
+		_interface->setCreateCubeCallback([]() {
+			sceneM().activeScene()->addCubeToScene();
+			});
+
+		return true;
 	}
+
+	void GLApplication::start() {
+		std::string name = "";
+		sceneM().loadScenes(name);
+
+		glEnable(GL_BLEND);
+		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+		while (!glfwWindowShouldClose(_window))
+		{
+			processInput(_window, sceneM().activeScene()->getCamera());
+
+			glClearColor(0.3f, 0.3f, 0.31f, 1.0f);
+			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+			glEnable(GL_DEPTH_TEST);
+
+			sceneM().update();
+
+			// Se hace bind y un bind para que se renderice en el FBO
+			_interface->bind();
+			sceneM().render();
+			_interface->unbind();
+
+			// Se renderiza la interfaz
+			_interface->render();
+
+			glfwSwapBuffers(_window);
+			glfwPollEvents();
+
+			float currentFrame = glfwGetTime();
+			_deltaTime = currentFrame - _lastFrame;
+			_lastFrame = currentFrame;
+		}
+	}
+
+	void GLApplication::processInput(GLFWwindow* window, Camera* cam)
+	{
+		glm::vec3 cameraPos = cam->getPosition();
+		glm::vec3 cameraFront = cam->getCameraFront();
+		glm::vec3 cameraUp = cam->getCameraUp();
+
+		if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
+			glfwSetWindowShouldClose(window, true);
+
+		if (glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_RIGHT) == GLFW_PRESS) {
+			if (_glaState == GLA_MODE_NORMAL) {
+				cam->firstMove();
+			}
+
+			_glaState = GLA_MODE_MOVING;
+
+			glfwSetInputMode(_window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+
+			float cameraSpeed = 0.0f;
+			if (glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS)
+				cameraSpeed = 5.0f * _deltaTime;
+			if (glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_RELEASE)
+				cameraSpeed = 2.5f * _deltaTime;
+
+			if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
+				cameraPos += cameraSpeed * cameraFront;
+			if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
+				cameraPos -= cameraSpeed * cameraFront;
+			if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
+				cameraPos -= glm::normalize(glm::cross(cameraFront, cameraUp)) *
+				cameraSpeed;
+			if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
+				cameraPos += glm::normalize(glm::cross(cameraFront, cameraUp)) *
+				cameraSpeed;
+		}
+
+		if (glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_RIGHT) == GLFW_RELEASE) {
+			_glaState = GLA_MODE_NORMAL;
+			glfwSetInputMode(_window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
+		}
+
+		cam->setPosition(cameraPos);
+	}
+
+	void GLApplication::mouseCallback(GLFWwindow* window, double xpos, double ypos) {
+		if (gla()._glaState == GLA_MODE_MOVING) {
+			sceneM().activeScene()->getCamera()->setCameraLookAt(xpos, ypos);
+		}
+	}
+
 }

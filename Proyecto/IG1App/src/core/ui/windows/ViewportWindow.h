@@ -12,7 +12,7 @@ namespace cme::ui {
 		float _width = 800;
 		float _height = 600;
 	public:
-		WINDOW_ID(cme::ui::windowGroupID::VIEWPORT)
+		WINDOW_ID(ui::windowGroupID::VIEWPORT)
 		ViewportWindow(const char* name) : Window(name) {
 			initFBO();
 		}

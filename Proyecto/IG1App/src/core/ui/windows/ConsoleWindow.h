@@ -9,7 +9,7 @@ namespace cme::ui {
 	private:
 		std::vector<std::string> _logs;
 	public:
-		WINDOW_ID(cme::ui::windowGroupID::CONSOLE)
+		WINDOW_ID(ui::windowGroupID::CONSOLE)
 		ConsoleWindow(const char* name, ImGuiWindowFlags flags = ImGuiWindowFlags_NoCollapse) :
 			Window(name, flags) { }
 

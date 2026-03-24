@@ -35,7 +35,7 @@ namespace cme::ui {
 			auto window = std::make_unique<T>(std::forward<Args>(args)...);
 			T* ptr = window.get();
 
-			constexpr cme::ui::windowGroupID id = static_cast<cme::ui::windowGroupID>(cme::ui::getWindowID<T>);
+			constexpr ui::windowGroupID id = static_cast<ui::windowGroupID>(ui::getWindowID<T>);
 			_windows[id] = std::move(window);
 			return ptr;
 		}

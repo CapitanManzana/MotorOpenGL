@@ -14,12 +14,12 @@ int main(int argc, char* argv[]) {
 	std::filesystem::path carpetaExe = rutaExe.parent_path();
 	std::filesystem::current_path(carpetaExe);
 
-	if (!GLApplication::Init()) {
+	if (!cme::GLApplication::Init()) {
 		LOG_ERROR("No se pudo inicializar GLApplication");
 		return -1;
 	}
-	gla().start();
-	gla().Release();
+	cme::gla().start();
+	cme::gla().Release();
 
 	return 0;
 }

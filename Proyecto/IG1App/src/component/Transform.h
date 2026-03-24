@@ -5,34 +5,36 @@
 #include <glm/vec4.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
-class Transform : public ec::Component {
-private:
-	glm::vec3 _position = glm::vec3(0.0f);
-	glm::vec3 _scale = glm::vec3(1.0f);
-	glm::vec3 _rotation = glm::vec3(0.0f);
+namespace cme {
+    class Transform : public ec::Component {
+    private:
+        glm::vec3 _position = glm::vec3(0.0f);
+        glm::vec3 _scale = glm::vec3(1.0f);
+        glm::vec3 _rotation = glm::vec3(0.0f);
 
-public:
-    __CMPID_DECL__(ec::comp::TRANSFORM)
+    public:
+        __CMPID_DECL__(ec::comp::TRANSFORM)
 
-    /// @brief Devuelve la matriz de modelado de la entidad
-    /// @return Un glm::mat4
-    glm::mat4 getModelMatrix() const;
+            /// @brief Devuelve la matriz de modelado de la entidad
+            /// @return Un glm::mat4
+            glm::mat4 getModelMatrix() const;
 
-    // --- GETTERS ---
-    const glm::vec3& getPosition() const { return _position; }
-    glm::vec3& getPosition() { return _position; }
-    const glm::vec3& getScale() const { return _scale; }
-    glm::vec3& getScale() { return _scale; }
-    const glm::vec3& getRotation() const { return _rotation; }
-    glm::vec3& getRotation() { return _rotation; }
+        // --- GETTERS ---
+        const glm::vec3& getPosition() const { return _position; }
+        glm::vec3& getPosition() { return _position; }
+        const glm::vec3& getScale() const { return _scale; }
+        glm::vec3& getScale() { return _scale; }
+        const glm::vec3& getRotation() const { return _rotation; }
+        glm::vec3& getRotation() { return _rotation; }
 
-    // --- SETTERS ---
-    void setPosition(const glm::vec3& pos) { _position = pos; }
-    void setScale(const glm::vec3& scale) { _scale = scale; }
-    void setRotation(const glm::vec3& rot) { _rotation = rot; }
+        // --- SETTERS ---
+        void setPosition(const glm::vec3& pos) { _position = pos; }
+        void setScale(const glm::vec3& scale) { _scale = scale; }
+        void setRotation(const glm::vec3& rot) { _rotation = rot; }
 
-    void serialize(cme::JsonSerializer& s) const override;
-    void deserialize(cme::JsonSerializer& s) override;
+        void serialize(JsonSerializer& s) const override;
+        void deserialize(JsonSerializer& s) override;
 
-    std::string serializeID() const override { return "Transform"; }
-};
+        std::string serializeID() const override { return "Transform"; }
+    };
+}

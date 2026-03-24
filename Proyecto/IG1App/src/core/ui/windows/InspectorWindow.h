@@ -8,7 +8,7 @@ namespace cme::ui {
 	private:
 		ec::entity_t _selectedEnt = nullptr;
 	public:
-		WINDOW_ID(cme::ui::windowGroupID::INSPECTOR)
+		WINDOW_ID(ui::windowGroupID::INSPECTOR)
 		InspectorWindow(const char* name, ImGuiWindowFlags flags = ImGuiWindowFlags_NoCollapse) :
 			Window(name, flags) {}
 

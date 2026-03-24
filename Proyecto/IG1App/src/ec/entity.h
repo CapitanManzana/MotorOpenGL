@@ -7,18 +7,21 @@
 #include <iostream>
 #endif // _DEBUG
 
-#include <core/serialize/Serializable.h>
 #include <core/serialize/JsonSerializer.h>
+#include <core/serialize/Serializable.h>
 #include <core/register/ComponentRegistry.h>
 
-class Scene;
+namespace cme {
+	class Scene;
+}
+
 namespace ec
 {
 	class EntityManager;
 	class Entity : public cme::Serializable
 	{
 	public:
-		Entity(ent::groupID groupID, Scene* _scenePtr, std::string name)
+		Entity(ent::groupID groupID, cme::Scene* _scenePtr, std::string name)
 			: _alive(true)
 			, _active(true)
 			, _groupID(ec::ent::None)
@@ -56,7 +59,7 @@ namespace ec
 	private:
 		bool _alive;
 		bool _active;
-		Scene* _scene;
+		cme::Scene* _scene;
 
 		std::string _name;
 	public:
@@ -250,7 +253,7 @@ namespace ec
 		/// @param el id al que 
 		inline void setGroup(ec::ent::groupID id) { _groupID = id; }
 
-		inline Scene* getScene() {
+		inline cme::Scene* getScene() {
 			return _scene;
 		}
 

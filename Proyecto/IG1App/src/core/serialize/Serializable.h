@@ -6,7 +6,7 @@ namespace cme {
     /// @brief Interfaz que hace que los objetos se vuelvan serializables
     class Serializable {
     public:
-        virtual void serialize(cme::JsonSerializer& s) const = 0;
-        virtual void deserialize(cme::JsonSerializer& s) = 0;
+        virtual void serialize(JsonSerializer& s) const = 0;
+        virtual void deserialize(JsonSerializer& s) = 0;
     };
 }
