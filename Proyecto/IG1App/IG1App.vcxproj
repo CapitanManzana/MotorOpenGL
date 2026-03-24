@@ -119,6 +119,7 @@ if %errorlevel% leq 7 exit 0</Command>
     <ClCompile Include="src\core\ui\windows\ViewportWindow.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\core\serialize\Inspectable.h" />
     <ClInclude Include="src\managers\InputManager.h" />
     <ClInclude Include="src\core\register\ComponentRegistry.h" />
     <ClInclude Include="src\core\mesh\MeshID.h" />

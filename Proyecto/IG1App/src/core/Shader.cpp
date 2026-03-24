@@ -11,6 +11,7 @@
 
 namespace cme {
 	Shader::Shader(ShaderCreationData ctx) {
+		_name = ctx.name;
 		std::string vertShaderSource = getShaderSource(ctx.vertexShaderPath);
 		std::string fragShaderSource = getShaderSource(ctx.fragmentShaderPath);
 

@@ -1,0 +1,74 @@
+{
+    "name": "",
+    "entities_groups": [
+        {
+            "group": 1,
+            "entities": [
+                {
+                    "name": "Cube Red",
+                    "components": [
+                        {
+                            "type": "Transform",
+                            "data": {
+                                "position": [
+                                    0.0,
+                                    0.0,
+                                    0.0
+                                ],
+                                "scale": [
+                                    1.0,
+                                    1.0,
+                                    1.0
+                                ],
+                                "rotation": [
+                                    0.0,
+                                    0.0,
+                                    0.0
+                                ]
+                            }
+                        },
+                        {
+                            "type": "MeshRenderer",
+                            "data": {
+                                "mesh": 3,
+                                "shader": "outline"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "Cube",
+                    "components": [
+                        {
+                            "type": "Transform",
+                            "data": {
+                                "position": [
+                                    2.0,
+                                    2.0,
+                                    1.0
+                                ],
+                                "scale": [
+                                    1.0,
+                                    2.0,
+                                    1.0
+                                ],
+                                "rotation": [
+                                    0.0,
+                                    0.0,
+                                    0.0
+                                ]
+                            }
+                        },
+                        {
+                            "type": "MeshRenderer",
+                            "data": {
+                                "mesh": 2,
+                                "shader": "default"
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

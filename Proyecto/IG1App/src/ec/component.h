@@ -6,6 +6,7 @@
 #include <array>
 #include <utils/logger.h>
 #include <core/serialize/Serializable.h>
+#include <core/serialize/Inspectable.h>
 
 class Transform;
 class Scene;
@@ -15,7 +16,7 @@ namespace ec
 	class UpdateComponent;
 
 	/// @brief Declaracion adelantada, para evitar dependencia circular
-	class Component : public cme::Serializable
+	class Component : public cme::Serializable, public cme::Inspectable
 	{
 		using Iterator = std::vector<Component*>::iterator;
 	public:
@@ -49,8 +50,10 @@ namespace ec
 		virtual ec::cmpID_t getID() const = 0;
 		virtual std::string serializeID() const = 0;
 
-		virtual void serialize(cme::JsonSerializer& s) const = 0;
-		virtual void deserialize(cme::JsonSerializer& s) = 0;
+		virtual void drawOnInspector() override {}
+
+		virtual void serialize(cme::JsonSerializer& s) const override {}
+		virtual void deserialize(cme::JsonSerializer& s) override {}
 
 		virtual RenderComponent* getAsRender() { return nullptr; }
 		virtual UpdateComponent* getAsUpdate() { return nullptr; }

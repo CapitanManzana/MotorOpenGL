@@ -19,6 +19,8 @@ namespace cme {
 
 		buildProjectionMat();
 		_view = glm::lookAt(_cameraPos, _cameraPos + _cameraDirection, _cameraUp);
+
+		_movementSpeed = SLOW_SPEED;
 	}
 
 	void Camera::buildProjectionMat() {

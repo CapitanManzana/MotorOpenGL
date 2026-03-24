@@ -12,6 +12,9 @@ namespace cme {
 		Mesh* _mesh = nullptr;
 		Camera* _cam = nullptr;
 		Transform* _tr = nullptr;
+
+		std::string _shaderName;
+		std::string _currentMeshType;
 	public:
 		__CMPID_DECL__(ec::comp::MESH_RENDERER)
 
@@ -22,6 +25,8 @@ namespace cme {
 		void render() const override;
 
 		void initComponent() override;
+
+		void drawOnInspector() override;
 
 		void serialize(JsonSerializer& s) const override;
 		void deserialize(JsonSerializer& s) override;

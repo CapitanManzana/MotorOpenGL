@@ -15,9 +15,9 @@ namespace cme {
     public:
         __CMPID_DECL__(ec::comp::TRANSFORM)
 
-            /// @brief Devuelve la matriz de modelado de la entidad
-            /// @return Un glm::mat4
-            glm::mat4 getModelMatrix() const;
+        /// @brief Devuelve la matriz de modelado de la entidad
+        /// @return Un glm::mat4
+        glm::mat4 getModelMatrix() const;
 
         // --- GETTERS ---
         const glm::vec3& getPosition() const { return _position; }
@@ -31,6 +31,8 @@ namespace cme {
         void setPosition(const glm::vec3& pos) { _position = pos; }
         void setScale(const glm::vec3& scale) { _scale = scale; }
         void setRotation(const glm::vec3& rot) { _rotation = rot; }
+
+        void drawOnInspector() override;
 
         void serialize(JsonSerializer& s) const override;
         void deserialize(JsonSerializer& s) override;

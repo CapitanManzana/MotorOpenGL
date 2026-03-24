@@ -11,8 +11,11 @@ namespace cme {
 	{
 		friend class Singleton<ResourceManager>;
 	private:
+		// ----- SHADERS -----
 		const char* SHADERS_PATH = "assets/shaders";
 		std::unordered_map<std::string, std::unique_ptr<Shader>> _shadersMap;
+		std::vector<Shader*> _shaders;
+		std::vector<std::string> _shaderNames;
 
 	public:
 		virtual ~ResourceManager();
@@ -30,6 +33,9 @@ namespace cme {
 		/// @brief Busca todos los shaders cargados y los almacena en un vector
 		/// @return Un vector de shaders
 		std::vector<Shader*> getAllShaders();
+		/// @brief Busca el nombre de todos los shader cargados
+		/// @return Un vector de nombres
+		std::vector<std::string> getAllShaderNames();
 
 	private:
 		ResourceManager() = default;

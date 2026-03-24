@@ -10,10 +10,12 @@ namespace cme {
 		std::string vertexShaderPath;
 		/// @brief Path del archivo del shader de fragmentos. Este archivo contiene el código fuente del shader de fragmentos que se utilizará para procesar los fragmentos (píxeles) en la aplicación.
 		std::string fragmentShaderPath;
+		/// @brief El nombre del archivo
+		std::string name;
 
 		ShaderCreationData() = default;
-		ShaderCreationData(const std::string& vertexPath, const std::string& fragmentPath)
-			: vertexShaderPath(vertexPath), fragmentShaderPath(fragmentPath) {
+		ShaderCreationData(const std::string& vertexPath, const std::string& fragmentPath, const std::string& name)
+			: vertexShaderPath(vertexPath), fragmentShaderPath(fragmentPath), name(name) {
 		}
 
 		/// @brief Comprueba si la data es valida, que ninguno de los 2 paths esten vacios
@@ -32,6 +34,7 @@ namespace cme {
 	private:
 		// El programa con los shaders cargados
 		GLuint _shaderProgram;
+		std::string _name;
 	public:
 		/// @brief Constructor que carga el shader desde un archivo. El shader se compila y se prepara para su uso. 
 		/// @param ctx Contexto para la cración de los shaders
@@ -56,6 +59,8 @@ namespace cme {
 		void setUniform(const std::string& name, const glm::vec3& value);
 		void setUniform(const std::string& name, const glm::vec4& value);
 		void setUniform(const std::string& name, const glm::mat4& value);
+
+		std::string getName() { return _name; }
 	private:
 		/// @brief Se encarga de leer el código fuente del shader desde un archivo. Dado un path al archivo del shader, esta función lee su contenido y devuelve el código fuente como una cadena de caracteres.
 		/// @param shaderPath Donde se encuentra el archivo del shader que se desea cargar.

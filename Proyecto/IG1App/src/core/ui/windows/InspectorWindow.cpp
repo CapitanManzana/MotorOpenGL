@@ -23,46 +23,12 @@ namespace cme::ui {
 				name = buffer;
 			}
 
+			ImGui::Dummy(ImVec2(0, 10));
 			ImGui::SeparatorText("Components");
-			if (ImGui::CollapsingHeader("Transform")) {
-				glm::vec3& pos = _selectedEnt->getComponent<Transform>()->getPosition();
-				glm::vec3& scl = _selectedEnt->getComponent<Transform>()->getScale();
-				glm::vec3& rot = _selectedEnt->getComponent<Transform>()->getRotation();
-
-				if (ImGui::BeginTable("TransformTable", 4)) {
-					ImGui::TableNextRow();
-
-					ImGui::TableSetColumnIndex(0);
-					ImGui::Text("Position");
-
-					ImGui::TableSetColumnIndex(1);
-					ImGui::InputFloat("X###px", &pos.x, 1, 10);
-					ImGui::TableSetColumnIndex(2);
-					ImGui::InputFloat("Y###py", &pos.y, 1, 10);
-					ImGui::TableSetColumnIndex(3);
-					ImGui::InputFloat("Z###pz", &pos.z, 1, 10);
-
-					ImGui::TableNextRow();
-					ImGui::TableSetColumnIndex(0);
-					ImGui::Text("Scale");
-					ImGui::TableSetColumnIndex(1);
-					ImGui::InputFloat("X###sx", &scl.x, 1, 10);
-					ImGui::TableSetColumnIndex(2);
-					ImGui::InputFloat("Y###sy", &scl.y, 1, 10);
-					ImGui::TableSetColumnIndex(3);
-					ImGui::InputFloat("Z###sz", &scl.z, 1, 10);
-
-					ImGui::TableNextRow();
-					ImGui::TableSetColumnIndex(0);
-					ImGui::Text("Rotation");
-					ImGui::TableSetColumnIndex(1);
-					ImGui::InputFloat("X###rx", &rot.x, 1, 10);
-					ImGui::TableSetColumnIndex(2);
-					ImGui::InputFloat("Y###ry", &rot.y, 1, 10);
-					ImGui::TableSetColumnIndex(3);
-					ImGui::InputFloat("Z###rz", &rot.z, 1, 10);
-
-					ImGui::EndTable();
+			for (auto& comp : _selectedEnt->_components) {
+				if (comp) {
+					comp->drawOnInspector();
+					ImGui::Dummy(ImVec2(0, 5));
 				}
 			}
 		}

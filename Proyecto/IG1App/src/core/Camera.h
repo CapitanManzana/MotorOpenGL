@@ -40,7 +40,12 @@ namespace cme {
 		float _lastY = 0.0f;
 
 		bool _firstMove = true; // Si es la primera vez que se mueve para que no se mueva muy brusco pone el offset del raton a 0
+
+		float _movementSpeed;
 	public:
+		const float SLOW_SPEED = 2.5f;
+		const float FAST_SPEED = 5.0f;
+
 		Camera();
 
 		/// @brief Manda a la GPU las matrices de proyeccion y vista
@@ -82,6 +87,9 @@ namespace cme {
 
 		/// @brief Establece que que es la primera vez que se mueve la camara
 		void firstMove() { _firstMove = true; }
+
+		float movementSpeed() { return _movementSpeed; }
+		void setMovementSpeed(float speed) { _movementSpeed = speed; }
 
 	private:
 		/// @brief Manda a la gpu la matriz de proyeccion

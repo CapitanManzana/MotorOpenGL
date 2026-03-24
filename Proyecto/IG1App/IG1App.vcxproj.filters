@@ -73,5 +73,6 @@
     <ClInclude Include="src\utils\FileExplorer.h" />
     <ClInclude Include="src\core\register\ComponentRegistry.h" />
     <ClInclude Include="src\managers\InputManager.h" />
+    <ClInclude Include="src\core\serialize\Inspectable.h" />
   </ItemGroup>
 </Project>

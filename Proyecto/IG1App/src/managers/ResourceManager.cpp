@@ -23,6 +23,7 @@ namespace cme {
                 std::string extension = archivo.path().extension().string(); // ej: ".vert"
                 std::string baseName = archivo.path().stem().string();     // ej: "basico"
                 std::string fullPath = archivo.path().string();          // ej: "assets/shaders/basico.vert"
+                foundShaders[baseName].name = baseName;
 
                 // 2. Clasificamos el archivo según su extensión
                 if (extension == ".vert") {
@@ -43,6 +44,8 @@ namespace cme {
                 LOG_INFO("Shader cargado correctamente: " << name);
 
                 _shadersMap[name] = std::make_unique<Shader>(shaderData);
+                _shaders.push_back(_shadersMap[name].get());
+                _shaderNames.push_back(name);
             }
             else {
                 LOG_WARN("Shader incompleto" << name << ".Falta el.vert o el.frag.\n");
@@ -63,11 +66,10 @@ namespace cme {
     }
 
     std::vector<Shader*> ResourceManager::getAllShaders() {
-        std::vector<Shader*> out;
-        for (const auto& par : _shadersMap) {
-            if (par.second) out.push_back(par.second.get());
-        }
+        return _shaders;
+    }
 
-        return out;
+    std::vector<std::string> ResourceManager::getAllShaderNames() {
+        return _shaderNames;
     }
 }

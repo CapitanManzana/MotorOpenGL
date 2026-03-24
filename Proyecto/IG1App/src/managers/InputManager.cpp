@@ -31,53 +31,70 @@ namespace cme {
 		addStateChanger(toMoving);
 		addStateChanger(toNormal);
 
-		float speed = 2.5f;
 		std::vector<int> key = { GLFW_KEY_W };
-		Shortcut cameraMoveW(key, [speed]() {
+		Shortcut cameraMoveW(key, []() {
 			Camera* cam = sceneM().activeScene()->getCamera();
 			glm::vec3 cameraPos = cam->getPosition();
 			glm::vec3 cameraFront = cam->getCameraFront();
 
-			cameraPos += speed * cameraFront * gla().deltaTime();
+			cameraPos += cam->movementSpeed() * cameraFront * gla().deltaTime();
 			cam->setPosition(cameraPos);
 		}, CME_STATE_VIEWPORT_MOVING);
 
 		key = { GLFW_KEY_S };
-		Shortcut cameraMoveS(key, [speed]() {
+		Shortcut cameraMoveS(key, []() {
 			Camera* cam = sceneM().activeScene()->getCamera();
 			glm::vec3 cameraPos = cam->getPosition();
 			glm::vec3 cameraFront = cam->getCameraFront();
 
-			cameraPos -= speed * cameraFront * gla().deltaTime();
+			cameraPos -= cam->movementSpeed() * cameraFront * gla().deltaTime();
 			cam->setPosition(cameraPos);
 		}, CME_STATE_VIEWPORT_MOVING);
 
 		key = { GLFW_KEY_A };
-		Shortcut cameraMoveA(key, [speed]() {
+		Shortcut cameraMoveA(key, []() {
 			Camera* cam = sceneM().activeScene()->getCamera();
 			glm::vec3 cameraPos = cam->getPosition();
 			glm::vec3 cameraFront = cam->getCameraFront();
 			glm::vec3 cameraUp = cam->getCameraUp();
 
-			cameraPos -= glm::normalize(glm::cross(cameraFront, cameraUp)) * speed * gla().deltaTime();
+			cameraPos -= glm::normalize(glm::cross(cameraFront, cameraUp)) * cam->movementSpeed() * gla().deltaTime();
 			cam->setPosition(cameraPos);
 			}, CME_STATE_VIEWPORT_MOVING);
 
 		key = { GLFW_KEY_D };
-		Shortcut cameraMoveD(key, [speed]() {
+		Shortcut cameraMoveD(key, []() {
 			Camera* cam = sceneM().activeScene()->getCamera();
 			glm::vec3 cameraPos = cam->getPosition();
 			glm::vec3 cameraFront = cam->getCameraFront();
 			glm::vec3 cameraUp = cam->getCameraUp();
 
-			cameraPos += glm::normalize(glm::cross(cameraFront, cameraUp)) * speed * gla().deltaTime();
+			cameraPos += glm::normalize(glm::cross(cameraFront, cameraUp)) * cam->movementSpeed() * gla().deltaTime();
 			cam->setPosition(cameraPos);
 			}, CME_STATE_VIEWPORT_MOVING);
+
+		key = { GLFW_KEY_LEFT_SHIFT };
+		Shortcut fastMove(key, []() {
+			Camera* cam = sceneM().activeScene()->getCamera();
+			float movspeed = cam->movementSpeed();
+			movspeed = cam->FAST_SPEED;
+			cam->setMovementSpeed(movspeed);
+			}, CME_STATE_VIEWPORT_MOVING);
+
+		key = { GLFW_KEY_LEFT_SHIFT };
+		Shortcut normalMove(key, []() {
+			Camera* cam = sceneM().activeScene()->getCamera();
+			float movspeed = cam->movementSpeed();
+			movspeed = cam->SLOW_SPEED;
+			cam->setMovementSpeed(movspeed);
+			}, CME_STATE_VIEWPORT_MOVING, GLFW_RELEASE);
 
 		addShortcut(cameraMoveW);
 		addShortcut(cameraMoveS);
 		addShortcut(cameraMoveA);
 		addShortcut(cameraMoveD);
+		addShortcut(fastMove);
+		addShortcut(normalMove);
 	}
 
 	InputManager::~InputManager() {
