@@ -47,7 +47,7 @@ bool ResourceManager::init() {
             LOG_WARN("Shader incompleto" << name << ".Falta el.vert o el.frag.\n");
         }
     }
-
+    
     return true;
 }
 
