@@ -14,8 +14,9 @@ namespace cme {
 
 		void update();
 		void render() const;
+		void start();
 
-		void loadScenes(std::string& path);
+		void loadScene(std::string& path);
 		void saveActiveScene(std::string& path) const;
 
 		/// @brief Devuelve la escena activa

@@ -24,7 +24,7 @@ namespace cme::ui {
 		auto hierarchy = addWindow<SceneWindow>("Scene");
 		auto console = addWindow<ConsoleWindow>("Console");
 
-		hierarchy->setCallback([inspector](ec::entity_t e) {
+		hierarchy->setCallback([inspector](std::weak_ptr<ec::Entity> e) {
 			inspector->changeDisplayEntity(e);
 		});
 
@@ -132,10 +132,10 @@ namespace cme::ui {
 					sceneM().saveActiveScene(path);
 				}
 
-				if (ImGui::MenuItem("Open Scene", "Ctrl+O")) {
+				if (ImGui::MenuItem("Load Scene", "Ctrl+L")) {
 					FileExplorer fe;
 					std::string path = fe.fileDialog(FileDialogMode::Open);
-					sceneM().loadScenes(path);
+					sceneM().loadScene(path);
 				}
 				ImGui::EndMenu();
 			}

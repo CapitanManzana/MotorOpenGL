@@ -1,17 +1,49 @@
 {
-    "name": "",
+    "name": "Default",
     "entities_groups": [
         {
             "group": 1,
             "entities": [
                 {
-                    "name": "Cube Red",
+                    "name": "Cube",
                     "components": [
                         {
                             "type": "Transform",
                             "data": {
                                 "position": [
-                                    3.0,
+                                    0.0,
+                                    0.0,
+                                    0.0
+                                ],
+                                "scale": [
+                                    1.0,
+                                    1.0,
+                                    1.0
+                                ],
+                                "rotation": [
+                                    0.0,
+                                    0.0,
+                                    0.0
+                                ]
+                            }
+                        },
+                        {
+                            "type": "MeshRenderer",
+                            "data": {
+                                "mesh": 3,
+                                "shader": "default"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "Cube2",
+                    "components": [
+                        {
+                            "type": "Transform",
+                            "data": {
+                                "position": [
+                                    0.0,
                                     2.0,
                                     0.0
                                 ],
@@ -31,39 +63,7 @@
                             "type": "MeshRenderer",
                             "data": {
                                 "mesh": 3,
-                                "shader": ""
-                            }
-                        }
-                    ]
-                },
-                {
-                    "name": "Cube",
-                    "components": [
-                        {
-                            "type": "Transform",
-                            "data": {
-                                "position": [
-                                    0.0,
-                                    3.0,
-                                    1.0
-                                ],
-                                "scale": [
-                                    1.0,
-                                    2.0,
-                                    1.0
-                                ],
-                                "rotation": [
-                                    0.0,
-                                    0.0,
-                                    0.0
-                                ]
-                            }
-                        },
-                        {
-                            "type": "MeshRenderer",
-                            "data": {
-                                "mesh": 2,
-                                "shader": ""
+                                "shader": "grid"
                             }
                         }
                     ]

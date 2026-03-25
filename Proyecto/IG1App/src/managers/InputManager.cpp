@@ -8,6 +8,7 @@
 #include <managers/SceneManager.h>
 #include <core/Scene.h>
 #include <core/Camera.h>
+#include <utils/FileExplorer.h>
 
 namespace cme {
 	InputManager::InputManager() {
@@ -31,6 +32,71 @@ namespace cme {
 		addStateChanger(toMoving);
 		addStateChanger(toNormal);
 
+		createShortcuts();
+	}
+
+	InputManager::~InputManager() {
+		_shortcuts.clear();
+		_stateChangers.clear();
+	}
+
+	bool Shortcut::isPressed(int currState) {
+		bool pressedKeys = true;
+		int i = 0;
+		while (pressedKeys && i < keys.size()) {
+			pressedKeys = glfwGetKey(gla().window(), keys[i]) == eventTrigger;
+			i++;
+		}
+
+		return currState == state && pressedKeys;
+	}
+
+	void InputManager::proccessInput() {
+		for (auto& sc : _stateChangers) {
+			if (sc.condition()) {
+				if (_currentState != sc.state)
+					sc.call();
+
+				_currentState = sc.state;
+			}
+		}
+
+		for (auto& s : _shortcuts) {
+			if (s.isPressed(_currentState)) {
+				s.callback();
+			}
+		}
+	}
+
+	bool InputManager::init() {
+		return true;
+	}
+
+	void InputManager::mouseCallback(GLFWwindow* window, double xpos, double ypos) {
+		if (inpM()._currentState == CME_STATE_VIEWPORT_MOVING) {
+			sceneM().activeScene()->getCamera()->setCameraLookAt(xpos, ypos);
+		}
+	}
+
+	void InputManager::createShortcuts() {
+		// ----- ATAJOS VENTANA MOTOR -----
+		std::vector<int> saveFileKeys = { GLFW_KEY_LEFT_CONTROL, GLFW_KEY_S };
+		Shortcut saveFile(saveFileKeys, []() {
+			FileExplorer f;
+			std::string path = f.fileDialog(FileDialogMode::Save);
+			if (path != "") sceneM().saveActiveScene(path);
+		}, CME_STATE_NORMAL);
+		addShortcut(saveFile);
+
+		std::vector<int> loadFileKeys = { GLFW_KEY_LEFT_CONTROL, GLFW_KEY_L };
+		Shortcut loadFile(loadFileKeys, []() {
+			FileExplorer f;
+			std::string path = f.fileDialog(FileDialogMode::Open);
+			if (path != "") sceneM().loadScene(path);
+			}, CME_STATE_NORMAL);
+		addShortcut(loadFile);
+
+		// ----- MOVIMIENTO DEL VIEWPORT -----
 		std::vector<int> key = { GLFW_KEY_W };
 		Shortcut cameraMoveW(key, []() {
 			Camera* cam = sceneM().activeScene()->getCamera();
@@ -39,7 +105,7 @@ namespace cme {
 
 			cameraPos += cam->movementSpeed() * cameraFront * gla().deltaTime();
 			cam->setPosition(cameraPos);
-		}, CME_STATE_VIEWPORT_MOVING);
+			}, CME_STATE_VIEWPORT_MOVING);
 
 		key = { GLFW_KEY_S };
 		Shortcut cameraMoveS(key, []() {
@@ -49,7 +115,7 @@ namespace cme {
 
 			cameraPos -= cam->movementSpeed() * cameraFront * gla().deltaTime();
 			cam->setPosition(cameraPos);
-		}, CME_STATE_VIEWPORT_MOVING);
+			}, CME_STATE_VIEWPORT_MOVING);
 
 		key = { GLFW_KEY_A };
 		Shortcut cameraMoveA(key, []() {
@@ -95,48 +161,5 @@ namespace cme {
 		addShortcut(cameraMoveD);
 		addShortcut(fastMove);
 		addShortcut(normalMove);
-	}
-
-	InputManager::~InputManager() {
-		_shortcuts.clear();
-		_stateChangers.clear();
-	}
-
-	bool Shortcut::isPressed(int currState) {
-		bool pressedKeys = true;
-		int i = 0;
-		while (pressedKeys && i < keys.size()) {
-			pressedKeys = glfwGetKey(gla().window(), keys[i]) == eventTrigger;
-			i++;
-		}
-
-		return currState == state && pressedKeys;
-	}
-
-	void InputManager::proccessInput() {
-		for (auto& sc : _stateChangers) {
-			if (sc.condition()) {
-				if (_currentState != sc.state)
-					sc.call();
-
-				_currentState = sc.state;
-			}
-		}
-
-		for (auto& s : _shortcuts) {
-			if (s.isPressed(_currentState)) {
-				s.callback();
-			}
-		}
-	}
-
-	bool InputManager::init() {
-		return true;
-	}
-
-	void InputManager::mouseCallback(GLFWwindow* window, double xpos, double ypos) {
-		if (inpM()._currentState == CME_STATE_VIEWPORT_MOVING) {
-			sceneM().activeScene()->getCamera()->setCameraLookAt(xpos, ypos);
-		}
 	}
 }

@@ -28,17 +28,19 @@ namespace cme {
 	}
 
 	void MeshRenderer::initComponent() {
-		_cam = _entity->getScene()->getCamera();
-		_tr = _entity->getComponent<Transform>();
+		if (auto entitySp = _entity.lock()) {
+			_cam = entitySp->getScene()->getCamera();
+			_tr = entitySp->getComponent<Transform>();
 
-		assert(_tr != nullptr);
+			assert(_tr != nullptr);
 
-		if (_mesh) {
-			int meshID = _mesh->id();
-			if (meshID >= 0 && meshID < MESH_T_NAMES.size()) _currentMeshType = MESH_T_NAMES[meshID];
-			else LOG_ERROR(std::format("El id del mesh no es valido. Entidad: {} | ID: ", _entity->name(), meshID));
+			if (_mesh) {
+				int meshID = _mesh->id();
+				if (meshID >= 0 && meshID < MESH_T_NAMES.size()) _currentMeshType = MESH_T_NAMES[meshID];
+				else LOG_ERROR(std::format("El id del mesh no es valido. Entidad: {} | ID: ", entitySp->name(), meshID));
 
-			_shaderName = _mesh->shader()->getName();
+				_shaderName = _mesh->shader()->getName();
+			}
 		}
 	}
 
@@ -65,74 +67,78 @@ namespace cme {
 			return;
 		}
 
-		if (meshID >= 0 && meshID < MESH_T_NAMES.size()) _currentMeshType = MESH_T_NAMES[meshID];
-		else LOG_ERROR(std::format("El id del mesh no es valido. Entidad: {} | ID: {}", _entity->name(), meshID));
+		if (auto entitySp = _entity.lock()) {
+			if (meshID >= 0 && meshID < MESH_T_NAMES.size()) _currentMeshType = MESH_T_NAMES[meshID];
+			else LOG_ERROR(std::format("El id del mesh no es valido. Entidad: {} | ID: {}", entitySp->name(), meshID));
+		}
 	}
 
 	void MeshRenderer::drawOnInspector() {
-		if (ImGui::CollapsingHeader("Mesh Renderer")) {
-			if (ImGui::BeginTable("MeshRendTable", 2)) {
-				ImGui::TableNextRow();
+		if (auto entitySp = _entity.lock()) {
+			if (ImGui::CollapsingHeader("Mesh Renderer")) {
+				if (ImGui::BeginTable("MeshRendTable", 2)) {
+					ImGui::TableNextRow();
 
-				ImGui::TableSetColumnIndex(0);
-				ImGui::Text("Mesh Type");
-				ImGui::TableSetColumnIndex(1);
+					ImGui::TableSetColumnIndex(0);
+					ImGui::Text("Mesh Type");
+					ImGui::TableSetColumnIndex(1);
 
-				if (ImGui::BeginCombo("##combo", _currentMeshType.c_str())) {
-					for (auto& opcion : MESH_T_NAMES) {
-						bool isSelected = _currentMeshType == opcion;
-						if (ImGui::Selectable(opcion, isSelected)) {
-							_currentMeshType = opcion;
+					if (ImGui::BeginCombo("##combo", _currentMeshType.c_str())) {
+						for (auto& opcion : MESH_T_NAMES) {
+							bool isSelected = _currentMeshType == opcion;
+							if (ImGui::Selectable(opcion, isSelected)) {
+								_currentMeshType = opcion;
 
-							delete _mesh;
-							if (_currentMeshType == MESH_T_NAMES[1]) {
-								_mesh = new TriangleMesh(rscrM().getShader(_shaderName));
+								delete _mesh;
+								if (_currentMeshType == MESH_T_NAMES[1]) {
+									_mesh = new TriangleMesh(rscrM().getShader(_shaderName));
+								}
+								else if (_currentMeshType == MESH_T_NAMES[2]) {
+									_mesh = new QuadMesh(rscrM().getShader(_shaderName));
+								}
+								else if (_currentMeshType == MESH_T_NAMES[3]) {
+									_mesh = new CubeMesh(rscrM().getShader(_shaderName));
+								}
+								else {
+									_mesh = nullptr;
+								}
 							}
-							else if (_currentMeshType == MESH_T_NAMES[2]) {
-								_mesh = new QuadMesh(rscrM().getShader(_shaderName));
-							}
-							else if (_currentMeshType == MESH_T_NAMES[3]) {
-								_mesh = new CubeMesh(rscrM().getShader(_shaderName));
-							}
-							else {
-								_mesh = nullptr;
+							if (isSelected && ImGui::IsWindowAppearing()) {
+								ImGui::SetItemDefaultFocus();
 							}
 						}
-						if (isSelected && ImGui::IsWindowAppearing()) {
-							ImGui::SetItemDefaultFocus();
-						}
+						ImGui::EndCombo();
 					}
-					ImGui::EndCombo();
-				}
 
-				ImGui::TableNextRow();
+					ImGui::TableNextRow();
 
-				ImGui::TableSetColumnIndex(0);
-				ImGui::Text("Shader");
-				ImGui::TableSetColumnIndex(1);
+					ImGui::TableSetColumnIndex(0);
+					ImGui::Text("Shader");
+					ImGui::TableSetColumnIndex(1);
 
-				if (ImGui::BeginCombo("##comboShader", _shaderName.c_str())) {
-					for (auto& opcion : rscrM().getAllShaderNames()) {
-						bool isSelected = _shaderName == opcion;
-						if (ImGui::Selectable(opcion.c_str(), isSelected)) {
-							_shaderName = opcion;
-							Shader* shader = rscrM().getShader(opcion);
-							if (shader) {
-								if (_mesh) _mesh->setShader(shader);
+					if (ImGui::BeginCombo("##comboShader", _shaderName.c_str())) {
+						for (auto& opcion : rscrM().getAllShaderNames()) {
+							bool isSelected = _shaderName == opcion;
+							if (ImGui::Selectable(opcion.c_str(), isSelected)) {
 								_shaderName = opcion;
+								Shader* shader = rscrM().getShader(opcion);
+								if (shader) {
+									if (_mesh) _mesh->setShader(shader);
+									_shaderName = opcion;
+								}
+								else {
+									LOG_WARN(std::format("EL shader seleccionado para el mesh renderer es inexistente. Entity: {} | Shader: {}", entitySp->name(), opcion));
+								}
 							}
-							else {
-								LOG_WARN(std::format("EL shader seleccionado para el mesh renderer es inexistente. Entity: {} | Shader: {}", _entity->name(), opcion));
+							if (isSelected && ImGui::IsWindowAppearing()) {
+								ImGui::SetItemDefaultFocus();
 							}
 						}
-						if (isSelected && ImGui::IsWindowAppearing()) {
-							ImGui::SetItemDefaultFocus();
-						}
+						ImGui::EndCombo();
 					}
-					ImGui::EndCombo();
-				}
 
-				ImGui::EndTable();
+					ImGui::EndTable();
+				}
 			}
 		}
 	}

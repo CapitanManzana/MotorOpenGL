@@ -129,8 +129,7 @@ namespace cme {
 	}
 
 	void GLApplication::start() {
-		std::string name = "";
-		sceneM().loadScenes(name);
+		sceneM().start();
 
 		glEnable(GL_BLEND);
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);

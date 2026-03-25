@@ -15,17 +15,6 @@ namespace cme {
 	}
 
 	Scene::~Scene() {
-
-		for (int i = 0; i < ec::ent::maxGroupLayer; i++) {
-			for (ec::Entity* gObj : _gameObjectsByGroup[i]) {
-				delete gObj;
-			}
-		}
-
-		for (auto& go : _gizmos) {
-			delete go;
-		}
-
 		delete _cam;
 	}
 
@@ -39,7 +28,7 @@ namespace cme {
 							return false;
 						}
 						else {
-							delete e;
+							e.reset();
 							return true;
 						}
 					}),
@@ -49,8 +38,8 @@ namespace cme {
 
 	void Scene::render() const {
 		for (int i = 0; i < ec::ent::maxGroupLayer; i++) {
-			for (ec::entity_t gObj : _gameObjectsByGroup[i]) {
-				if (gObj->active()) gObj->render();
+			for (auto& gObj : _gameObjectsByGroup[i]) {
+				if (gObj && gObj->active()) gObj->render();
 			}
 		}
 
@@ -61,22 +50,22 @@ namespace cme {
 
 	void Scene::update() {
 		for (int i = 0; i < ec::ent::maxGroupLayer; i++) {
-			for (ec::entity_t gObj : _gameObjectsByGroup[i]) {
+			for (auto& gObj : _gameObjectsByGroup[i]) {
 				if (gObj->active()) gObj->update();
 			}
 		}
 	};
 
-	ec::entity_t Scene::addGameObject(Scene* scene, std::string name, ec::ent::groupID grID) {
-		ec::entity_t gObj = new ec::Entity(grID, scene, name);
-		_gameObjectsByGroup[grID].push_back(gObj);
-		return gObj;
+	std::shared_ptr<ec::Entity> Scene::addGameObject(Scene* scene, std::string name, ec::ent::groupID grID) {
+		auto shPtr = std::make_shared<ec::Entity>(grID, scene, name);
+		_gameObjectsByGroup[grID].push_back(shPtr);
+		return shPtr;
 	}
 
 	ec::entity_t Scene::addGizmos() {
-		ec::entity_t gObj = new ec::Entity((ec::ent::groupID)0, this, "");
-		_gizmos.push_back(gObj);
-		return gObj;
+		auto shPtr = std::make_shared<ec::Entity>((ec::ent::groupID)0, this, "");
+		_gizmos.push_back(shPtr);
+		return shPtr;
 	}
 
 	void Scene::createGrid() {
@@ -111,7 +100,7 @@ namespace cme {
 			s.pushObjectToArray();
 			s.write("group", i);
 			s.beginArray("entities");
-			for (ec::entity_t gObj : _gameObjectsByGroup[i]) {
+			for (auto& gObj : _gameObjectsByGroup[i]) {
 				gObj->serialize(s);
 			}
 			s.endScope(); // El del array de entidades

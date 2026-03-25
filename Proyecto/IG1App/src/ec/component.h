@@ -22,7 +22,7 @@ namespace ec
 	public:
 
 		/// @brief Constructor
-		Component() : _entity(nullptr) {
+		Component() {
 #ifdef _DEBUG
 			LOG_INFO("Creating base component");
 #endif // _DEBUG
@@ -32,14 +32,14 @@ namespace ec
 		virtual ~Component() { };
 
 		protected:
-			entity_t _entity;
+			std::weak_ptr<ec::Entity> _entity;
 			Iterator _iterator;
 
 	public:
 
 		/// @brief Hacer saber al componente quien le controla
 		/// @param ent La entidad que la controla
-		inline void setContext(ec::entity_t ent)
+		inline void setContext(std::weak_ptr<ec::Entity> ent)
 		{
 			_entity = ent;
 		}

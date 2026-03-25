@@ -1,5 +1,6 @@
 #pragma once
 #include <cstdint> // wtf
+#include <memory>
 #define _CMPS_LIST_ TRANSFORM, MESH_RENDERER, NUM_COMPONENTS
 #define _GRPS_LIST_ TRANSPARENT, NUM_GROUP
 
@@ -7,7 +8,7 @@ namespace ec
 {
 	class Entity;
 	class Component;
-	using entity_t = Entity*;
+	using entity_t = std::shared_ptr<Entity>;
 
 	// Para ahorrar, no hay tantos componentes
 	using cmpID_t = uint8_t;

@@ -6,7 +6,7 @@ namespace cme::ui {
 	class InspectorWindow : public Window
 	{
 	private:
-		ec::entity_t _selectedEnt = nullptr;
+		std::weak_ptr<ec::Entity> _selectedEnt;
 	public:
 		WINDOW_ID(ui::windowGroupID::INSPECTOR)
 		InspectorWindow(const char* name, ImGuiWindowFlags flags = ImGuiWindowFlags_NoCollapse) :
@@ -14,7 +14,7 @@ namespace cme::ui {
 
 		/// @brief Cambia el foco de la ventana a la entidad que se le pasa
 		/// @param entity La entidad
-		void changeDisplayEntity(ec::entity_t entity) { _selectedEnt = entity; }
+		void changeDisplayEntity(std::weak_ptr<ec::Entity> entity) { _selectedEnt = entity; }
 
 	protected:
 		virtual void renderWindowContent() override;

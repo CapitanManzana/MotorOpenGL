@@ -10,27 +10,30 @@
 
 namespace cme::ui {
 	void InspectorWindow::renderWindowContent() {
-		if (_selectedEnt) {
+		if (auto entitySp = _selectedEnt.lock()) {
 			ImGui::SeparatorText("GameObject");
 
-			ImGui::Checkbox("Active", &_selectedEnt->active());
+			ImGui::Checkbox("Active", &entitySp->active());
 			ImGui::SameLine(0, 10);
 
 			char buffer[256] = "";
-			strncpy_s(buffer, sizeof(buffer), _selectedEnt->name().c_str(), _TRUNCATE);
+			strncpy_s(buffer, sizeof(buffer), entitySp->name().c_str(), _TRUNCATE);
 			if (ImGui::InputText("##Name", buffer, sizeof(buffer))) {
-				auto& name = _selectedEnt->name();
+				auto& name = entitySp->name();
 				name = buffer;
 			}
 
 			ImGui::Dummy(ImVec2(0, 10));
 			ImGui::SeparatorText("Components");
-			for (auto& comp : _selectedEnt->_components) {
+			for (auto& comp : entitySp->_components) {
 				if (comp) {
 					comp->drawOnInspector();
 					ImGui::Dummy(ImVec2(0, 5));
 				}
 			}
+		}
+		else {
+			_selectedEnt.reset();
 		}
 
 		ImGui::Dummy(ImVec2(0, 30));
@@ -38,9 +41,6 @@ namespace cme::ui {
 		Camera* cam = sceneM().activeScene()->getCamera();
 		ImGui::Text("Delta Time: %.3f", gla().deltaTime());
 		ImGui::Text("FPS: %.1f", 1.0f / gla().deltaTime());
-
-		if (_selectedEnt) ImGui::Text("Entidad Seleccionada: %s", _selectedEnt->name().c_str());
-		else ImGui::Text("Entidad Seleccionada: NONE");
 
 		glm::vec3 pos = cam->getPosition();
 		float pitch = cam->getPitch();

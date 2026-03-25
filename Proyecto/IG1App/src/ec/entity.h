@@ -18,7 +18,7 @@ namespace cme {
 namespace ec
 {
 	class EntityManager;
-	class Entity : public cme::Serializable
+	class Entity : public cme::Serializable, public std::enable_shared_from_this<Entity>
 	{
 	public:
 		Entity(ent::groupID groupID, cme::Scene* _scenePtr, std::string name)
@@ -166,7 +166,7 @@ namespace ec
 
 
 			// Asignar el owner del componente
-			component->setContext(this);
+			component->setContext(shared_from_this());
 
 			// Inicializar el componente
 			component->initComponent();
@@ -195,7 +195,7 @@ namespace ec
 				u->setUpdateIterator(std::prev(_updateComponents.end()));
 			}
 
-			component->setContext(this);
+			component->setContext(shared_from_this());
 			component->initComponent();
 		}
 

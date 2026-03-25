@@ -5,6 +5,7 @@
 #include <ec/ec.h>
 #include <core/serialize/Serializable.h>
 #include <string>
+#include <memory>
 
 namespace cme {
 	class Camera;
@@ -45,7 +46,7 @@ namespace cme {
 
 		/// @brief permite añadir objetos a la escena
 		/// @param grID Grupo al que añadir al objeto creado
-		ec::entity_t addGameObject(Scene* scene, std::string name, ec::ent::groupID grID = ec::ent::None);
+		std::shared_ptr<ec::Entity> addGameObject(Scene* scene, std::string name, ec::ent::groupID grID = ec::ent::None);
 		ec::entity_t addGizmos();
 
 		const std::array<std::vector<ec::entity_t>, ec::ent::maxGroupLayer>& getSceneObjects() { return _gameObjectsByGroup; }

@@ -28,7 +28,11 @@ namespace cme {
 		_currentScene->render();
 	}
 
-	void SceneManager::loadScenes(std::string& path) {
+	void SceneManager::start() {
+		_currentScene = new Scene("Default");
+	}
+
+	void SceneManager::loadScene(std::string& path) {
 		JsonSerializer serializer;
 		serializer.load(path);
 		if (_currentScene) delete _currentScene;
