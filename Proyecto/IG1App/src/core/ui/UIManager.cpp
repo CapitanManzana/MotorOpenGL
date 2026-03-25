@@ -18,19 +18,6 @@
 namespace cme::ui {
 	UIManager::UIManager() {
 		_windows.resize(windowGroupID::NUM_GROUP);
-
-		auto inspector = addWindow<InspectorWindow>("Inspector");
-		addWindow<ViewportWindow>("Viewport");
-		auto hierarchy = addWindow<SceneWindow>("Scene");
-		auto console = addWindow<ConsoleWindow>("Console");
-
-		hierarchy->setCallback([inspector](std::weak_ptr<ec::Entity> e) {
-			inspector->changeDisplayEntity(e);
-		});
-
-		logger().setCallback([console](const std::string& msg) {
-			console->addLog(msg);
-		});
 	}
 
 	UIManager::~UIManager() {
@@ -42,6 +29,19 @@ namespace cme::ui {
 
 	bool UIManager::initCoreUI(GLFWwindow* window) {
 		if (!initImgui(window)) return false;
+
+		auto inspector = addWindow<InspectorWindow>("Inspector");
+		addWindow<ViewportWindow>("Viewport");
+		auto hierarchy = addWindow<SceneWindow>("Scene");
+		auto console = addWindow<ConsoleWindow>("Console");
+
+		hierarchy->setCallback([inspector](std::weak_ptr<ec::Entity> e) {
+			inspector->changeDisplayEntity(e);
+			});
+
+		logger().setCallback([console](const std::string& msg) {
+			console->addLog(msg);
+			});
 
 		return true;
 	}
@@ -81,6 +81,13 @@ namespace cme::ui {
 		if (viewport.get()) {
 			ViewportWindow& vp = static_cast<ViewportWindow&>(*viewport);
 			vp.unbindFBO();
+		}
+	}
+
+	void UIManager::start() {
+		if (auto& viewport = _windows[windowGroupID::VIEWPORT]) {
+			ViewportWindow& vp = static_cast<ViewportWindow&>(*viewport);
+			vp.initialResize();
 		}
 	}
 

@@ -20,6 +20,7 @@ namespace cme::ui {
 		bool initCoreUI(GLFWwindow* window);
 
 		void render() const;
+		void start();
 
 		void bind() const;
 		void unbind() const;

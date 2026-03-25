@@ -4,6 +4,7 @@
 #include <managers/SceneManager.h>
 #include <core/Scene.h>
 #include <core/Camera.h>
+#include <managers/InputManager.h>
 
 namespace cme::ui {
     ViewportWindow::ViewportWindow(const char* name) : Window(name) {
@@ -55,9 +56,10 @@ namespace cme::ui {
             const_cast<ViewportWindow*>(this)->resizeFBO(size.x, size.y);
         }
 
+        inpM().setViewportHovered(ImGui::IsWindowHovered());
+
         // Mostrar la textura
         ImGui::Image((ImTextureID)(intptr_t)_texture, size, ImVec2(0, 1), ImVec2(1, 0));
-        //                                                     ↑ flip UV vertical, OpenGL y ImGui tienen Y invertida
     }
 
     void ViewportWindow::resizeFBO(float w, float h) {
@@ -69,5 +71,10 @@ namespace cme::ui {
         glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, w, h, 0, GL_RGB, GL_UNSIGNED_BYTE, nullptr);
         glBindRenderbuffer(GL_RENDERBUFFER, _rbo);
         glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, w, h);
+    }
+
+    void ViewportWindow::initialResize() {
+        _width = 0;
+        _height = 0;
     }
 }

@@ -12,8 +12,8 @@
 
 namespace cme {
 	InputManager::InputManager() {
-		StateChanger toMoving([]() {
-			return glfwGetMouseButton(gla().window(), GLFW_MOUSE_BUTTON_RIGHT) == GLFW_PRESS;
+		StateChanger toMoving([this]() {
+			return this->_isViewportHovered && glfwGetMouseButton(gla().window(), GLFW_MOUSE_BUTTON_RIGHT) == GLFW_PRESS;
 		}, 
 		CME_STATE_VIEWPORT_MOVING, 
 		[]() {
@@ -28,6 +28,10 @@ namespace cme {
 		[]() {
 			glfwSetInputMode(gla().window(), GLFW_CURSOR, GLFW_CURSOR_NORMAL);
 		});
+
+		/*MouseEvent selectObjInViewPortr([this]() {
+			this->_isViewportHovered&& glfwGetMouseButton(gla().window(), GLFW_MOUSE_BUTTON_LEFT) == GLFW_PRESS;
+		}, []());*/
 
 		addStateChanger(toMoving);
 		addStateChanger(toNormal);

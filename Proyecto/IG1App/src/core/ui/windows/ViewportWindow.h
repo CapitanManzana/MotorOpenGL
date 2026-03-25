@@ -17,6 +17,7 @@ namespace cme::ui {
 
 		~ViewportWindow();
 
+		void initialResize();
 		/// @brief Le dice a opengl que active el FBO, se tiene que llamar al principio
 		void bindFBO() const;
 		/// @brief Desactiva el FBO

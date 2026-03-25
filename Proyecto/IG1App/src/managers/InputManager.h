@@ -31,6 +31,15 @@ namespace cme {
 		bool isPressed(int currState);
 	};
 
+	struct  MouseEvent {
+		std::function<bool()> condition;			// Condicion a ocurrir
+		std::function<void(float,float)> call;		// Callback con las coordenadas del raton
+
+		MouseEvent(std::function<bool()> condition, std::function<void(float, float)> call) :
+			condition(condition), call(call) {
+		}
+	};
+
 	struct StateChanger {
 		std::function<bool()> condition;
 		std::function<void()> call;
@@ -47,6 +56,9 @@ namespace cme {
 		int _currentState = CME_STATE_NORMAL;
 		std::vector<Shortcut> _shortcuts;
 		std::vector<StateChanger> _stateChangers;
+		std::vector<MouseEvent> _mouseEvents;
+
+		bool _isViewportHovered = false;
 	public:
 		~InputManager();
 
@@ -55,12 +67,16 @@ namespace cme {
 
 		void addShortcut(Shortcut shortC) { _shortcuts.push_back(shortC); }
 		void addStateChanger(StateChanger changer) { _stateChangers.push_back(changer); }
+		void addMouseEvent(MouseEvent evt) { _mouseEvents.push_back(evt); }
 
 		/// @brief Procesa el input del raton, se llama omo callback
 		/// @param window LA ventana
 		/// @param xpos La posicion del raton en el eje X
 		/// @param ypos La posicion del raton en el eje Y
 		static void mouseCallback(GLFWwindow* window, double xpos, double ypos);
+
+		void setViewportHovered(bool hovered) { _isViewportHovered = hovered; }
+		bool isViewportHovered() const { return _isViewportHovered; }
 
 		// cannot copy/move
 		InputManager(InputManager&) = delete;
