@@ -33,9 +33,9 @@ namespace cme {
 
 	struct  MouseEvent {
 		std::function<bool()> condition;			// Condicion a ocurrir
-		std::function<void(float,float)> call;		// Callback con las coordenadas del raton
+		std::function<void()> call;		// Callback con las coordenadas del raton
 
-		MouseEvent(std::function<bool()> condition, std::function<void(float, float)> call) :
+		MouseEvent(std::function<bool()> condition, std::function<void()> call) :
 			condition(condition), call(call) {
 		}
 	};
@@ -59,6 +59,13 @@ namespace cme {
 		std::vector<MouseEvent> _mouseEvents;
 
 		bool _isViewportHovered = false;
+
+		float _mouseX = 0.0f;
+		float _mouseY = 0.0f;
+
+		float _viewportMouseX = 0.0f;
+		float _viewportMouseY = 0.0f;
+
 	public:
 		~InputManager();
 
@@ -83,6 +90,15 @@ namespace cme {
 		InputManager(InputManager&&) = delete;
 		InputManager& operator=(InputManager&) = delete;
 		InputManager& operator=(InputManager&&) = delete;
+
+		float getMouseX() const { return _mouseX; }
+		float getMouseY() const { return _mouseY; }
+
+		float getViewportMouseX() const { return _viewportMouseX; }
+		float getViewportMouseY() const { return _viewportMouseY; }
+		void setViewportMouseX(float mouse) { _viewportMouseX = mouse; }
+		void setViewportMouseY(float mouse) { _viewportMouseY = mouse; }
+
 	private:
 		InputManager();
 

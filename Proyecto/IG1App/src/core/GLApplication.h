@@ -24,6 +24,9 @@ namespace cme {
 		float _width = 800;
 		float _height = 600;
 
+		float _viewportWidth = 800;
+		float _viewportHeight = 600;
+
 		float _deltaTime = 0.0f;
 		float _lastFrame = 0.0f;
 
@@ -45,6 +48,17 @@ namespace cme {
 		/// @brief El alto de la pantalla
 		/// @return El alto de la pantalla
 		float height() { return _height; }
+
+		/// @brief El ancho del viewport
+		/// @return El ancho del viewport
+		float viewportWidth() { return _viewportWidth; }
+		/// @brief El alto del viewport
+		/// @return El alto del viewport
+		float viewportHeight() { return _viewportHeight; }
+
+		void setViewportWidth(float vw) { _viewportWidth = vw; }
+		void setViewportHeight(float vh) { _viewportHeight = vh; }
+
 		/// @brief Devuelve la diferencia de tiempo entre frames
 		/// @return El delta time
 		float deltaTime() { return _deltaTime; }

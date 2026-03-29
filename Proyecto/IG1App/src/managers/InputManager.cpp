@@ -9,6 +9,7 @@
 #include <core/Scene.h>
 #include <core/Camera.h>
 #include <utils/FileExplorer.h>
+#include <utils/Raycast.h>
 
 namespace cme {
 	InputManager::InputManager() {
@@ -29,9 +30,17 @@ namespace cme {
 			glfwSetInputMode(gla().window(), GLFW_CURSOR, GLFW_CURSOR_NORMAL);
 		});
 
-		/*MouseEvent selectObjInViewPortr([this]() {
-			this->_isViewportHovered&& glfwGetMouseButton(gla().window(), GLFW_MOUSE_BUTTON_LEFT) == GLFW_PRESS;
-		}, []());*/
+		MouseEvent selectObjInViewPortr([this]() {
+			return this->_isViewportHovered && glfwGetMouseButton(gla().window(), GLFW_MOUSE_BUTTON_LEFT) == GLFW_PRESS;
+		}, []() {
+			Raycast ray;
+			auto ent = ray.castRay();
+			if (auto lockedEnt = ent.lock()) {
+				LOG_INFO(std::format("Se ha clicado en el objeto con nombre: {}", lockedEnt->name()));
+			}
+		});
+
+		addMouseEvent(selectObjInViewPortr);
 
 		addStateChanger(toMoving);
 		addStateChanger(toNormal);
@@ -70,6 +79,12 @@ namespace cme {
 				s.callback();
 			}
 		}
+
+		for (auto& m : _mouseEvents) {
+			if (m.condition()) {
+				m.call();
+			}
+		}
 	}
 
 	bool InputManager::init() {
@@ -79,6 +94,8 @@ namespace cme {
 	void InputManager::mouseCallback(GLFWwindow* window, double xpos, double ypos) {
 		if (inpM()._currentState == CME_STATE_VIEWPORT_MOVING) {
 			sceneM().activeScene()->getCamera()->setCameraLookAt(xpos, ypos);
+			inpM()._mouseX = static_cast<float>(xpos);
+			inpM()._mouseY = static_cast<float>(ypos);
 		}
 	}
 

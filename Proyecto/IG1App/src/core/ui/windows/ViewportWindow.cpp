@@ -5,6 +5,7 @@
 #include <core/Scene.h>
 #include <core/Camera.h>
 #include <managers/InputManager.h>
+#include <core/GLApplication.h>
 
 namespace cme::ui {
     ViewportWindow::ViewportWindow(const char* name) : Window(name) {
@@ -57,6 +58,13 @@ namespace cme::ui {
         }
 
         inpM().setViewportHovered(ImGui::IsWindowHovered());
+        ImVec2 viewportPos = ImGui::GetCursorScreenPos();
+        ImVec2 globalMousePos = ImGui::GetMousePos();
+        float relativeMouseX = globalMousePos.x - viewportPos.x;
+        float relativeMouseY = globalMousePos.y - viewportPos.y;
+
+        inpM().setViewportMouseX(relativeMouseX);
+        inpM().setViewportMouseY(relativeMouseY);
 
         // Mostrar la textura
         ImGui::Image((ImTextureID)(intptr_t)_texture, size, ImVec2(0, 1), ImVec2(1, 0));
@@ -64,6 +72,9 @@ namespace cme::ui {
 
     void ViewportWindow::resizeFBO(float w, float h) {
         _width = w; _height = h;
+
+        gla().setViewportHeight(h);
+        gla().setViewportWidth(w);
 
         sceneM().activeScene()->getCamera()->onResize(w, h);
 

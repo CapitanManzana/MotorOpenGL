@@ -85,6 +85,7 @@ if %errorlevel% leq 7 exit 0</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\utils\Raycast.cpp" />
     <ClCompile Include="src\managers\InputManager.cpp" />
     <ClCompile Include="src\component\Transform.cpp" />
     <ClCompile Include="src\core\serialize\JsonSerializer.cpp" />
@@ -119,6 +120,7 @@ if %errorlevel% leq 7 exit 0</Command>
     <ClCompile Include="src\core\ui\windows\ViewportWindow.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\utils\Raycast.h" />
     <ClInclude Include="src\core\serialize\Inspectable.h" />
     <ClInclude Include="src\managers\InputManager.h" />
     <ClInclude Include="src\core\register\ComponentRegistry.h" />

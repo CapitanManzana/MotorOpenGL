@@ -1,6 +1,7 @@
 #pragma once
 #include <ec/component.h>
 #include <string>
+#include <glm/fwd.hpp>
 
 namespace cme {
 	class Mesh;
@@ -25,6 +26,8 @@ namespace cme {
 		void render() const override;
 
 		void initComponent() override;
+
+		void getLocalAABB(glm::vec3& outMin, glm::vec3& outMax) const;
 
 		void drawOnInspector() override;
 

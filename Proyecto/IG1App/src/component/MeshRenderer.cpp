@@ -44,6 +44,10 @@ namespace cme {
 		}
 	}
 
+	void MeshRenderer::getLocalAABB(glm::vec3& outMin, glm::vec3& outMax) const {
+		_mesh->getLocalAABB(outMin, outMax);
+	}
+
 	void MeshRenderer::serialize(JsonSerializer& s) const {
 		s.write("mesh", (int)_mesh->id());
 		s.write("shader", _shaderName);

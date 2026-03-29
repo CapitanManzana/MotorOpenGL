@@ -91,6 +91,9 @@ namespace cme {
 		float movementSpeed() { return _movementSpeed; }
 		void setMovementSpeed(float speed) { _movementSpeed = speed; }
 
+		glm::mat4 getViewMat() { return _view; }
+		glm::mat4 getProjectionMat() { return _projection; }
+
 	private:
 		/// @brief Manda a la gpu la matriz de proyeccion
 		/// @param shader El shader objetivo a modificar

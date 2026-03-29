@@ -54,6 +54,8 @@ namespace cme {
 		Shader* shader() { return _shader; }
 
 		meshID id() { return _id; }
+
+		void getLocalAABB(glm::vec3& outMin, glm::vec3& outMax) const;
 	protected:
 		void initBuffers();
 	};

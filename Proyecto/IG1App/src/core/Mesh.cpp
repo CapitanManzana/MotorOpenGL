@@ -71,4 +71,25 @@ namespace cme {
 
         glBindVertexArray(0);
     }
+
+    void Mesh::getLocalAABB(glm::vec3& outMin, glm::vec3& outMax) const {
+        if (_vertices.empty()) {
+            outMax = glm::vec3(0.0f);
+            outMin = glm::vec3(0.0f);
+            return;
+        }
+
+        outMin = _vertices[0];
+        outMax = _vertices[0];
+
+        for (const auto& v : _vertices) {
+            outMin.x = std::min(outMin.x, v.x);
+            outMin.y = std::min(outMin.y, v.y);
+            outMin.z = std::min(outMin.z, v.z);
+
+            outMax.x = std::max(outMax.x, v.x);
+            outMax.y = std::max(outMax.y, v.y);
+            outMax.z = std::max(outMax.z, v.z);
+        }
+    }
 }

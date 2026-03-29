@@ -30,6 +30,7 @@
     <ClCompile Include="src\core\serialize\JsonSerializer.cpp" />
     <ClCompile Include="src\component\Transform.cpp" />
     <ClCompile Include="src\managers\InputManager.cpp" />
+    <ClCompile Include="src\utils\Raycast.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\core\Camera.h" />
@@ -74,5 +75,6 @@
     <ClInclude Include="src\core\register\ComponentRegistry.h" />
     <ClInclude Include="src\managers\InputManager.h" />
     <ClInclude Include="src\core\serialize\Inspectable.h" />
+    <ClInclude Include="src\utils\Raycast.h" />
   </ItemGroup>
 </Project>
