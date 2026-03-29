@@ -10,6 +10,8 @@
 #include <core/Camera.h>
 #include <utils/FileExplorer.h>
 #include <utils/Raycast.h>
+#include <core/ui/UIManager.h>
+#include <core/ui/windows/InspectorWindow.h>
 
 namespace cme {
 	InputManager::InputManager() {
@@ -35,10 +37,13 @@ namespace cme {
 		}, []() {
 			Raycast ray;
 			auto ent = ray.castRay();
-			if (auto lockedEnt = ent.lock()) {
-				LOG_INFO(std::format("Se ha clicado en el objeto con nombre: {}", lockedEnt->name()));
+			auto win = gla().getUIManager()->getWindow(ui::INSPECTOR);
+			if (auto lockedWin = win.lock()) {
+				ui::InspectorWindow& inspector = static_cast<ui::InspectorWindow&>(*lockedWin);
+				inspector.changeDisplayEntity(ent);
+				LOG_INFO("Cambiando entidad del inspector");
 			}
-		});
+		}, GLFW_MOUSE_BUTTON_LEFT);
 
 		addMouseEvent(selectObjInViewPortr);
 
@@ -81,8 +86,12 @@ namespace cme {
 		}
 
 		for (auto& m : _mouseEvents) {
-			if (m.condition()) {
+			if (m.condition() && !m.pressed) {
 				m.call();
+				m.pressed = true;
+			}
+			else if (glfwGetMouseButton(gla().window(), GLFW_MOUSE_BUTTON_LEFT) == GLFW_RELEASE && m.pressed) {
+				m.pressed = false;
 			}
 		}
 	}

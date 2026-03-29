@@ -12,7 +12,7 @@ namespace cme::ui {
 	class UIManager
 	{
 	private:
-		std::vector<std::unique_ptr<Window>> _windows;
+		std::vector<std::shared_ptr<Window>> _windows;
 		std::function<void()> _createCubeCallback;
 	public:
 		UIManager();
@@ -26,6 +26,8 @@ namespace cme::ui {
 		void unbind() const;
 
 		void setCreateCubeCallback(std::function<void()> call) { _createCubeCallback = call; }
+
+		std::weak_ptr<Window> getWindow(windowGroupID windowID) { return _windows[windowID]; }
 	private:
 		bool initImgui(GLFWwindow* window);
 		void renderMenuBar() const;

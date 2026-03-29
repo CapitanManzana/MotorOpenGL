@@ -34,9 +34,12 @@ namespace cme {
 	struct  MouseEvent {
 		std::function<bool()> condition;			// Condicion a ocurrir
 		std::function<void()> call;		// Callback con las coordenadas del raton
+		bool pressed = false;
 
-		MouseEvent(std::function<bool()> condition, std::function<void()> call) :
-			condition(condition), call(call) {
+		int mouseButton = 0;
+
+		MouseEvent(std::function<bool()> condition, std::function<void()> call, int button) :
+			condition(condition), call(call), mouseButton(button) {
 		}
 	};
 

@@ -65,6 +65,7 @@ namespace cme {
 
 		GLFWwindow* window() { return _window; }
 
+		ui::UIManager* getUIManager() { return _interface; }
 	private:
 		GLApplication() = default;
 
