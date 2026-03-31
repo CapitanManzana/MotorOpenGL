@@ -17,7 +17,7 @@ namespace cme::ui {
 		static char importPath[256] = "assets/models/model.glb";
 		ImGui::SeparatorText("Import Asset");
 		ImGui::InputText("Path", importPath, sizeof(importPath));
-		if (ImGui::Button("Import GLB")) {
+		if (ImGui::Button("Import file")) {
 			auto meshes = AssimpLoader::loadModel(importPath);
 			if (!meshes.empty()) {
 				for (size_t i = 0; i < meshes.size(); ++i) {
