@@ -10,7 +10,7 @@
 namespace cme {
 	class Shader;
 
-	/// @brief Clase abstracta que sirve como padre para crear todo tipo de mallas distintas
+	/// @brief Clase que representa una malla (Geometry + Buffers)
 	class Mesh
 	{
 	protected:
@@ -20,42 +20,46 @@ namespace cme {
 		std::vector<glm::vec4> _vColor;
 		std::vector<glm::uvec3> _indices;
 
-		GLuint mPrimitive = GL_TRIANGLES;
+		GLenum mPrimitive = GL_TRIANGLES;
 
 		GLuint _VAO = 0;	// Vertex Array Object
 		GLuint _VBO = 0;	// Vertex Buffer Object
 		GLuint _CBO = 0;	// Color Buffer Object
 		GLuint _EBO = 0;	// Element Bueffer Object
 
-		glm::mat4 _model = glm::mat4(1.0f); // La matriz de modelado del mesh, que guarda su posición rotacion y escala en el mundo
+		glm::mat4 _model = glm::mat4(1.0f); 
 
 		meshID _id = None;
 	public:
 		/// @brief Constructor por defecto
 		Mesh() = default;
+		/// @brief Constructor con datos
+		Mesh(const std::vector<glm::vec3>& vertices, const std::vector<glm::uvec3>& indices);
 		virtual ~Mesh();
 
-		/// @brief Genera el mesh colocando los vértices, colores, etc...
-		virtual void generateMesh() = 0;
 		/// @brief Renderiza el mesh
 		virtual void render() const;
 
+		/// @brief Metodo para generar la malla (si aplica en subclases)
+		virtual void generateMesh() {}
+
 		/// @brief Cambia el shader que utiliza la mesh
-		/// @param shader El shader a poner
 		void setShader(Shader* shader) { _shader = shader; }
 		/// @brief Establece la matriz de modelado de la malla
-		/// @param model La nueva matriz
 		void setModelMatrix(glm::mat4 model) { _model = model; }
-		/// @brief La matriz de modelado del mesh, que guarda su posición rotacion y escala en el mundo
-		/// @return La matriz de modelado
+		
 		glm::mat4 modelMatrix() { return _model; }
-		/// @brief El shader que esta usando la mesh
-		/// @return Un puntero al shader
 		Shader* shader() { return _shader; }
-
 		meshID id() { return _id; }
 
 		void getLocalAABB(glm::vec3& outMin, glm::vec3& outMax) const;
+
+		void setMeshData(const std::vector<glm::vec3>& vertices, const std::vector<glm::uvec3>& indices);
+		void setMeshData(const std::vector<glm::vec3>& vertices, const std::vector<glm::uvec3>& indices, const std::vector<glm::vec4>& colors);
+
+		size_t getNumVertices() const { return _vertices.size(); }
+		size_t getNumIndices() const { return _indices.size() * 3; }
+
 	protected:
 		void initBuffers();
 	};
