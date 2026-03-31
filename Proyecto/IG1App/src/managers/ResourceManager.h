@@ -1,24 +1,23 @@
 #pragma once
 #include <unordered_map>
+#include <string>
+#include <vector>
+#include <memory>
 #include <utils/Singleton.h>
+
 #include <core/Shader.h>
 
 namespace cme {
-	class Shader;
+	class Mesh;
 
-	/// @brief Se encarga de la gesiton de recursos del proyecto, desde shaders hasta imagenes. Utiliza el patron Singleton y se puede acceder a su instancia con rscrM()
 	class ResourceManager : public Singleton<ResourceManager>
 	{
 		friend class Singleton<ResourceManager>;
-	private:
-		// ----- SHADERS -----
-		const char* SHADERS_PATH = "assets/shaders";
-		std::unordered_map<std::string, std::unique_ptr<Shader>> _shadersMap;
-		std::vector<Shader*> _shaders;
-		std::vector<std::string> _shaderNames;
-
 	public:
+		ResourceManager() = default;
 		virtual ~ResourceManager();
+
+		bool init();
 
 		// cannot copy/move
 		ResourceManager(ResourceManager&) = delete;
@@ -26,10 +25,10 @@ namespace cme {
 		ResourceManager& operator=(ResourceManager&) = delete;
 		ResourceManager& operator=(ResourceManager&&) = delete;
 
-		/// @brief Busca en los recursos el shader pedido mediante la key, que es el nombre del archivo sin la extensión
+		/// @brief Busca en los recursos el shader pedido mediante la key, que es el nombre del archivo sin la extensiÃ³n
 		/// @param key La clave del shader
 		/// @return Devuelve un puntero inteligente al shader
-		Shader* getShader(std::string key);
+		Shader* getShader(const std::string& key);
 		/// @brief Busca todos los shaders cargados y los almacena en un vector
 		/// @return Un vector de shaders
 		std::vector<Shader*> getAllShaders();
@@ -37,16 +36,18 @@ namespace cme {
 		/// @return Un vector de nombres
 		std::vector<std::string> getAllShaderNames();
 
-	private:
-		ResourceManager() = default;
+		Mesh* getMesh(const std::string& name);
+		void registerMesh(const std::string& name, std::shared_ptr<Mesh> mesh);
 
-		/// @brief Inicializa el Resource Manager
-		/// @return False si falla
-		bool init();
+	private:
+		std::string _shadersPath = "assets/shaders";
+		std::unordered_map<std::string, std::unique_ptr<Shader>> _shadersMap;
+		std::vector<std::string> _shaderNames;
+		std::unordered_map<std::string, std::shared_ptr<Mesh>> _meshesMap;
+
+		void loadShaders();
 	};
 
-	/// @brief Devuelve la instancia de ResourceManager mediante el uso del patrón Singleton
-	/// @return La instancia de ResourceManager
 	inline ResourceManager& rscrM() {
 		return *ResourceManager::Instance();
 	}
