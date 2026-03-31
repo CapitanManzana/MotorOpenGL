@@ -1,14 +1,14 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ImportGroup Label="PropertySheets" />
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
     <OutDir>$(SolutionDir)bin\</OutDir>
     <TargetName>$(ProjectName)$(Configuration)</TargetName>
-    <IncludePath>$(SolutionDir)libs\glm\include;$(SolutionDir)libs\glfw\include;$(SolutionDir)libs\glad\include;$(SolutionDir)libs\stb_image\include;$(SolutionDir)libs\imgui;$(IncludePath)</IncludePath>
-    <LibraryPath>$(SolutionDir)libs\glfw\lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(SolutionDir)libs\assimp\include;$(SolutionDir)libs\glm\include;$(SolutionDir)libs\glfw\include;$(SolutionDir)libs\glad\include;$(SolutionDir)libs\stb_image\include;$(SolutionDir)libs\imgui;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)libs\assimp\lib\x64;$(SolutionDir)libs\glfw\lib;$(LibraryPath)</LibraryPath>
     <_PropertySheetDisplayName>IGProjects</_PropertySheetDisplayName>
-    <LocalDebuggerEnvironment>PATH=$(SolutionDir)libs\glfw\bin;$(LocalDebuggerEnvironment)</LocalDebuggerEnvironment>
+    <LocalDebuggerEnvironment>PATH=$(SolutionDir)libs\assimp\bin\x64;$(SolutionDir)libs\glfw\bin;$(LocalDebuggerEnvironment)</LocalDebuggerEnvironment>
   </PropertyGroup>
   <ItemDefinitionGroup>
     <ClCompile>
@@ -19,7 +19,8 @@
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>opengl32.lib;glfw3dll.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies Condition="'$(Configuration)'=='Debug'">assimp-vc143-mtd.lib;opengl32.lib;glfw3dll.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies Condition="'$(Configuration)'=='Release'">assimp-vc143-mt.lib;opengl32.lib;glfw3dll.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <SubSystem>Console</SubSystem>
     </Link>
   </ItemDefinitionGroup>

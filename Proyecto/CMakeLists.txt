@@ -26,12 +26,20 @@ if (CMAKE_HOST_WIN32)
 		libs/glew/include
 		libs/glfw/include
 		libs/glm/include
+		libs/assimp/include
 	)
 
 	link_directories(
 		libs/glew/lib
 		libs/glfw/lib
+		libs/assimp/lib/x64
 	)
+
+	if(CMAKE_BUILD_TYPE STREQUAL "Debug")
+		link_libraries(assimp-vc143-mtd.lib)
+	else()
+		link_libraries(assimp-vc143-mt.lib)
+	endif()
 
 	link_libraries(
 		glew32.lib
