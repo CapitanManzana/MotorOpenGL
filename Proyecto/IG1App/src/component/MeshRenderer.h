@@ -24,6 +24,8 @@ namespace cme {
 		MeshRenderer(Mesh* mesh) : _mesh(mesh) {}
 		~MeshRenderer();
 
+		void setMesh(Mesh* mesh) { _mesh = mesh; }
+
 		void render() const override;
 
 		void initComponent() override;

@@ -1,149 +1,83 @@
 #include "MeshRenderer.h"
 #include <imgui.h>
-
 #include <ec/entity.h>
-
 #include <core/Mesh.h>
 #include <core/Camera.h>
 #include <core/Scene.h>
-
+#include <core/Shader.h>
 #include <component/Transform.h>
-#include <core/serialize/JsonSerializer.h>
-#include <core/mesh/CubeMesh.h>
-#include <core/mesh/TriangleMesh.h>
-#include <core/mesh/QuadMesh.h>
 #include <managers/ResourceManager.h>
+#include <managers/SceneManager.h>
 
 namespace cme {
-	MeshRenderer::~MeshRenderer() {
-		delete _mesh; // Esto invocará Mesh::~Mesh() y liberará VBOs/VAOs y memoria
-	}
-
-	void MeshRenderer::render() const {
-		if (!_mesh) return;
-		_mesh->setModelMatrix(_tr->getModelMatrix());
-
-		_cam->uploadToGPU(_mesh);
-		_mesh->render();
-	}
+	MeshRenderer::~MeshRenderer() {}
 
 	void MeshRenderer::initComponent() {
-		if (auto entitySp = _entity.lock()) {
-			_cam = entitySp->getScene()->getCamera();
-			_tr = entitySp->getComponent<Transform>();
-
-			assert(_tr != nullptr);
-
-			if (_mesh) {
-				int meshID = _mesh->id();
-				if (meshID >= 0 && meshID < MESH_T_NAMES.size()) _currentMeshType = MESH_T_NAMES[meshID];
-				else LOG_ERROR(std::format("El id del mesh no es valido. Entidad: {} | ID: ", entitySp->name(), meshID));
-
-				_shaderName = _mesh->shader()->getName();
-			}
-		}
+		_tr = _entity.lock()->getComponent<Transform>();
 	}
 
 	void MeshRenderer::getLocalAABB(glm::vec3& outMin, glm::vec3& outMax) const {
-		_mesh->getLocalAABB(outMin, outMax);
+		if (_mesh) {
+			_mesh->getLocalAABB(outMin, outMax);
+		}
+		else {
+			outMin = outMax = glm::vec3(0.0f);
+		}
 	}
 
-	void MeshRenderer::serialize(JsonSerializer& s) const {
-		s.write("mesh", (int)_mesh->id());
-		s.write("shader", _shaderName);
-	}
+	void MeshRenderer::render() const {
+		if (_mesh && _tr) {
+			Shader* shader = nullptr;
+			if (_shaderName != "") {
+				shader = rscrM().getShader(_shaderName);
+			}
+			else {
+				shader = _mesh->shader();
+			}
 
-	void MeshRenderer::deserialize(JsonSerializer& s) {
-		int meshID = s.readInt("mesh");
-		std::string _shaderName = s.readString("shader");
-		if (meshID == 1) {
-			_mesh = new TriangleMesh(rscrM().getShader(_shaderName));
-		}
-		else if (meshID == 2) {
-			_mesh = new QuadMesh(rscrM().getShader(_shaderName));
-		}
-		else if (meshID == 3) {
-			_mesh = new CubeMesh(rscrM().getShader(_shaderName));
-		}
+			Camera* cam = sceneM().activeScene()->getCamera();
+			if (shader && cam) {
+				shader->use();
+				
+				glm::mat4 view = cam->getViewMat();
+				glm::mat4 proj = cam->getProjectionMat();
+				glm::mat4 model = _tr->getModelMatrix();
 
-		if (!_mesh) {
-			LOG_ERROR("La mesh es nula despues de cargarla del archivo");
-			return;
-		}
-
-		if (auto entitySp = _entity.lock()) {
-			if (meshID >= 0 && meshID < MESH_T_NAMES.size()) _currentMeshType = MESH_T_NAMES[meshID];
-			else LOG_ERROR(std::format("El id del mesh no es valido. Entidad: {} | ID: {}", entitySp->name(), meshID));
+				shader->setUniform("modelView", view * model);
+				shader->setUniform("projection", proj);
+				shader->setUniform("model", model);
+				
+				_mesh->render();
+			}
 		}
 	}
 
 	void MeshRenderer::drawOnInspector() {
-		if (auto entitySp = _entity.lock()) {
-			if (ImGui::CollapsingHeader("Mesh Renderer")) {
-				if (ImGui::BeginTable("MeshRendTable", 2)) {
-					ImGui::TableNextRow();
+		if (ImGui::CollapsingHeader("Mesh Renderer", ImGuiTreeNodeFlags_DefaultOpen)) {
+			ImGui::Text("Mesh Type: %s", _currentMeshType.c_str());
+			if (_mesh) {
+				ImGui::Text("Vertices: %d", (int)_mesh->getNumVertices());
+			}
 
-					ImGui::TableSetColumnIndex(0);
-					ImGui::Text("Mesh Type");
-					ImGui::TableSetColumnIndex(1);
-
-					if (ImGui::BeginCombo("##combo", _currentMeshType.c_str())) {
-						for (auto& opcion : MESH_T_NAMES) {
-							bool isSelected = _currentMeshType == opcion;
-							if (ImGui::Selectable(opcion, isSelected)) {
-								_currentMeshType = opcion;
-
-								delete _mesh;
-								if (_currentMeshType == MESH_T_NAMES[1]) {
-									_mesh = new TriangleMesh(rscrM().getShader(_shaderName));
-								}
-								else if (_currentMeshType == MESH_T_NAMES[2]) {
-									_mesh = new QuadMesh(rscrM().getShader(_shaderName));
-								}
-								else if (_currentMeshType == MESH_T_NAMES[3]) {
-									_mesh = new CubeMesh(rscrM().getShader(_shaderName));
-								}
-								else {
-									_mesh = nullptr;
-								}
-							}
-							if (isSelected && ImGui::IsWindowAppearing()) {
-								ImGui::SetItemDefaultFocus();
-							}
-						}
-						ImGui::EndCombo();
-					}
-
-					ImGui::TableNextRow();
-
-					ImGui::TableSetColumnIndex(0);
-					ImGui::Text("Shader");
-					ImGui::TableSetColumnIndex(1);
-
-					if (ImGui::BeginCombo("##comboShader", _shaderName.c_str())) {
-						for (auto& opcion : rscrM().getAllShaderNames()) {
-							bool isSelected = _shaderName == opcion;
-							if (ImGui::Selectable(opcion.c_str(), isSelected)) {
-								_shaderName = opcion;
-								Shader* shader = rscrM().getShader(opcion);
-								if (shader) {
-									if (_mesh) _mesh->setShader(shader);
-									_shaderName = opcion;
-								}
-								else {
-									LOG_WARN(std::format("EL shader seleccionado para el mesh renderer es inexistente. Entity: {} | Shader: {}", entitySp->name(), opcion));
-								}
-							}
-							if (isSelected && ImGui::IsWindowAppearing()) {
-								ImGui::SetItemDefaultFocus();
-							}
-						}
-						ImGui::EndCombo();
-					}
-
-					ImGui::EndTable();
-				}
+			char shaderBuf[64];
+			strncpy_s(shaderBuf, sizeof(shaderBuf), _shaderName.c_str(), _TRUNCATE);
+			if (ImGui::InputText("Shader", shaderBuf, sizeof(shaderBuf))) {
+				_shaderName = shaderBuf;
+			}
+			
+			if (ImGui::Button("Reset to Default")) {
+				_shaderName = "default";
 			}
 		}
+	}
+
+	void MeshRenderer::serialize(JsonSerializer& s) const {
+		s.write("shader", _shaderName);
+		s.write("meshType", _currentMeshType);
+	}
+
+	void MeshRenderer::deserialize(JsonSerializer& s) {
+		_shaderName = s.readString("shader");
+		_currentMeshType = s.readString("meshType");
 	}
 }

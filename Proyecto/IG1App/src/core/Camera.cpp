@@ -24,11 +24,12 @@ namespace cme {
 	}
 
 	void Camera::buildProjectionMat() {
+		float aspect = (float)gla().width() / (float)gla().height();
 		if (_usePerspective) {
-			_projection = glm::perspective(_fov, gla().width() / gla().height(), _nearDistance, _farDistance);
+			_projection = glm::perspective(glm::radians(_fov), aspect, _nearDistance, _farDistance);
 		}
 		else {
-			_projection = glm::ortho(0.0f, gla().width(), 0.0f, gla().height(), _nearDistance, _farDistance);
+			_projection = glm::ortho(0.0f, (float)gla().width(), 0.0f, (float)gla().height(), _nearDistance, _farDistance);
 		}
 	}
 
