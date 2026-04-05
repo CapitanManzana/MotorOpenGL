@@ -103,7 +103,7 @@ namespace cme {
 		/// @brief Manda a la gpu la matriz de vista
 		/// @param shader El shader objetivo a modificar
 		/// @param model La matriz de modelado del mesh
-		void uploadViewToGPU(Shader* shader, glm::mat4 model, ec::entity_t ent);
+		void uploadViewToGPU(Shader* shader, glm::mat4 model, glm::mat3 normal, ec::entity_t ent);
 	};
 }
 

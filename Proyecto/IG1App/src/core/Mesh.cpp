@@ -141,4 +141,13 @@ namespace cme {
 
         _isLightSource = value;
     }
+
+    void Mesh::calculateNormalMatrix() {
+        _normalMatrix = glm::transpose(glm::inverse(glm::mat3(_model)));
+    }
+
+    void Mesh::setModelMatrix(glm::mat4 model) {
+        _model = model;
+        if (_LightVAO != 0) calculateNormalMatrix();
+    }
 }

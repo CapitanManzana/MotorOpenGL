@@ -81,23 +81,35 @@ namespace cme {
 		return id;
 	}
 
+	int Shader::getUniformLocation(const std::string& name) {
+		if (_uniformLocationCache.find(name) != _uniformLocationCache.end()) {
+			return _uniformLocationCache[name]; // ¡Encontrado! Súper rápido
+		}
+
+		int location = glGetUniformLocation(_shaderProgram, name.c_str());
+
+		_uniformLocationCache[name] = location;
+
+		return location;
+	}
+
 	void Shader::setUniform(const std::string& name, float value) {
-		int loc = glGetUniformLocation(_shaderProgram, name.c_str());
-		glUniform1f(loc, value);
+		glUniform1f(getUniformLocation(name), value);
 	}
 
 	void Shader::setUniform(const std::string& name, const glm::vec3& value) {
-		int loc = glGetUniformLocation(_shaderProgram, name.c_str());
-		glUniform3f(loc, value.r, value.g, value.b);
+		glUniform3f(getUniformLocation(name), value.r, value.g, value.b);
 	}
 
 	void Shader::setUniform(const std::string& name, const glm::vec4& value) {
-		int loc = glGetUniformLocation(_shaderProgram, name.c_str());
-		glUniform4f(loc, value.r, value.g, value.b, value.a);
+		glUniform4f(getUniformLocation(name), value.r, value.g, value.b, value.a);
 	}
 
 	void Shader::setUniform(const std::string& name, const glm::mat4& value) {
-		int loc = glGetUniformLocation(_shaderProgram, name.c_str());
-		glUniformMatrix4fv(loc, 1, GL_FALSE, glm::value_ptr(value));
+		glUniformMatrix4fv(getUniformLocation(name), 1, GL_FALSE, glm::value_ptr(value));
+	}
+
+	void Shader::setUniform(const std::string& name, const glm::mat3& value) {
+		glUniformMatrix3fv(getUniformLocation(name), 1, GL_FALSE, glm::value_ptr(value));
 	}
 }

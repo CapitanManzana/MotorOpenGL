@@ -33,6 +33,7 @@ namespace cme {
 		bool _isLightSource = false;
 
 		glm::mat4 _model = glm::mat4(1.0f); // La matriz de modelado del mesh, que guarda su posición rotacion y escala en el mundo
+		glm::mat3 _normalMatrix;
 
 		meshID _id = None;
 	public:
@@ -50,10 +51,17 @@ namespace cme {
 		void setShader(Shader* shader) { _shader = shader; }
 		/// @brief Establece la matriz de modelado de la malla
 		/// @param model La nueva matriz
-		void setModelMatrix(glm::mat4 model) { _model = model; }
+		void setModelMatrix(glm::mat4 model);
 		/// @brief La matriz de modelado del mesh, que guarda su posición rotacion y escala en el mundo
 		/// @return La matriz de modelado
-		glm::mat4 modelMatrix() { return _model; }
+		glm::mat4& modelMatrix() { return _model; }
+		/// @brief La matriz de normales del mesh, que es la inversa de la transpuesta de la matriz 3x3 superior izquierda de la de modelado
+		/// @return La matriz de normales
+		glm::mat3& normalMatrix() { 
+			calculateNormalMatrix();
+			return _normalMatrix; 
+		}
+
 		/// @brief El shader que esta usando la mesh
 		/// @return Un puntero al shader
 		Shader* shader() { return _shader; }
@@ -66,5 +74,7 @@ namespace cme {
 		void setLightSource(bool value);
 	protected:
 		void initBuffers();
+
+		void calculateNormalMatrix();
 	};
 }

@@ -1,6 +1,7 @@
 ﻿#pragma once
 #include <string>
 #include <glm/fwd.hpp>
+#include <unordered_map>
 
 namespace cme {
 	/// @brief Contiene la información necesaria para crear un shader, incluyendo las rutas de los archivos de shader de vértices y fragmentos. 
@@ -35,6 +36,8 @@ namespace cme {
 		// El programa con los shaders cargados
 		GLuint _shaderProgram;
 		std::string _name;
+
+		std::unordered_map<std::string, int> _uniformLocationCache;
 	public:
 		/// @brief Constructor que carga el shader desde un archivo. El shader se compila y se prepara para su uso. 
 		/// @param ctx Contexto para la cración de los shaders
@@ -59,6 +62,7 @@ namespace cme {
 		void setUniform(const std::string& name, const glm::vec3& value);
 		void setUniform(const std::string& name, const glm::vec4& value);
 		void setUniform(const std::string& name, const glm::mat4& value);
+		void setUniform(const std::string& name, const glm::mat3& value);
 
 		std::string getName() { return _name; }
 	private:
@@ -72,5 +76,7 @@ namespace cme {
 		/// @param shaderType El tipo de shader (por ejemplo, GL_VERTEX_SHADER o GL_FRAGMENT_SHADER) que se desea compilar.
 		/// @return Devuelve el ID del shader compilado en OpenGL.
 		GLuint compileShader(const char* shaderSource, GLenum shaderType) const;
+
+		int getUniformLocation(const std::string& name);
 	};
 }

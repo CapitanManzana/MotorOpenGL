@@ -50,6 +50,10 @@ namespace cme {
 		_mesh->setLightSource(value);
 	}
 
+	glm::mat3& MeshRenderer::normalMatrix() {
+		return _mesh->normalMatrix(); 
+	}
+
 	void MeshRenderer::getLocalAABB(glm::vec3& outMin, glm::vec3& outMax) const {
 		_mesh->getLocalAABB(outMin, outMax);
 	}

@@ -38,5 +38,7 @@ namespace cme {
 		std::string serializeID() const override { return "MeshRenderer"; }
 
 		void setLightSource(bool value);
+
+		glm::mat3& normalMatrix();
 	};
 }

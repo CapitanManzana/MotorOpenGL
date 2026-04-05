@@ -36,7 +36,7 @@ namespace cme {
 	void Camera::uploadToGPU(Mesh* m, ec::entity_t ent) {
 		Shader* s = m->shader();
 		uploadProjectionToGPU(s);
-		uploadViewToGPU(s, m->modelMatrix(), ent);
+		uploadViewToGPU(s, m->modelMatrix(), m->normalMatrix(), ent);
 	}
 
 	void Camera::uploadProjectionToGPU(Shader* shader) {
@@ -49,7 +49,7 @@ namespace cme {
 		shader->setUniform("projection", _projection);
 	}
 
-	void Camera::uploadViewToGPU(Shader* shader, glm::mat4 model, ec::entity_t ent) {
+	void Camera::uploadViewToGPU(Shader* shader, glm::mat4 model, glm::mat3 normal, ec::entity_t ent) {
 		if (!shader) {
 			LOG_WARN("El shader para hacer upload de la matriz de vista es nulo");
 			return;
@@ -61,6 +61,7 @@ namespace cme {
 		shader->setUniform("modelView", modelView);
 		shader->setUniform("cameraPos", _cameraPos);
 		shader->setUniform("model", model);
+		shader->setUniform("normalMatrix", normal);
 
 		if (ent->hasComponent<Light>()) return;
 

@@ -42,7 +42,7 @@ namespace cme {
 	}
 
 	void Light::deserialize(JsonSerializer& s) {
-		_color = s.readVec4("color");
+		_color = s.readVec3("color");
 		_intensity = s.readFloat("intensity");
 		_ambienteStrength = s.readFloat("ambientStrength");
 	}
