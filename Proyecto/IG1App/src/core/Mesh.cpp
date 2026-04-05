@@ -1,6 +1,7 @@
 #include "Mesh.h"
 #include "Shader.h"
 #include <utils/logger.h>
+#include <managers/ResourceManager.h>
 
 namespace cme {
     Mesh::~Mesh() {
@@ -19,6 +20,18 @@ namespace cme {
                 glDeleteBuffers(1, &_EBO);
                 _EBO = 0;
             }
+
+            if (_NBO != 0) {
+                glDeleteBuffers(1, &_NBO);
+                _NBO = 0;
+            }
+        }
+
+        if (_LightVAO != 0) {
+            glDeleteVertexArrays(1, &_LightVAO);
+            glDeleteBuffers(1, &_VBO);
+            _VAO = 0;
+            _VBO = 0;
         }
     }
 
@@ -50,6 +63,14 @@ namespace cme {
             glBufferData(GL_ELEMENT_ARRAY_BUFFER, _indices.size() * sizeof(glm::uvec3), _indices.data(), GL_STATIC_DRAW);
         }
 
+        if (!_normals.empty()) {
+            glGenBuffers(1, &_NBO);
+            glBindBuffer(GL_ARRAY_BUFFER, _NBO);
+            glBufferData(GL_ARRAY_BUFFER, _normals.size() * sizeof(glm::vec3), _normals.data(), GL_STATIC_DRAW);
+            glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, sizeof(glm::vec3), nullptr);
+            glEnableVertexAttribArray(2);
+        }
+
         // Nos desvinculamos para no modificar este VAO por accidente después
         glBindVertexArray(0);
     }
@@ -61,6 +82,7 @@ namespace cme {
         }
 
         _shader->use();
+
         glBindVertexArray(_VAO);
         if (!_indices.empty()) {
             glDrawElements(mPrimitive, _indices.size() * 3, GL_UNSIGNED_INT, 0);
@@ -91,5 +113,32 @@ namespace cme {
             outMax.y = std::max(outMax.y, v.y);
             outMax.z = std::max(outMax.z, v.z);
         }
+    }
+
+    void Mesh::setLightSource(bool value) {
+        if (value) {
+            glGenVertexArrays(1, &_LightVAO);
+            glBindVertexArray(_LightVAO);
+
+            glBindBuffer(GL_ARRAY_BUFFER, _VBO);
+            glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(glm::vec3), nullptr);
+            glEnableVertexAttribArray(0);
+
+            glBindVertexArray(0);
+
+            setShader(rscrM().getShader("lightSource"));
+        }
+        else {
+            if (_LightVAO != 0) {
+                glDeleteVertexArrays(1, &_LightVAO);
+                glDeleteBuffers(1, &_VBO);
+                _VAO = 0;
+                _VBO = 0;
+            }
+
+            setShader(rscrM().getShader("default"));
+        }
+
+        _isLightSource = value;
     }
 }

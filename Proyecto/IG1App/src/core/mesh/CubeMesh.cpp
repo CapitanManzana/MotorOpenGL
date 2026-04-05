@@ -95,5 +95,40 @@ namespace cme {
 		_vColor.emplace_back(0.0f, 0.0f, 1.0f, 1.0f);
 		_vColor.emplace_back(0.0f, 0.0f, 1.0f, 1.0f);
 		_vColor.emplace_back(0.0f, 0.0f, 1.0f, 1.0f);
+
+		_normals.emplace_back(0, 0, 1);
+		_normals.emplace_back(0, 0, 1);
+		_normals.emplace_back(0, 0, 1);
+		_normals.emplace_back(0, 0, 1);
+
+		// --- Cara Superior (+Y) ---
+		_normals.emplace_back(0, 1, 0);
+		_normals.emplace_back(0, 1, 0);
+		_normals.emplace_back(0, 1, 0);
+		_normals.emplace_back(0, 1, 0);
+
+		// --- Cara Trasera (-Z) ---
+		_normals.emplace_back(0, 0, -1);
+		_normals.emplace_back(0, 0, -1);
+		_normals.emplace_back(0, 0, -1);
+		_normals.emplace_back(0, 0, -1);
+
+		// --- Cara Inferior (-Y) ---
+		_normals.emplace_back(0, -1, 0);
+		_normals.emplace_back(0, -1, 0);
+		_normals.emplace_back(0, -1, 0);
+		_normals.emplace_back(0, -1, 0);
+
+		// --- Cara Derecha (+X) ---
+		_normals.emplace_back(1, 0, 0);
+		_normals.emplace_back(1, 0, 0);
+		_normals.emplace_back(1, 0, 0);
+		_normals.emplace_back(1, 0, 0);
+
+		// --- Cara Izquierda (-X) ---
+		_normals.emplace_back(-1, 0, 0);
+		_normals.emplace_back(-1, 0, 0);
+		_normals.emplace_back(-1, 0, 0);
+		_normals.emplace_back(-1, 0, 0);
 	}
 }

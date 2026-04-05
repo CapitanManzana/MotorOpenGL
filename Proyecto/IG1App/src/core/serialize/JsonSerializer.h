@@ -2,6 +2,7 @@
 #include <utils/json.hpp>
 #include <stack>
 #include <glm/vec3.hpp>
+#include <glm/vec4.hpp>
 
 using json = nlohmann::ordered_json;
 
@@ -23,6 +24,7 @@ namespace cme {
 		void write(const std::string& key, float value);
 		void write(const std::string& key, int value);
 		void write(const std::string& key, const glm::vec3& value);
+		void write(const std::string& key, const glm::vec4& value);
 		void write(const std::string& key, const std::string& value);
 
 		/// @brief Lee y devuelve un valor de punto flotante asociado a la clave especificada.
@@ -37,6 +39,10 @@ namespace cme {
 		/// @param key Clave cuyo valor glm::vec3 se desea leer.
 		/// @return El valor de tipo glm::vec3 asociado a la clave.
 		glm::vec3 readVec3(const std::string& key) const;
+		/// @brief Lee y devuelve un valor de tipo glm::vec4 asociado a la clave especificada.
+		/// @param key Clave cuyo valor glm::vec4 se desea leer.
+		/// @return El valor de tipo glm::vec4 asociado a la clave.
+		glm::vec4 readVec4(const std::string& key) const;
 		/// @brief Lee y devuelve un valor de tipo string asociado a la clave especificada.
 		/// @param key Clave cuyo valor string se desea leer.
 		/// @return El valor de tipo string asociado a la clave.

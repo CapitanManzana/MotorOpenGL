@@ -4,6 +4,7 @@
 #include <utils/logger.h>
 #include <managers/ResourceManager.h>
 #include <core/Mesh.h>
+#include <component/Light.h>
 
 namespace cme {
 	Camera::Camera() {
@@ -32,10 +33,10 @@ namespace cme {
 		}
 	}
 
-	void Camera::uploadToGPU(Mesh* m) {
+	void Camera::uploadToGPU(Mesh* m, ec::entity_t ent) {
 		Shader* s = m->shader();
 		uploadProjectionToGPU(s);
-		uploadViewToGPU(s, m->modelMatrix());
+		uploadViewToGPU(s, m->modelMatrix(), ent);
 	}
 
 	void Camera::uploadProjectionToGPU(Shader* shader) {
@@ -48,16 +49,33 @@ namespace cme {
 		shader->setUniform("projection", _projection);
 	}
 
-	void Camera::uploadViewToGPU(Shader* shader, glm::mat4 model) {
+	void Camera::uploadViewToGPU(Shader* shader, glm::mat4 model, ec::entity_t ent) {
 		if (!shader) {
 			LOG_WARN("El shader para hacer upload de la matriz de vista es nulo");
 			return;
 		}
+
 		glm::mat4 modelView = _view * model;
 		shader->use();
+
 		shader->setUniform("modelView", modelView);
-		shader->setUniform("cameraPos", _cameraPos); // o setVec3
-		shader->setUniform("model", model); // o setVec3
+		shader->setUniform("cameraPos", _cameraPos);
+		shader->setUniform("model", model);
+
+		if (ent->hasComponent<Light>()) return;
+
+		auto& lights = Light::getAllLights();
+		Light* l = nullptr;
+		if (!lights.empty()) {
+			l = lights[0];
+			shader->setUniform("lightColor", l->color());
+			shader->setUniform("lightPos", l->getPosition());
+			shader->setUniform("ambientStrength", l->ambientStrength());
+		}
+		else {
+			shader->setUniform("lightColor", glm::vec3(1.f, 1.f, 1.f));
+			shader->setUniform("ambientStrenght", 1.0f);
+		}
 	}
 
 	void Camera::setCameraLookAt(float xpos, float ypos) {

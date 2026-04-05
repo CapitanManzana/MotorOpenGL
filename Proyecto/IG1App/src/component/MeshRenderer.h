@@ -36,5 +36,7 @@ namespace cme {
 		void deserialize(JsonSerializer& s) override;
 
 		std::string serializeID() const override { return "MeshRenderer"; }
+
+		void setLightSource(bool value);
 	};
 }

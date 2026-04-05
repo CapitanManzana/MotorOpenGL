@@ -6,7 +6,7 @@
 #include <ec/component.h>
 
 namespace cme {
-    /// @brief Se encarga de registrar y crear los componentes
+    /// @brief Se encarga de registrar y crear los componentes para luego poder crearlos en tiempo de ejecución
     class ComponentRegistry {
     private:
         // El mapa: Relaciona String -> Función que devuelve un Component*

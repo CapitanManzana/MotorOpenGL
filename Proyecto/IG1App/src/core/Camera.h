@@ -3,6 +3,7 @@
 #include <glm/vec3.hpp>
 #include <glm/vec4.hpp>
 #include <glm/gtc/type_ptr.hpp>
+#include <ec/entity.h>
 
 namespace cme {
 	class Shader;
@@ -50,7 +51,7 @@ namespace cme {
 
 		/// @brief Manda a la GPU las matrices de proyeccion y vista
 		/// @param m La mesh objetivo
-		void uploadToGPU(Mesh* m);
+		void uploadToGPU(Mesh* m, ec::entity_t ent);
 
 		/// @brief La matriz de vista de la camara
 		/// @return La matriz de vista
@@ -102,7 +103,7 @@ namespace cme {
 		/// @brief Manda a la gpu la matriz de vista
 		/// @param shader El shader objetivo a modificar
 		/// @param model La matriz de modelado del mesh
-		void uploadViewToGPU(Shader* shader, glm::mat4 model);
+		void uploadViewToGPU(Shader* shader, glm::mat4 model, ec::entity_t ent);
 	};
 }
 

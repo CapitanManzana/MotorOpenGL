@@ -7,6 +7,8 @@
 #include <core/Scene.h>
 #include <core/Camera.h>
 #include <component/Transform.h>
+#include <component/MeshRenderer.h>
+#include <component/Light.h>
 
 namespace cme::ui {
 	void InspectorWindow::renderWindowContent() {
@@ -30,6 +32,24 @@ namespace cme::ui {
 					comp->drawOnInspector();
 					ImGui::Dummy(ImVec2(0, 5));
 				}
+			}
+
+			if (ImGui::Button("Add Component")) {
+				ImGui::OpenPopup("add_component_popup");
+			}
+
+			if (ImGui::BeginPopup("add_component_popup")) {
+				ImGui::TextDisabled("Componentes");
+				ImGui::Separator();
+
+				if (ImGui::Selectable("Transform") && !entitySp->hasComponent<Transform>())	
+					entitySp->addComponent<Transform>();
+				if (ImGui::Selectable("Mesh Renderer") && !entitySp->hasComponent<MeshRenderer>())
+					entitySp->addComponent<MeshRenderer>();
+				if (ImGui::Selectable("Light") && !entitySp->hasComponent<Light>())
+					entitySp->addComponent<Light>();
+
+				ImGui::EndPopup();
 			}
 		}
 		else {

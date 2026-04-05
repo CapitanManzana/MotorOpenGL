@@ -18,6 +18,7 @@
 #include <core/register/ComponentRegistry.h>
 #include <component/Transform.h>
 #include <component/MeshRenderer.h>
+#include <component/Light.h>
 
 namespace cme {
 	GLApplication::~GLApplication() {
@@ -119,6 +120,7 @@ namespace cme {
 		// Registrar Componentes
 		ComponentRegistry::registerComponent<Transform>("Transform");
 		ComponentRegistry::registerComponent<MeshRenderer>("MeshRenderer");
+		ComponentRegistry::registerComponent<Light>("Light");
 
 		// Registrar Callbacks interfaz
 		_interface->setCreateCubeCallback([]() {

@@ -19,13 +19,18 @@ namespace cme {
 		std::vector<glm::vec3> _vertices;
 		std::vector<glm::vec4> _vColor;
 		std::vector<glm::uvec3> _indices;
+		std::vector<glm::vec3> _normals;
 
 		GLuint mPrimitive = GL_TRIANGLES;
 
 		GLuint _VAO = 0;	// Vertex Array Object
+		GLuint _LightVAO = 0;	// Vertex Array Object
 		GLuint _VBO = 0;	// Vertex Buffer Object
 		GLuint _CBO = 0;	// Color Buffer Object
 		GLuint _EBO = 0;	// Element Bueffer Object
+		GLuint _NBO = 0;	// Normal Buffer Object
+
+		bool _isLightSource = false;
 
 		glm::mat4 _model = glm::mat4(1.0f); // La matriz de modelado del mesh, que guarda su posición rotacion y escala en el mundo
 
@@ -56,6 +61,9 @@ namespace cme {
 		meshID id() { return _id; }
 
 		void getLocalAABB(glm::vec3& outMin, glm::vec3& outMax) const;
+
+		bool isLightSource() const { return _isLightSource; }
+		void setLightSource(bool value);
 	protected:
 		void initBuffers();
 	};

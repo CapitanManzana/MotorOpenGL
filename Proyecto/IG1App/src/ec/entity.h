@@ -122,9 +122,9 @@ namespace ec
 					continue;
 				}
 
-				this->addComponent(comp);
 				s.beginScope("data");
 				comp->deserialize(s);
+				this->addComponent(comp);
 				s.endScope();
 
 				s.endScope();

@@ -31,21 +31,22 @@
                             "type": "MeshRenderer",
                             "data": {
                                 "mesh": 3,
-                                "shader": ""
+                                "shader": "default",
+                                "isLight": 0
                             }
                         }
                     ]
                 },
                 {
-                    "name": "Cube2",
+                    "name": "Light",
                     "components": [
                         {
                             "type": "Transform",
                             "data": {
                                 "position": [
-                                    0.0,
                                     2.0,
-                                    0.0
+                                    1.0,
+                                    -2.0
                                 ],
                                 "scale": [
                                     1.0,
@@ -63,7 +64,8 @@
                             "type": "MeshRenderer",
                             "data": {
                                 "mesh": 3,
-                                "shader": ""
+                                "shader": "lightSource",
+                                "isLight": 1
                             }
                         },
                         {
@@ -72,11 +74,10 @@
                                 "color": [
                                     1.0,
                                     1.0,
-                                    1.0,
                                     1.0
                                 ],
                                 "intensity": 1.0,
-                                "ambientStrength": 0.10000000149011612
+                                "ambientStrength": 0.20000000298023224
                             }
                         }
                     ]

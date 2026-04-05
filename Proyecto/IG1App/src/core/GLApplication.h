@@ -3,6 +3,12 @@
 
 struct GLFWwindow;
 
+/**
+ * @namespace cme
+ * @brief Contiene todas las clases principales y sistemas del Core Engine.
+ * * En este namespace se agrupan utilidades matemáticas, gestores de ventana,
+ * el bucle principal y los componentes del motor.
+ */
 namespace cme {
 	class Camera;
 	class Scene;

@@ -92,6 +92,10 @@ namespace cme {
 		if (_scope) (*_scope)[key] = {value.x, value.y, value.z};
 	}
 
+	void JsonSerializer::write(const std::string& key, const glm::vec4& value) {
+		if (_scope) (*_scope)[key] = { value.r, value.g, value.b, value.a };
+	}
+
 	void JsonSerializer::write(const std::string& key, const std::string& value) {
 		if (_scope) (*_scope)[key] = value;
 	}
@@ -122,6 +126,16 @@ namespace cme {
 
 		LOG_ERROR(std::format("No se encontro el scope o la key no existe (key: {})", key));
 		return glm::vec3(0,0,0);
+	}
+
+	glm::vec4 JsonSerializer::readVec4(const std::string& key) const {
+		if (_scope && (*_scope).contains(key)) {
+			auto& array = (*_scope)[key];
+			return glm::vec4(array.at(0), array.at(1), array.at(2), array.at(3));
+		}
+
+		LOG_ERROR(std::format("No se encontro el scope o la key no existe (key: {})", key));
+		return glm::vec4(0, 0, 0, 0);
 	}
 
 	std::string JsonSerializer::readString(const std::string& key) const {
