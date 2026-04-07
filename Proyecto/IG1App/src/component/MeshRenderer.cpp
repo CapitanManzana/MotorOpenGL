@@ -15,6 +15,11 @@
 #include <managers/ResourceManager.h>
 
 namespace cme {
+	MeshRenderer::MeshRenderer(Mesh* mesh) : _mesh(mesh) {
+		_mat = new Material();
+		_mesh->setMaterial(_mat);
+	}
+
 	MeshRenderer::~MeshRenderer() {
 		delete _mesh; // Esto invocará Mesh::~Mesh() y liberará VBOs/VAOs y memoria
 	}
@@ -40,8 +45,6 @@ namespace cme {
 				int meshID = _mesh->id();
 				if (meshID >= 0 && meshID < MESH_T_NAMES.size()) _currentMeshType = MESH_T_NAMES[meshID];
 				else LOG_ERROR(std::format("El id del mesh no es valido. Entidad: {} | ID: ", entitySp->name(), meshID));
-
-				_shaderName = _mesh->shader()->getName();
 			}
 		}
 	}
@@ -54,24 +57,26 @@ namespace cme {
 		return _mesh->normalMatrix(); 
 	}
 
+	Material* MeshRenderer::material() {
+		return _mesh->material();
+	}
+
 	void MeshRenderer::getLocalAABB(glm::vec3& outMin, glm::vec3& outMax) const {
 		_mesh->getLocalAABB(outMin, outMax);
 	}
 
 	void MeshRenderer::serialize(JsonSerializer& s) const {
 		s.write("mesh", (int)_mesh->id());
-		s.write("shader", _shaderName);
 		s.write("isLight", _mesh->isLightSource());
 	}
 
 	void MeshRenderer::deserialize(JsonSerializer& s) {
 		int meshID = s.readInt("mesh");
-		std::string _shaderName = s.readString("shader");
 		bool isLight = s.readInt("isLight");
 
-		if (meshID == 1)      _mesh = new TriangleMesh(rscrM().getShader(_shaderName));
-		else if (meshID == 2) _mesh = new QuadMesh(rscrM().getShader(_shaderName));
-		else if (meshID == 3) _mesh = new CubeMesh(rscrM().getShader(_shaderName));
+		if (meshID == 1)      _mesh = new TriangleMesh();
+		else if (meshID == 2) _mesh = new QuadMesh();
+		else if (meshID == 3) _mesh = new CubeMesh();
 
 		if (!_mesh) {
 			LOG_ERROR("La mesh es nula despues de cargarla del archivo");
@@ -105,13 +110,13 @@ namespace cme {
 
 								delete _mesh;
 								if (_currentMeshType == MESH_T_NAMES[1]) {
-									_mesh = new TriangleMesh(rscrM().getShader(_shaderName));
+									_mesh = new TriangleMesh();
 								}
 								else if (_currentMeshType == MESH_T_NAMES[2]) {
-									_mesh = new QuadMesh(rscrM().getShader(_shaderName));
+									_mesh = new QuadMesh();
 								}
 								else if (_currentMeshType == MESH_T_NAMES[3]) {
-									_mesh = new CubeMesh(rscrM().getShader(_shaderName));
+									_mesh = new CubeMesh();
 								}
 								else {
 									_mesh = nullptr;
@@ -130,7 +135,7 @@ namespace cme {
 					ImGui::Text("Shader");
 					ImGui::TableSetColumnIndex(1);
 
-					if (ImGui::BeginCombo("##comboShader", _shaderName.c_str())) {
+					/*if (ImGui::BeginCombo("##comboShader", _shaderName.c_str())) {
 						for (auto& opcion : rscrM().getAllShaderNames()) {
 							bool isSelected = _shaderName == opcion;
 							if (ImGui::Selectable(opcion.c_str(), isSelected)) {
@@ -149,7 +154,7 @@ namespace cme {
 							}
 						}
 						ImGui::EndCombo();
-					}
+					}*/
 
 					ImGui::EndTable();
 				}

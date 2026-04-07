@@ -1,10 +1,12 @@
 #include "TriangleMesh.h"
 #include <core/Shader.h>
+#include <core/Material.h>
 
 namespace cme {
 	TriangleMesh::TriangleMesh() {
 		generateMesh();
 		initBuffers();
+		_mat = new Material();
 
 		_id = TRIANGLE;
 	}

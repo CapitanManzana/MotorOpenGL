@@ -97,6 +97,14 @@ namespace cme {
 		glUniform1f(getUniformLocation(name), value);
 	}
 
+	void Shader::setUniform(const std::string& name, int value) {
+		glUniform1i(getUniformLocation(name), value);
+	}
+
+	void Shader::setUniform(const std::string& name, bool value) {
+		glUniform1i(getUniformLocation(name), value);
+	}
+
 	void Shader::setUniform(const std::string& name, const glm::vec3& value) {
 		glUniform3f(getUniformLocation(name), value.r, value.g, value.b);
 	}

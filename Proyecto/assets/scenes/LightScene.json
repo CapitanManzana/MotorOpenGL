@@ -16,6 +16,72 @@
                                     0.0
                                 ],
                                 "scale": [
+                                    9.0,
+                                    0.10000000149011612,
+                                    9.0
+                                ],
+                                "rotation": [
+                                    0.0,
+                                    0.0,
+                                    0.0
+                                ]
+                            }
+                        },
+                        {
+                            "type": "MeshRenderer",
+                            "data": {
+                                "mesh": 3,
+                                "shader": "default",
+                                "isLight": 0
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "Cube",
+                    "components": [
+                        {
+                            "type": "Transform",
+                            "data": {
+                                "position": [
+                                    4.0,
+                                    2.0,
+                                    0.0
+                                ],
+                                "scale": [
+                                    0.10000000149011612,
+                                    5.0,
+                                    10.0
+                                ],
+                                "rotation": [
+                                    0.0,
+                                    0.0,
+                                    0.0
+                                ]
+                            }
+                        },
+                        {
+                            "type": "MeshRenderer",
+                            "data": {
+                                "mesh": 3,
+                                "shader": "default",
+                                "isLight": 0
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "Cube",
+                    "components": [
+                        {
+                            "type": "Transform",
+                            "data": {
+                                "position": [
+                                    0.0,
+                                    2.0,
+                                    0.0
+                                ],
+                                "scale": [
                                     1.0,
                                     1.0,
                                     1.0
@@ -49,9 +115,9 @@
                                     -2.0
                                 ],
                                 "scale": [
-                                    1.0,
-                                    1.0,
-                                    1.0
+                                    0.10000000149011612,
+                                    0.10000000149011612,
+                                    0.10000000149011612
                                 ],
                                 "rotation": [
                                     0.0,

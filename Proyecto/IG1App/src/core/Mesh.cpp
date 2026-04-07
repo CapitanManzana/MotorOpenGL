@@ -2,6 +2,7 @@
 #include "Shader.h"
 #include <utils/logger.h>
 #include <managers/ResourceManager.h>
+#include <core/Material.h>
 
 namespace cme {
     Mesh::~Mesh() {
@@ -24,6 +25,11 @@ namespace cme {
             if (_NBO != 0) {
                 glDeleteBuffers(1, &_NBO);
                 _NBO = 0;
+            }
+
+            if (_TBO != 0) {
+                glDeleteBuffers(1, &_TBO);
+                _TBO = 0;
             }
         }
 
@@ -71,17 +77,26 @@ namespace cme {
             glEnableVertexAttribArray(2);
         }
 
+        if (!_texCoords.empty()) {
+            glGenBuffers(1, &_TBO);
+            glBindBuffer(GL_ARRAY_BUFFER, _TBO);
+            glBufferData(GL_ARRAY_BUFFER, _texCoords.size() * sizeof(glm::vec2), _texCoords.data(), GL_STATIC_DRAW);
+            glVertexAttribPointer(3, 2, GL_FLOAT, GL_FALSE, sizeof(glm::vec2), nullptr);
+            glEnableVertexAttribArray(3);
+        }
+
         // Nos desvinculamos para no modificar este VAO por accidente después
         glBindVertexArray(0);
     }
 
     void Mesh::render() const {
-        if (!_shader) {
+        if (!_mat) {
             LOG_ERROR("La mesh no tiene shader asignado");
             return;
         }
 
-        _shader->use();
+        if (!_shader) _mat->apply();
+        else _shader->use();
 
         glBindVertexArray(_VAO);
         if (!_indices.empty()) {
@@ -126,7 +141,7 @@ namespace cme {
 
             glBindVertexArray(0);
 
-            setShader(rscrM().getShader("lightSource"));
+            _mat->shader = rscrM().getShader("lightSource");
         }
         else {
             if (_LightVAO != 0) {
@@ -136,7 +151,7 @@ namespace cme {
                 _VBO = 0;
             }
 
-            setShader(rscrM().getShader("default"));
+            _mat->shader = rscrM().getShader("default");
         }
 
         _isLightSource = value;

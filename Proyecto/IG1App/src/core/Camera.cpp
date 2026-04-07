@@ -5,6 +5,7 @@
 #include <managers/ResourceManager.h>
 #include <core/Mesh.h>
 #include <component/Light.h>
+#include <core/Material.h>
 
 namespace cme {
 	Camera::Camera() {
@@ -25,6 +26,10 @@ namespace cme {
 	}
 
 	void Camera::buildProjectionMat() {
+		if (gla().width() <= 0.0f || gla().height() <= 0.0f) {
+			return; // Salimos sin actualizar la matriz
+		}
+
 		if (_usePerspective) {
 			_projection = glm::perspective(_fov, gla().width() / gla().height(), _nearDistance, _farDistance);
 		}
@@ -34,7 +39,16 @@ namespace cme {
 	}
 
 	void Camera::uploadToGPU(Mesh* m, ec::entity_t ent) {
-		Shader* s = m->shader();
+		Shader* s = nullptr;
+
+		if (m->shader())          s = m->shader();           // gizmo — shader directo
+		else if (m->material())   s = m->material()->shader; // objeto normal — material
+
+		if (!s) {
+			LOG_WARN("La mesh no tiene shader ni material para subir a la GPU");
+			return;
+		}
+
 		uploadProjectionToGPU(s);
 		uploadViewToGPU(s, m->modelMatrix(), m->normalMatrix(), ent);
 	}

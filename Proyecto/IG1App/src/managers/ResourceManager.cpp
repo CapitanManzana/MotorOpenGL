@@ -1,6 +1,7 @@
 #include "ResourceManager.h"
 #include <filesystem>
 #include <utils/logger.h>
+#include <core/Texture.h>
 
 namespace fs = std::filesystem;
 
@@ -8,11 +9,37 @@ namespace cme {
     ResourceManager::~ResourceManager() {}
 
     bool ResourceManager::init() {
+        loadShaders();
+        loadTextures();
+
+        return true;
+    }
+
+    Shader* ResourceManager::getShader(std::string key) {
+        auto it = _shadersMap.find(key);
+        if (it != _shadersMap.end()) {
+            return it->second.get();
+        }
+
+        LOG_WARN("Se intento obtener el shader '" << key << "', pero no existe");
+        return nullptr;
+    }
+
+    Texture* ResourceManager::getTexture(std::string key) {
+        auto it = _texturesMap.find(key);
+        if (it != _texturesMap.end()) {
+            return it->second.get();
+        }
+
+        LOG_WARN("Se intento obtener la textura '" << key << "', pero no existe");
+        return nullptr;
+    }
+
+    void ResourceManager::loadShaders() {
         std::unordered_map<std::string, ShaderCreationData> foundShaders;
 
         if (!fs::exists(SHADERS_PATH) || !fs::is_directory(SHADERS_PATH)) {
             LOG_ERROR("No existe el path de shaders: " << SHADERS_PATH << ". Buscando desde: " << fs::current_path());
-            return false;
         }
 
         // Recorremos cada archivo de la carpeta
@@ -51,18 +78,26 @@ namespace cme {
                 LOG_WARN("Shader incompleto" << name << ".Falta el.vert o el.frag.\n");
             }
         }
-
-        return true;
     }
 
-    Shader* ResourceManager::getShader(std::string key) {
-        auto it = _shadersMap.find(key);
-        if (it != _shadersMap.end()) {
-            return it->second.get();
+    void ResourceManager::loadTextures() {
+        if (!fs::exists(TEXTURES_PATH) || !fs::is_directory(TEXTURES_PATH)) {
+            LOG_ERROR("No existe el path de textures: " << TEXTURES_PATH << ". Buscando desde: " << fs::current_path());
         }
 
-        LOG_WARN("Se intento obtener el shader '" << key << "', pero no existe");
-        return nullptr;
+        for (const auto& archivo : fs::directory_iterator(TEXTURES_PATH)) {
+            // Nos aseguramos de que sea un archivo y no una subcarpeta
+            if (archivo.is_regular_file()) {
+                // Extraemos la información usando las utilidades de filesystem
+                std::string extension = archivo.path().extension().string(); // ej: ".vert"
+                std::string baseName = archivo.path().stem().string();     // ej: "basico"
+                std::string fullPath = archivo.path().string();          // ej: "assets/shaders/basico.vert"
+                
+                _texturesMap[baseName] = std::make_unique<Texture>();
+                _texturesMap[baseName]->load(fullPath);
+                _texturesNames.push_back(baseName);
+            }
+        }
     }
 
     std::vector<Shader*> ResourceManager::getAllShaders() {
@@ -71,5 +106,9 @@ namespace cme {
 
     std::vector<std::string> ResourceManager::getAllShaderNames() {
         return _shaderNames;
+    }
+
+    std::vector<std::string> ResourceManager::getAllTextureNames() {
+        return _texturesNames;
     }
 }

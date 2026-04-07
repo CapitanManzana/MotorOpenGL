@@ -85,7 +85,9 @@ if %errorlevel% leq 7 exit 0</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\core\Material.cpp" />
     <ClCompile Include="src\component\Light.cpp" />
+    <ClCompile Include="src\core\Texture.cpp" />
     <ClCompile Include="src\utils\Raycast.cpp" />
     <ClCompile Include="src\managers\InputManager.cpp" />
     <ClCompile Include="src\component\Transform.cpp" />
@@ -121,7 +123,9 @@ if %errorlevel% leq 7 exit 0</Command>
     <ClCompile Include="src\core\ui\windows\ViewportWindow.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\core\Material.h" />
     <ClInclude Include="src\component\Light.h" />
+    <ClInclude Include="src\core\Texture.h" />
     <ClInclude Include="src\utils\Raycast.h" />
     <ClInclude Include="src\core\serialize\Inspectable.h" />
     <ClInclude Include="src\managers\InputManager.h" />

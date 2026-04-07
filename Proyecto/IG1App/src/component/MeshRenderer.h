@@ -2,6 +2,7 @@
 #include <ec/component.h>
 #include <string>
 #include <glm/fwd.hpp>
+#include <core/Material.h>
 
 namespace cme {
 	class Mesh;
@@ -14,14 +15,17 @@ namespace cme {
 		Mesh* _mesh = nullptr;
 		Camera* _cam = nullptr;
 		Transform* _tr = nullptr;
-
-		std::string _shaderName;
 		std::string _currentMeshType;
+
+		Material* _mat = nullptr;
 	public:
 		__CMPID_DECL__(ec::comp::MESH_RENDERER)
 
-		MeshRenderer() : _mesh(nullptr) {}
-		MeshRenderer(Mesh* mesh) : _mesh(mesh) {}
+		MeshRenderer() : _mesh(nullptr) {
+			_mat = new Material();
+		}
+
+		MeshRenderer(Mesh* mesh);
 		~MeshRenderer();
 
 		void render() const override;
@@ -40,5 +44,7 @@ namespace cme {
 		void setLightSource(bool value);
 
 		glm::mat3& normalMatrix();
+
+		Material* material();
 	};
 }

@@ -51,6 +51,11 @@ namespace cme::ui {
 
 				ImGui::EndPopup();
 			}
+
+			ImGui::Separator();
+			if (auto m = entitySp->getComponent<MeshRenderer>()) {
+				m->material()->drawOnInspector();
+			}
 		}
 		else {
 			_selectedEnt.reset();

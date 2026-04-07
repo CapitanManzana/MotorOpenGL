@@ -1,10 +1,12 @@
 #include "CubeMesh.h"
 #include <core/Shader.h>
+#include <core/Material.h>
 
 namespace cme {
 	CubeMesh::CubeMesh() {
 		generateMesh();
 		initBuffers();
+		_mat = new Material();
 
 		_id = CUBE;
 	}
@@ -130,5 +132,12 @@ namespace cme {
 		_normals.emplace_back(-1, 0, 0);
 		_normals.emplace_back(-1, 0, 0);
 		_normals.emplace_back(-1, 0, 0);
+
+		for (int i = 0; i < 6; ++i) {
+			_texCoords.emplace_back(0.0f, 0.0f); // Abajo-Izq
+			_texCoords.emplace_back(1.0f, 0.0f); // Abajo-Der
+			_texCoords.emplace_back(1.0f, 1.0f); // Arriba-Der
+			_texCoords.emplace_back(0.0f, 1.0f); // Arriba-Izq
+		}
 	}
 }

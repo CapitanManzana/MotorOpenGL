@@ -9,17 +9,18 @@
 
 namespace cme {
 	class Shader;
-
+	class Material;
 	/// @brief Clase abstracta que sirve como padre para crear todo tipo de mallas distintas
 	class Mesh
 	{
 	protected:
-		Shader* _shader = nullptr;
+		Material* _mat = nullptr;
 
 		std::vector<glm::vec3> _vertices;
 		std::vector<glm::vec4> _vColor;
 		std::vector<glm::uvec3> _indices;
 		std::vector<glm::vec3> _normals;
+		std::vector<glm::vec2> _texCoords;
 
 		GLuint mPrimitive = GL_TRIANGLES;
 
@@ -29,6 +30,7 @@ namespace cme {
 		GLuint _CBO = 0;	// Color Buffer Object
 		GLuint _EBO = 0;	// Element Bueffer Object
 		GLuint _NBO = 0;	// Normal Buffer Object
+		GLuint _TBO = 0;	// Texture Buffer Object
 
 		bool _isLightSource = false;
 
@@ -36,6 +38,8 @@ namespace cme {
 		glm::mat3 _normalMatrix;
 
 		meshID _id = None;
+
+		Shader* _shader = nullptr;
 	public:
 		/// @brief Constructor por defecto
 		Mesh() = default;
@@ -48,7 +52,7 @@ namespace cme {
 
 		/// @brief Cambia el shader que utiliza la mesh
 		/// @param shader El shader a poner
-		void setShader(Shader* shader) { _shader = shader; }
+		void setMaterial(Material* mat) { _mat = mat; }
 		/// @brief Establece la matriz de modelado de la malla
 		/// @param model La nueva matriz
 		void setModelMatrix(glm::mat4 model);
@@ -62,8 +66,7 @@ namespace cme {
 			return _normalMatrix; 
 		}
 
-		/// @brief El shader que esta usando la mesh
-		/// @return Un puntero al shader
+		Material* material() { return _mat; }
 		Shader* shader() { return _shader; }
 
 		meshID id() { return _id; }

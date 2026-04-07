@@ -1,10 +1,12 @@
 #include "QuadMesh.h"
 #include <core/Shader.h>
+#include <core/Material.h>
 
 namespace cme {
 	QuadMesh::QuadMesh() {
 		generateMesh();
 		initBuffers();
+		_mat = new Material();
 
 		_id = QUAD;
 	}
