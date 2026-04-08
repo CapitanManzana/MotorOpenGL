@@ -95,6 +95,7 @@ namespace cme {
                 
                 _texturesMap[baseName] = std::make_unique<Texture>();
                 _texturesMap[baseName]->load(fullPath);
+                _texturesMap[baseName]->setName(baseName);
                 _texturesNames.push_back(baseName);
             }
         }

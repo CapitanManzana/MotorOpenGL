@@ -38,8 +38,6 @@ namespace cme {
 		glm::mat3 _normalMatrix;
 
 		meshID _id = None;
-
-		Shader* _shader = nullptr;
 	public:
 		/// @brief Constructor por defecto
 		Mesh() = default;
@@ -67,7 +65,6 @@ namespace cme {
 		}
 
 		Material* material() { return _mat; }
-		Shader* shader() { return _shader; }
 
 		meshID id() { return _id; }
 

@@ -29,12 +29,16 @@ namespace cme {
 		void loadColorBuffer(GLsizei width, GLsizei height, GLuint buffer = GL_FRONT);
 
 		GLuint id() { return mId; }
+		std::string name() { return _name; }
+		void setName(std::string n) { _name = n; }
 	protected:
 		void init();
 
 		int mWidth = 0;
 		int mHeight = 0;
 		GLuint mId = 0;
+
+		std::string _name;
 
 		unsigned char* _image = nullptr;
 	};

@@ -17,13 +17,10 @@ namespace cme {
 		Transform* _tr = nullptr;
 		std::string _currentMeshType;
 
-		Material* _mat = nullptr;
 	public:
 		__CMPID_DECL__(ec::comp::MESH_RENDERER)
 
-		MeshRenderer() : _mesh(nullptr) {
-			_mat = new Material();
-		}
+		MeshRenderer() : _mesh(nullptr) {}
 
 		MeshRenderer(Mesh* mesh);
 		~MeshRenderer();

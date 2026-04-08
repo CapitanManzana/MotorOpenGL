@@ -11,12 +11,8 @@ namespace cme {
 		_id = CUBE;
 	}
 
-	CubeMesh::CubeMesh(Shader* shader) {
-		_shader = shader;
-		generateMesh();
-		initBuffers();
-
-		_id = CUBE;
+	CubeMesh::CubeMesh(Shader* shader) : CubeMesh() {
+		_mat->setShader(shader);
 	}
 
 	void CubeMesh::generateMesh() {

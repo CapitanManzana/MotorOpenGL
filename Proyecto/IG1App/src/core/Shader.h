@@ -2,8 +2,12 @@
 #include <string>
 #include <glm/fwd.hpp>
 #include <unordered_map>
+#include <glad/glad.h>
 
 namespace cme {
+
+	using RawUniform = std::vector<std::pair<std::string, GLenum>>;
+
 	/// @brief Contiene la información necesaria para crear un shader, incluyendo las rutas de los archivos de shader de vértices y fragmentos. 
 	/// Esta estructura se utiliza para encapsular los datos necesarios para la creación de un shader en la aplicación.
 	struct ShaderCreationData {
@@ -55,12 +59,15 @@ namespace cme {
 		/// @brief Activa el shader para su uso en la aplicación. Esto hace que el shader sea el programa de shader activo en OpenGL.
 		void use() const;
 
+		RawUniform getActiveUniforms();
+
 		/// @brief Establece un valor a una variable uniform del shader
 		/// @param name Nombre de la variable
 		/// @param value Valor de la variable
 		void setUniform(const std::string& name, float value);
 		void setUniform(const std::string& name, int value);
 		void setUniform(const std::string& name, bool value);
+		void setUniform(const std::string& name, const glm::vec2& value);
 		void setUniform(const std::string& name, const glm::vec3& value);
 		void setUniform(const std::string& name, const glm::vec4& value);
 		void setUniform(const std::string& name, const glm::mat4& value);
@@ -80,5 +87,6 @@ namespace cme {
 		GLuint compileShader(const char* shaderSource, GLenum shaderType) const;
 
 		int getUniformLocation(const std::string& name);
+
 	};
 }

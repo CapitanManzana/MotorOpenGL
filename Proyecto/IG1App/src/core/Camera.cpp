@@ -1,4 +1,4 @@
-#include "Camera.h"
+ï»¿#include "Camera.h"
 #include <core/GLApplication.h>
 #include <core/Shader.h>
 #include <utils/logger.h>
@@ -39,16 +39,9 @@ namespace cme {
 	}
 
 	void Camera::uploadToGPU(Mesh* m, ec::entity_t ent) {
-		Shader* s = nullptr;
+		if (!m->material()) return;
 
-		if (m->shader())          s = m->shader();           // gizmo — shader directo
-		else if (m->material())   s = m->material()->shader; // objeto normal — material
-
-		if (!s) {
-			LOG_WARN("La mesh no tiene shader ni material para subir a la GPU");
-			return;
-		}
-
+		Shader* s = m->material()->getShader();
 		uploadProjectionToGPU(s);
 		uploadViewToGPU(s, m->modelMatrix(), m->normalMatrix(), ent);
 	}
@@ -83,11 +76,12 @@ namespace cme {
 		Light* l = nullptr;
 		if (!lights.empty()) {
 			l = lights[0];
+			shader->setUniform("hasLight", true);
 			shader->setUniform("lightColor", l->color());
 			shader->setUniform("lightPos", l->getPosition());
 		}
 		else {
-			shader->setUniform("lightColor", glm::vec3(1.f, 1.f, 1.f));
+			shader->setUniform("hasLight", false);
 		}
 	}
 

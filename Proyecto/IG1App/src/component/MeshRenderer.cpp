@@ -16,8 +16,6 @@
 
 namespace cme {
 	MeshRenderer::MeshRenderer(Mesh* mesh) : _mesh(mesh) {
-		_mat = new Material();
-		_mesh->setMaterial(_mat);
 	}
 
 	MeshRenderer::~MeshRenderer() {

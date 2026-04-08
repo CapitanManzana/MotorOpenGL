@@ -82,5 +82,6 @@
     <ClInclude Include="src\component\Light.h" />
     <ClInclude Include="src\core\Texture.h" />
     <ClInclude Include="src\core\Material.h" />
+    <ClInclude Include="src\utils\ImGuiUtils.h" />
   </ItemGroup>
 </Project>

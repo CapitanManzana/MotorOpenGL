@@ -93,12 +93,11 @@ namespace cme {
 
     void Mesh::render() const {
         if (!_mat) {
-            LOG_ERROR("La mesh no tiene shader asignado");
+            LOG_ERROR("La mesh no tiene material asignado");
             return;
         }
 
-        if (!_shader) _mat->apply();
-        else _shader->use();
+        _mat->apply();
 
         glBindVertexArray(_VAO);
         if (!_indices.empty()) {
@@ -143,7 +142,7 @@ namespace cme {
 
             glBindVertexArray(0);
 
-            _mat->shader = rscrM().getShader("lightSource");
+            _mat->setShader(rscrM().getShader("lightSource"));
         }
         else {
             if (_LightVAO != 0) {
@@ -153,7 +152,7 @@ namespace cme {
                 _VBO = 0;
             }
 
-            _mat->shader = rscrM().getShader("default");
+            _mat->setShader(rscrM().getShader("default"));
         }
 
         _isLightSource = value;

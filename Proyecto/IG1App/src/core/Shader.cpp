@@ -93,6 +93,30 @@ namespace cme {
 		return location;
 	}
 
+	RawUniform Shader::getActiveUniforms() {
+		RawUniform result;
+
+		GLint count;
+		glGetProgramiv(_shaderProgram, GL_ACTIVE_UNIFORMS, &count);
+		for (GLint i = 0; i < count; ++i) {
+			char name[256];
+			GLsizei length;
+			GLint size;
+			GLenum type;
+
+			glGetActiveUniform(_shaderProgram, i, sizeof(name), &length, &size, &type, name);
+
+			// Ignorar uniforms internos de OpenGL (empiezan por "gl_")
+			if (name[0] == 'g' && name[1] == 'l' && name[2] == '_') continue;
+
+			result.emplace_back(name, type);
+			int location = glGetUniformLocation(_shaderProgram, name);
+			_uniformLocationCache[name] = location;
+		}
+
+		return result;
+	}
+
 	void Shader::setUniform(const std::string& name, float value) {
 		glUniform1f(getUniformLocation(name), value);
 	}
@@ -103,6 +127,10 @@ namespace cme {
 
 	void Shader::setUniform(const std::string& name, bool value) {
 		glUniform1i(getUniformLocation(name), value);
+	}
+
+	void Shader::setUniform(const std::string& name, const glm::vec2& value) {
+		glUniform2f(getUniformLocation(name), value.x, value.y);
 	}
 
 	void Shader::setUniform(const std::string& name, const glm::vec3& value) {
