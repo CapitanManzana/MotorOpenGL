@@ -85,11 +85,9 @@ namespace cme {
 			l = lights[0];
 			shader->setUniform("lightColor", l->color());
 			shader->setUniform("lightPos", l->getPosition());
-			shader->setUniform("ambientStrength", l->ambientStrength());
 		}
 		else {
 			shader->setUniform("lightColor", glm::vec3(1.f, 1.f, 1.f));
-			shader->setUniform("ambientStrenght", 1.0f);
 		}
 	}
 

@@ -11,6 +11,11 @@
 namespace cme {
 	Texture::~Texture()
 	{
+		if (_image) {
+			stbi_image_free(_image);
+			_image = nullptr;
+		}
+
 		if (mId != 0)
 			glDeleteTextures(1, &mId);
 	}

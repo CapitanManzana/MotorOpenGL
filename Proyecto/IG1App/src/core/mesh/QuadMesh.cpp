@@ -11,8 +11,12 @@ namespace cme {
 		_id = QUAD;
 	}
 
-	QuadMesh::QuadMesh(Shader* shader) : QuadMesh() {
+	QuadMesh::QuadMesh(Shader* shader) {
 		_shader = shader;
+		generateMesh();
+		initBuffers();
+
+		_id = QUAD;
 	}
 
 	void QuadMesh::generateMesh() {

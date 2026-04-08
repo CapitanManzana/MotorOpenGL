@@ -39,6 +39,8 @@ namespace cme {
             _VAO = 0;
             _VBO = 0;
         }
+
+        delete _mat;
     }
 
     void Mesh::initBuffers() {

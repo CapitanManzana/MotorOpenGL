@@ -11,8 +11,12 @@ namespace cme {
 		_id = TRIANGLE;
 	}
 
-	TriangleMesh::TriangleMesh(Shader* shader) : TriangleMesh() {
+	TriangleMesh::TriangleMesh(Shader* shader) {
 		_shader = shader;
+		generateMesh();
+		initBuffers();
+
+		_id = TRIANGLE;
 	}
 
 	void TriangleMesh::generateMesh() {
