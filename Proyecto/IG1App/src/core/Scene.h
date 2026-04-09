@@ -9,6 +9,7 @@
 
 namespace cme {
 	class Camera;
+	class GlobalLight;
 
 	class Scene : public Serializable
 	{
@@ -16,15 +17,12 @@ namespace cme {
 		/// @param gameObjectsByLayer vectores de objetos según la layer a la que pertencen
 		/// El vector de gameObjectsByLayer[n] tendría todos los objetos pertencientes a la layer n 
 		std::array<std::vector<ec::entity_t>, ec::ent::maxGroupLayer> _gameObjectsByGroup;
-
 		std::vector<ec::entity_t> _gizmos;
-
-		/// @brief inicializa la escena creando todos los objetos que vayan a haber en la misma
-		virtual void init() {};
 
 		Camera* _cam = nullptr;
 		std::string _name = "Scene";
 
+		GlobalLight* _globalLight = nullptr;
 	public:
 		Scene(std::string name);
 
@@ -56,5 +54,10 @@ namespace cme {
 
 		void serialize(JsonSerializer& s) const override;
 		void deserialize(JsonSerializer& s) override;
+
+		GlobalLight* globalLight() { return _globalLight; }
+	private:
+		/// @brief inicializa la escena creando todos los objetos que vayan a haber en la misma
+		virtual void init() {};
 	};
 }

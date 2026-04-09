@@ -9,6 +9,7 @@
 #include <core/ui/windows/ViewportWindow.h>
 #include <core/ui/windows/SceneWindow.h>
 #include <core/ui/windows/ConsoleWindow.h>
+#include <core/ui/windows/LightingWindow.h>
 
 #include <managers/SceneManager.h>
 
@@ -29,19 +30,6 @@ namespace cme::ui {
 
 	bool UIManager::initCoreUI(GLFWwindow* window) {
 		if (!initImgui(window)) return false;
-
-		auto inspector = addWindow<InspectorWindow>("Inspector");
-		addWindow<ViewportWindow>("Viewport");
-		auto hierarchy = addWindow<SceneWindow>("Scene");
-		auto console = addWindow<ConsoleWindow>("Console");
-
-		hierarchy->setCallback([inspector](std::weak_ptr<ec::Entity> e) {
-			inspector->changeDisplayEntity(e);
-			});
-
-		logger().setCallback([console](const std::string& msg) {
-			console->addLog(msg);
-			});
 
 		return true;
 	}
@@ -85,6 +73,20 @@ namespace cme::ui {
 	}
 
 	void UIManager::start() {
+		auto inspector = addWindow<InspectorWindow>("Inspector");
+		addWindow<ViewportWindow>("Viewport");
+		auto hierarchy = addWindow<SceneWindow>("Scene");
+		auto console = addWindow<ConsoleWindow>("Console");
+		addWindow<LightingWindow>("Lighting");
+
+		hierarchy->setCallback([inspector](std::weak_ptr<ec::Entity> e) {
+			inspector->changeDisplayEntity(e);
+			});
+
+		logger().setCallback([console](const std::string& msg) {
+			console->addLog(msg);
+			});
+
 		if (auto& viewport = _windows[windowGroupID::VIEWPORT]) {
 			ViewportWindow& vp = static_cast<ViewportWindow&>(*viewport);
 			vp.initialResize();

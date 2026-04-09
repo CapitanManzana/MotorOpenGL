@@ -164,6 +164,6 @@ namespace cme {
 
     void Mesh::setModelMatrix(glm::mat4 model) {
         _model = model;
-        if (_LightVAO != 0) calculateNormalMatrix();
+        calculateNormalMatrix();
     }
 }

@@ -7,15 +7,18 @@
 #include <component/MeshRenderer.h>
 #include <core/mesh/QuadMesh.h>
 #include <core/mesh/CubeMesh.h>
+#include <core/lighting/GlobalLight.h>
 
 namespace cme {
 	Scene::Scene(std::string name) : _name(name) {
 		_cam = new Camera();
+		_globalLight = new GlobalLight();
 		createGrid();
 	}
 
 	Scene::~Scene() {
 		delete _cam;
+		delete _globalLight;
 	}
 
 	void Scene::refresh() {

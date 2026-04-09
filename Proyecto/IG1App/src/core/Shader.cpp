@@ -114,6 +114,13 @@ namespace cme {
 			_uniformLocationCache[name] = location;
 		}
 
+		if (glGetUniformLocation(_shaderProgram, "globalLight.color") != -1) {
+			_type = ShaderType::LIT_PHONG;
+		}
+		else {
+			_type = ShaderType::UNLIT;
+		}
+
 		return result;
 	}
 

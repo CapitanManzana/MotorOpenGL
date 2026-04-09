@@ -38,7 +38,7 @@ void main() {
     float d = distance(cameraPos, WorldPos);
     // Smoothstep difumina suavemente. A 10.0 de distancia empieza a borrarse, a 60.0 desaparece.
     // (Ajusta estos valores según la escala de tu motor)
-    float fade = 1.0 - smoothstep(10.0, 60.0, d);
+    float fade = 1.0 - smoothstep(50.0, 110.0, d);
 
     FragColor = vec4(smallGridColor.rgb + bigGridColor.rgb, (smallGridColor.a + bigGridColor.a) * fade);
     

@@ -85,6 +85,8 @@ if %errorlevel% leq 7 exit 0</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\core\lighting\GlobalLight.cpp" />
+    <ClCompile Include="src\core\ui\windows\LightingWindow.cpp" />
     <ClCompile Include="src\core\Material.cpp" />
     <ClCompile Include="src\component\Light.cpp" />
     <ClCompile Include="src\core\Texture.cpp" />
@@ -123,6 +125,8 @@ if %errorlevel% leq 7 exit 0</Command>
     <ClCompile Include="src\core\ui\windows\ViewportWindow.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\core\lighting\GlobalLight.h" />
+    <ClInclude Include="src\core\ui\windows\LightingWindow.h" />
     <ClInclude Include="src\core\Material.h" />
     <ClInclude Include="src\component\Light.h" />
     <ClInclude Include="src\core\Texture.h" />

@@ -70,19 +70,19 @@ namespace cme {
 		shader->setUniform("model", model);
 		shader->setUniform("normalMatrix", normal);
 
-		if (ent->hasComponent<Light>()) return;
+		//if (ent->hasComponent<Light>()) return;
 
-		auto& lights = Light::getAllLights();
-		Light* l = nullptr;
-		if (!lights.empty()) {
-			l = lights[0];
-			shader->setUniform("hasLight", true);
-			shader->setUniform("lightColor", l->color());
-			shader->setUniform("lightPos", l->getPosition());
-		}
-		else {
-			shader->setUniform("hasLight", false);
-		}
+		//auto& lights = Light::getAllLights();
+		//Light* l = nullptr;
+		//if (!lights.empty()) {
+		//	l = lights[0];
+		//	shader->setUniform("hasLight", true);
+		//	shader->setUniform("lightColor", l->color());
+		//	shader->setUniform("lightPos", l->getPosition());
+		//}
+		//else {
+		//	shader->setUniform("hasLight", false);
+		//}
 	}
 
 	void Camera::setCameraLookAt(float xpos, float ypos) {

@@ -1,6 +1,6 @@
 #pragma once
 #include <cstdint>
-#define UI_WINDOW_GROUP_LIST INSPECTOR, VIEWPORT, SCENE, CONSOLE, NUM_GROUP
+#define UI_WINDOW_GROUP_LIST INSPECTOR, VIEWPORT, SCENE, CONSOLE, LIGHTING, NUM_GROUP
 
 namespace cme::ui {
 	using windowGroupID_t = uint8_t;

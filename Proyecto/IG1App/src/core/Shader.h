@@ -30,8 +30,7 @@ namespace cme {
 		}
 	};
 
-	typedef unsigned int GLuint;
-	typedef unsigned int GLenum;
+	enum class ShaderType { UNLIT, LIT_PHONG};
 
 	/// @brief Clase que representa un shader de OpenGL. Se encarga de cargar, compilar y gestionar los shaders en la aplicación.
 	class Shader
@@ -42,6 +41,7 @@ namespace cme {
 		std::string _name;
 
 		std::unordered_map<std::string, int> _uniformLocationCache;
+		ShaderType _type;
 	public:
 		/// @brief Constructor que carga el shader desde un archivo. El shader se compila y se prepara para su uso. 
 		/// @param ctx Contexto para la cración de los shaders
@@ -74,6 +74,7 @@ namespace cme {
 		void setUniform(const std::string& name, const glm::mat3& value);
 
 		std::string getName() { return _name; }
+		ShaderType type() { return _type; }
 	private:
 		/// @brief Se encarga de leer el código fuente del shader desde un archivo. Dado un path al archivo del shader, esta función lee su contenido y devuelve el código fuente como una cadena de caracteres.
 		/// @param shaderPath Donde se encuentra el archivo del shader que se desea cargar.
