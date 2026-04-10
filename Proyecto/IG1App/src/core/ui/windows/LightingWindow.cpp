@@ -5,10 +5,9 @@
 
 namespace cme::ui {
 	LightingWindow::LightingWindow(const char* name) : Window(name) {
-		_gL = sceneM().activeScene()->globalLight();
 	}
 
 	void LightingWindow::renderWindowContent() {
-		_gL->drawOnInspector();
+		sceneM().activeScene()->globalLight()->drawOnInspector();
 	}
 }

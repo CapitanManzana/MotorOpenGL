@@ -107,9 +107,14 @@ namespace cme {
 				gObj->serialize(s);
 			}
 			s.endScope(); // El del array de entidades
+			s.endScope(); // El array de grupos
 		}
-
 		s.endScope(); // El array de grupos
+		
+
+		s.beginScope("globalLight");
+		_globalLight->serialize(s);
+		s.endScope();
 	}
 
 	void Scene::deserialize(JsonSerializer& s) {
@@ -117,7 +122,7 @@ namespace cme {
 		s.beginArray("entities_groups");
 		size_t numGroups = s.getArraySize();
 
-		if (numGroups >= ec::ent::maxGroupLayer) {
+		if (numGroups > ec::ent::maxGroupLayer) {
 			LOG_ERROR("Hay mas grupos de entidades de los permitidos en el archivo de escena a cargar");
 			return;
 		}
@@ -140,6 +145,10 @@ namespace cme {
 			s.endScope(); // Salimos del grupo 1
 		}
 
+		s.endScope();
+
+		s.beginScope("globalLight");
+		_globalLight->deserialize(s);
 		s.endScope();
 	}
 }

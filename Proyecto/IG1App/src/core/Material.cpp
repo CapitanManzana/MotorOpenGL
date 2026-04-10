@@ -11,6 +11,8 @@
 #include <core/Scene.h>
 #include <core/lighting/GlobalLight.h>
 
+#include <core/serialize/JsonSerializer.h>
+
 namespace cme {
 	Material::Material() {
 		_shader = rscrM().getShader("default");
@@ -167,5 +169,58 @@ namespace cme {
 			else
 				ImGui::Dummy(ImVec2(48, 48));
 		}
+	}
+
+	void Material::serialize(JsonSerializer& s) const {
+		s.beginScope("uniforms");
+		for (auto& [name, p] : _properties) {
+			std::visit([&](auto&& val) {
+				using T = std::decay_t<decltype(val)>;
+				if constexpr (std::is_same_v<T, int>)         s.write(name, (int)val);
+				else if constexpr (std::is_same_v<T, float>)  s.write(name, (float)val);
+				else if constexpr (std::is_same_v<T, bool>)   s.write(name, (bool)val);
+				else if constexpr (std::is_same_v<T, glm::vec2>) s.write(name, (glm::vec2)val);
+				else if constexpr (std::is_same_v<T, glm::vec3>) s.write(name, (glm::vec3)val);
+				else if constexpr (std::is_same_v<T, glm::vec4>) s.write(name, (glm::vec4)val);
+				}, p.value);
+		}
+		s.endScope(); // cierra uniforms
+
+		s.beginArray("textures");
+		for (auto& [name, tex] : _textures) {
+			if (!tex) continue;
+			s.pushObjectToArray();
+			s.write("uniformName", name);
+			s.write("textureName", tex->name());
+			s.endScope(); // cierra objeto textura
+		}
+		s.endScope(); // cierra array textures
+	}
+
+	void Material::deserialize(JsonSerializer& s) {
+		s.beginScope("uniforms");
+		int count = (int)s.getScopeSize(); // número de keys en el scope uniforms
+		for (int i = 0; i < count; i++) {
+			std::string key = s.getKey(i);
+			JsonValue jval = s.getValue(i);
+
+			std::visit([&](auto&& v) {
+				using T = std::decay_t<decltype(v)>;
+				if constexpr (std::is_constructible_v<UniformValue, T>)
+					_properties[key] = MaterialProperty(UniformValue(v));
+				}, jval);
+		}
+		s.endScope(); // cierra uniforms
+
+		s.beginArray("textures");
+		int texturesCount = (int)s.getArraySize();
+		for (int i = 0; i < texturesCount; i++) {
+			s.enterElement(i);
+			auto uniformName = s.readString("uniformName");
+			auto textureName = s.readString("textureName");
+			_textures[uniformName] = rscrM().getTexture(textureName);
+			s.endScope(); // cierra elemento i
+		}
+		s.endScope(); // cierra array textures
 	}
 }

@@ -65,12 +65,13 @@ namespace cme {
 
 	void MeshRenderer::serialize(JsonSerializer& s) const {
 		s.write("mesh", (int)_mesh->id());
-		s.write("isLight", _mesh->isLightSource());
+		s.beginScope("material");
+		_mesh->material()->serialize(s);
+		s.endScope();
 	}
 
 	void MeshRenderer::deserialize(JsonSerializer& s) {
 		int meshID = s.readInt("mesh");
-		bool isLight = s.readInt("isLight");
 
 		if (meshID == 1)      _mesh = new TriangleMesh();
 		else if (meshID == 2) _mesh = new QuadMesh();
@@ -81,13 +82,14 @@ namespace cme {
 			return;
 		}
 
-		// Solo si es luz, si no el shader ya está bien puesto en el constructor
-		if (isLight) _mesh->setLightSource(true);
-
 		if (auto entitySp = _entity.lock()) {
 			if (meshID >= 0 && meshID < MESH_T_NAMES.size())
 				_currentMeshType = MESH_T_NAMES[meshID];
 		}
+
+		s.beginScope("material");
+		_mesh->material()->deserialize(s);
+		s.endScope();
 	}
 
 	void MeshRenderer::drawOnInspector() {
@@ -126,33 +128,6 @@ namespace cme {
 						}
 						ImGui::EndCombo();
 					}
-
-					ImGui::TableNextRow();
-
-					ImGui::TableSetColumnIndex(0);
-					ImGui::Text("Shader");
-					ImGui::TableSetColumnIndex(1);
-
-					/*if (ImGui::BeginCombo("##comboShader", _shaderName.c_str())) {
-						for (auto& opcion : rscrM().getAllShaderNames()) {
-							bool isSelected = _shaderName == opcion;
-							if (ImGui::Selectable(opcion.c_str(), isSelected)) {
-								_shaderName = opcion;
-								Shader* shader = rscrM().getShader(opcion);
-								if (shader) {
-									if (_mesh) _mesh->setShader(shader);
-									_shaderName = opcion;
-								}
-								else {
-									LOG_WARN(std::format("EL shader seleccionado para el mesh renderer es inexistente. Entity: {} | Shader: {}", entitySp->name(), opcion));
-								}
-							}
-							if (isSelected && ImGui::IsWindowAppearing()) {
-								ImGui::SetItemDefaultFocus();
-							}
-						}
-						ImGui::EndCombo();
-					}*/
 
 					ImGui::EndTable();
 				}

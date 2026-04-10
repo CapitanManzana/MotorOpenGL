@@ -3,8 +3,20 @@
 #include <stack>
 #include <glm/vec3.hpp>
 #include <glm/vec4.hpp>
+#include <glm/vec2.hpp>
+#include <variant>
 
 using json = nlohmann::ordered_json;
+
+using JsonValue = std::variant<
+	int,
+	float,
+	bool,
+	glm::vec2,
+	glm::vec3,
+	glm::vec4,
+	std::string
+>;
 
 namespace cme {
 	/// @brief Se encarga de serializar en un JSON lo que sea de tipo Serializable
@@ -23,6 +35,7 @@ namespace cme {
 		/// @param value El valor par la clave
 		void write(const std::string& key, float value);
 		void write(const std::string& key, int value);
+		void write(const std::string& key, const glm::vec2& value);
 		void write(const std::string& key, const glm::vec3& value);
 		void write(const std::string& key, const glm::vec4& value);
 		void write(const std::string& key, const std::string& value);
@@ -35,6 +48,10 @@ namespace cme {
 		/// @param key Clave cuyo valor entero se desea leer.
 		/// @return El valor de tipo entero asociado a la clave.
 		int readInt(const std::string& key) const;
+		/// @brief Lee y devuelve un valor de tipo glm::vec2 asociado a la clave especificada.
+		/// @param key Clave cuyo valor glm::vec2 se desea leer.
+		/// @return El valor de tipo glm::vec2 asociado a la clave.
+		glm::vec2 readVec2(const std::string& key) const;
 		/// @brief Lee y devuelve un valor de tipo glm::vec3 asociado a la clave especificada.
 		/// @param key Clave cuyo valor glm::vec3 se desea leer.
 		/// @return El valor de tipo glm::vec3 asociado a la clave.
@@ -54,15 +71,22 @@ namespace cme {
 		/// @brief Obtiene el tamaño del array en el scope actual.
 		/// @return El tamaño del array.
 		size_t getArraySize() const;
+
+		size_t getScopeSize() const;
+
 		/// @brief Entra en un elemento específico del array en el scope actual.
 		/// @param index Índice del elemento al que se desea entrar.
 		void enterElement(size_t index);
 		/// @brief Agrega un nuevo objeto al array en el scope actual y entra en ese nuevo objeto, permitiendo agregar propiedades a ese objeto posteriormente.
 		void pushObjectToArray();
 
+		JsonValue readFromArray(int index);
+		void pushToArray(JsonValue value);
+
 		/// @brief Cambia de scope para leer o escribir en el json
 		/// @param key La clave del scope
 		void beginScope(const std::string& key);
+
 		/// @brief Vuelve al scope anterior
 		void endScope();
 
@@ -72,6 +96,9 @@ namespace cme {
 		/// @brief Carga la infoormación de un archivo json
 		/// @param path La ubicacion del archivo
 		void load(const std::string& path);
+
+		std::string getKey(int index);
+		JsonValue getValue(int index);
 	};
 }
 
