@@ -83,12 +83,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Tutoriales/5. Iluminacion.md",
+                "file": "Motor/Serializacion.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "5. Iluminacion"
+              "title": "Serializacion"
             }
           },
           {
@@ -270,8 +270,8 @@
   },
   "active": "d8cc1d5f7da06d6d",
   "lastOpenFiles": [
-    "Motor/Serializacion.md",
     "Tutoriales/5. Iluminacion.md",
+    "Motor/Serializacion.md",
     "Tutoriales/1. Inicialización de Dependencias.md",
     "Tutoriales/2. Pasos de Renderizado.md",
     "mainpage.md",

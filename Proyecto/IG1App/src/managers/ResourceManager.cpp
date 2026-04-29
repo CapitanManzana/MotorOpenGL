@@ -89,9 +89,9 @@ namespace cme {
             // Nos aseguramos de que sea un archivo y no una subcarpeta
             if (archivo.is_regular_file()) {
                 // Extraemos la información usando las utilidades de filesystem
-                std::string extension = archivo.path().extension().string(); // ej: ".vert"
-                std::string baseName = archivo.path().stem().string();     // ej: "basico"
-                std::string fullPath = archivo.path().string();          // ej: "assets/shaders/basico.vert"
+                std::string extension = archivo.path().extension().string();
+                std::string baseName = archivo.path().stem().string();
+                std::string fullPath = archivo.path().string();
                 
                 _texturesMap[baseName] = std::make_unique<Texture>();
                 _texturesMap[baseName]->load(fullPath);
