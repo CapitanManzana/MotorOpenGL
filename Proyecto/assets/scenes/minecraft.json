@@ -32,10 +32,7 @@
                             "data": {
                                 "mesh": 3,
                                 "material": {
-<<<<<<< Updated upstream
-=======
                                     "type": 1,
->>>>>>> Stashed changes
                                     "uniforms": {
                                         "material.diffuse": [
                                             0.800000011920929,
@@ -100,10 +97,7 @@
                             "data": {
                                 "mesh": 3,
                                 "material": {
-<<<<<<< Updated upstream
-=======
                                     "type": 1,
->>>>>>> Stashed changes
                                     "uniforms": {
                                         "material.diffuse": [
                                             0.800000011920929,
@@ -168,10 +162,7 @@
                             "data": {
                                 "mesh": 3,
                                 "material": {
-<<<<<<< Updated upstream
-=======
                                     "type": 1,
->>>>>>> Stashed changes
                                     "uniforms": {
                                         "material.diffuse": [
                                             0.800000011920929,
