@@ -32,6 +32,10 @@
                             "data": {
                                 "mesh": 3,
                                 "material": {
+<<<<<<< Updated upstream
+=======
+                                    "type": 1,
+>>>>>>> Stashed changes
                                     "uniforms": {
                                         "material.diffuse": [
                                             0.800000011920929,
@@ -96,6 +100,10 @@
                             "data": {
                                 "mesh": 3,
                                 "material": {
+<<<<<<< Updated upstream
+=======
+                                    "type": 1,
+>>>>>>> Stashed changes
                                     "uniforms": {
                                         "material.diffuse": [
                                             0.800000011920929,
@@ -160,6 +168,10 @@
                             "data": {
                                 "mesh": 3,
                                 "material": {
+<<<<<<< Updated upstream
+=======
+                                    "type": 1,
+>>>>>>> Stashed changes
                                     "uniforms": {
                                         "material.diffuse": [
                                             0.800000011920929,
@@ -256,6 +268,62 @@
                                         }
                                     ]
                                 }
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "Cube",
+                    "components": [
+                        {
+                            "type": "Transform",
+                            "data": {
+                                "position": [
+                                    5.0,
+                                    1.0,
+                                    -2.0
+                                ],
+                                "scale": [
+                                    1.0,
+                                    1.0,
+                                    1.0
+                                ],
+                                "rotation": [
+                                    0.0,
+                                    0.0,
+                                    0.0
+                                ]
+                            }
+                        },
+                        {
+                            "type": "MeshRenderer",
+                            "data": {
+                                "mesh": 3,
+                                "material": {
+                                    "type": 0,
+                                    "uniforms": {
+                                        "lightColor": [
+                                            0.0,
+                                            0.23529410362243652,
+                                            1.0
+                                        ]
+                                    },
+                                    "textures": []
+                                }
+                            }
+                        },
+                        {
+                            "type": "Light",
+                            "data": {
+                                "color": [
+                                    0.0,
+                                    0.5000002384185791,
+                                    1.0
+                                ],
+                                "intensity": 1.0,
+                                "constant": 0.06599999964237213,
+                                "linear": 0.11299999803304672,
+                                "quadratic": 0.03700000047683716
                             }
                         }
                     ]
