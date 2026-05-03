@@ -90,6 +90,7 @@ if %errorlevel% leq 7 exit 0</Command>
     <ClCompile Include="src\core\Material.cpp" />
     <ClCompile Include="src\component\Light.cpp" />
     <ClCompile Include="src\core\Texture.cpp" />
+    <ClCompile Include="src\managers\LightManager.cpp" />
     <ClCompile Include="src\utils\Raycast.cpp" />
     <ClCompile Include="src\managers\InputManager.cpp" />
     <ClCompile Include="src\component\Transform.cpp" />
@@ -126,10 +127,12 @@ if %errorlevel% leq 7 exit 0</Command>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\core\lighting\GlobalLight.h" />
+    <ClInclude Include="src\core\lighting\PointLight.h" />
     <ClInclude Include="src\core\ui\windows\LightingWindow.h" />
     <ClInclude Include="src\core\Material.h" />
     <ClInclude Include="src\component\Light.h" />
     <ClInclude Include="src\core\Texture.h" />
+    <ClInclude Include="src\managers\LightManager.h" />
     <ClInclude Include="src\utils\ImGuiUtils.h" />
     <ClInclude Include="src\utils\Raycast.h" />
     <ClInclude Include="src\core\serialize\Inspectable.h" />

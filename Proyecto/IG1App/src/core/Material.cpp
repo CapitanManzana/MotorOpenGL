@@ -5,15 +5,24 @@
 #include <glm/gtc/type_ptr.hpp>
 #include <managers/ResourceManager.h>
 #include <core/Texture.h>
-#include <unordered_set>
 
 #include <managers/SceneManager.h>
 #include <core/Scene.h>
 #include <core/lighting/GlobalLight.h>
 
 #include <core/serialize/JsonSerializer.h>
+#include <managers/LightManager.h>
 
 namespace cme {
+	const std::unordered_set<std::string> Material::CAMERA_UNIFORMS = {
+			"projection", "modelView", "model", "normalMatrix",
+			"cameraPos", "numPointLights"
+	};
+
+	const std::vector<std::string> Material::CAMERA_UNIFORMS_PREFIX = {
+			"globalLight.", "pointLights["
+	};
+
 	Material::Material() {
 		_shader = rscrM().getShader("default");
 		populateFromShader();
@@ -24,16 +33,20 @@ namespace cme {
 		_shader->use();
 
 		// Manda la luz global
-		if (_shader->type() == ShaderType::LIT_PHONG) {
-			auto gl = sceneM().activeScene()->globalLight();
+		auto gl = sceneM().activeScene()->globalLight();
 
-			_shader->setUniform("globalLight.direction", glm::normalize(gl->direction()));
-			_shader->setUniform("globalLight.color", gl->color());
-			_shader->setUniform("globalLight.intensity", gl->intensity());
-		}
+		_shader->setUniform("globalLight.direction", glm::normalize(gl->direction()));
+		_shader->setUniform("globalLight.color", gl->color());
+		_shader->setUniform("globalLight.intensity", gl->intensity());
 
-		// Sube todos los uniforms
+		lightM().uploadToShader(_shader);
+
+
+		// Sube todos los uniforms (excepto los de cámara que ya fueron enviados)
 		for (auto& [name, prop] : _properties) {
+			// No sobrescribir uniforms de cámara/luces que ya fueron enviados
+			if (isUniform(name)) continue;
+
 			std::visit([&](auto&& val) {
 				using T = std::decay_t<decltype(val)>;
 
@@ -69,14 +82,8 @@ namespace cme {
 	void Material::populateFromShader() {
 		if (!_shader) return;
 
-		static const std::unordered_set<std::string> cameraUniforms = {
-			"projection", "modelView", "model", "normalMatrix",
-			"cameraPos", "lightColor", "lightPos", "hasLight", "ambientStrength",
-			"globalLight.direction", "globalLight.color", "globalLight.intensity"
-		};
-
 		for (auto& [name, type] : _shader->getActiveUniforms()) {
-			if (cameraUniforms.count(name)) continue;
+			if (isUniform(name)) continue;
 			// Samplers van al mapa de texturas, no al de propiedades
 			if (type == GL_SAMPLER_2D || type == GL_SAMPLER_CUBE) {
 				if (!_textures.count(name))
@@ -172,6 +179,7 @@ namespace cme {
 	}
 
 	void Material::serialize(JsonSerializer& s) const {
+		s.write("type", (int)_shader->type());
 		s.beginScope("uniforms");
 		for (auto& [name, p] : _properties) {
 			std::visit([&](auto&& val) {
@@ -198,6 +206,7 @@ namespace cme {
 	}
 
 	void Material::deserialize(JsonSerializer& s) {
+		_shader->setType(s.readInt("type"));
 		s.beginScope("uniforms");
 		int count = (int)s.getScopeSize(); // número de keys en el scope uniforms
 		for (int i = 0; i < count; i++) {
@@ -222,5 +231,12 @@ namespace cme {
 			s.endScope(); // cierra elemento i
 		}
 		s.endScope(); // cierra array textures
+	}
+
+	bool Material::isUniform(const std::string& name) const {
+		if (Material::CAMERA_UNIFORMS.count(name)) return true;
+		for (const auto& prefix : Material::CAMERA_UNIFORMS_PREFIX)
+			if (name.starts_with(prefix)) return true;
+		return false;
 	}
 }

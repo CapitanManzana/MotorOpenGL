@@ -4,6 +4,7 @@
 #include <iostream>
 #include <utils/logger.h>
 #include <cassert>
+#include <format>
 
 #include <glm/vec3.hpp>
 #include <glm/vec4.hpp>
@@ -129,6 +130,14 @@ namespace cme {
 	}
 
 	void Shader::setUniform(const std::string& name, int value) {
+		GLint currentProgram = 0;
+		glGetIntegerv(GL_CURRENT_PROGRAM, &currentProgram);
+
+		if (currentProgram != (GLint)_shaderProgram) {
+			LOG_ERROR(std::format("setUniform '{}': programa activo {} != {} esperado",
+				name, currentProgram, _shaderProgram));
+		}
+
 		glUniform1i(getUniformLocation(name), value);
 	}
 

@@ -32,18 +32,8 @@
                             "data": {
                                 "mesh": 3,
                                 "material": {
+                                    "type": 0,
                                     "uniforms": {
-                                        "material.diffuse": [
-                                            0.800000011920929,
-                                            0.800000011920929,
-                                            0.800000011920929
-                                        ],
-                                        "albedo": [
-                                            1.0,
-                                            1.0,
-                                            1.0,
-                                            1.0
-                                        ],
                                         "useAlbedoTex": 1,
                                         "material.shininess": 32.0,
                                         "material.ambient": [
@@ -51,11 +41,23 @@
                                             0.10000000149011612,
                                             0.10000000149011612
                                         ],
+                                        "albedo": [
+                                            1.0,
+                                            1.0,
+                                            1.0,
+                                            1.0
+                                        ],
+                                        "material.diffuse": [
+                                            0.800000011920929,
+                                            0.800000011920929,
+                                            0.800000011920929
+                                        ],
                                         "material.specular": [
                                             0.5,
                                             0.5,
                                             0.5
-                                        ]
+                                        ],
+                                        "numPointLights": 0
                                     },
                                     "textures": [
                                         {
@@ -96,18 +98,8 @@
                             "data": {
                                 "mesh": 3,
                                 "material": {
+                                    "type": 0,
                                     "uniforms": {
-                                        "material.diffuse": [
-                                            0.800000011920929,
-                                            0.800000011920929,
-                                            0.800000011920929
-                                        ],
-                                        "albedo": [
-                                            1.0,
-                                            1.0,
-                                            1.0,
-                                            1.0
-                                        ],
                                         "useAlbedoTex": 1,
                                         "material.shininess": 32.0,
                                         "material.ambient": [
@@ -115,11 +107,23 @@
                                             0.10000000149011612,
                                             0.10000000149011612
                                         ],
+                                        "albedo": [
+                                            1.0,
+                                            1.0,
+                                            1.0,
+                                            1.0
+                                        ],
+                                        "material.diffuse": [
+                                            0.800000011920929,
+                                            0.800000011920929,
+                                            0.800000011920929
+                                        ],
                                         "material.specular": [
                                             0.5,
                                             0.5,
                                             0.5
-                                        ]
+                                        ],
+                                        "numPointLights": 0
                                     },
                                     "textures": [
                                         {
@@ -160,18 +164,8 @@
                             "data": {
                                 "mesh": 3,
                                 "material": {
+                                    "type": 0,
                                     "uniforms": {
-                                        "material.diffuse": [
-                                            0.800000011920929,
-                                            0.800000011920929,
-                                            0.800000011920929
-                                        ],
-                                        "albedo": [
-                                            1.0,
-                                            1.0,
-                                            1.0,
-                                            1.0
-                                        ],
                                         "useAlbedoTex": 1,
                                         "material.shininess": 32.0,
                                         "material.ambient": [
@@ -179,11 +173,23 @@
                                             0.10000000149011612,
                                             0.10000000149011612
                                         ],
+                                        "albedo": [
+                                            1.0,
+                                            1.0,
+                                            1.0,
+                                            1.0
+                                        ],
+                                        "material.diffuse": [
+                                            0.800000011920929,
+                                            0.800000011920929,
+                                            0.800000011920929
+                                        ],
                                         "material.specular": [
                                             0.5,
                                             0.5,
                                             0.5
-                                        ]
+                                        ],
+                                        "numPointLights": 0
                                     },
                                     "textures": [
                                         {
@@ -197,14 +203,14 @@
                     ]
                 },
                 {
-                    "name": "Cube",
+                    "name": "Light",
                     "components": [
                         {
                             "type": "Transform",
                             "data": {
                                 "position": [
                                     -3.0,
-                                    1.0,
+                                    4.0,
                                     1.0
                                 ],
                                 "scale": [
@@ -224,29 +230,12 @@
                             "data": {
                                 "mesh": 3,
                                 "material": {
+                                    "type": 0,
                                     "uniforms": {
-                                        "material.diffuse": [
-                                            0.800000011920929,
-                                            0.800000011920929,
-                                            0.800000011920929
-                                        ],
-                                        "albedo": [
-                                            1.0,
+                                        "lightColor": [
                                             1.0,
                                             1.0,
                                             1.0
-                                        ],
-                                        "useAlbedoTex": 1,
-                                        "material.shininess": 32.0,
-                                        "material.ambient": [
-                                            0.10000000149011612,
-                                            0.10000000149011612,
-                                            0.10000000149011612
-                                        ],
-                                        "material.specular": [
-                                            0.5,
-                                            0.5,
-                                            0.5
                                         ]
                                     },
                                     "textures": [
@@ -256,6 +245,20 @@
                                         }
                                     ]
                                 }
+                            }
+                        },
+                        {
+                            "type": "Light",
+                            "data": {
+                                "color": [
+                                    0.8186274766921997,
+                                    0.6628333330154419,
+                                    0.3370818793773651
+                                ],
+                                "intensity": 8.0600004196167,
+                                "constant": 1.0,
+                                "linear": 0.09000000357627869,
+                                "quadratic": 0.03200000151991844
                             }
                         }
                     ]
@@ -269,15 +272,15 @@
     ],
     "globalLight": {
         "lightColor": [
-            1.0,
-            0.9896193742752075,
-            0.9607843160629272
+            0.3704344630241394,
+            0.523429811000824,
+            0.8039215803146362
         ],
         "lightDir": [
             0.7610269784927368,
             -0.6374239921569824,
             -0.12053481489419937
         ],
-        "lightIntensity": 1.0
+        "lightIntensity": 0.0
     }
 }

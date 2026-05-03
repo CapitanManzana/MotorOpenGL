@@ -8,6 +8,7 @@
 #include <core/mesh/QuadMesh.h>
 #include <core/mesh/CubeMesh.h>
 #include <core/lighting/GlobalLight.h>
+#include <managers/LightManager.h>
 
 namespace cme {
 	Scene::Scene(std::string name) : _name(name) {
@@ -118,6 +119,8 @@ namespace cme {
 	}
 
 	void Scene::deserialize(JsonSerializer& s) {
+		lightM().clearLights();
+
 		_name = s.readString("name");
 		s.beginArray("entities_groups");
 		size_t numGroups = s.getArraySize();

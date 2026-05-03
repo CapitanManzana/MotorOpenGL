@@ -141,7 +141,7 @@ namespace cme {
 		{
 			inpM().proccessInput();
 
-			glClearColor(0.69f, 0.8f, 0.91f, 1.0f);
+			glClearColor(0.3f, 0.3f, 0.3f, 1.0f);
 			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 			glEnable(GL_DEPTH_TEST);
 

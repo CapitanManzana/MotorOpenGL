@@ -75,6 +75,7 @@ namespace cme {
 
 		std::string getName() { return _name; }
 		ShaderType type() { return _type; }
+		void setType(int shaderType) { _type = (ShaderType)shaderType; }
 	private:
 		/// @brief Se encarga de leer el código fuente del shader desde un archivo. Dado un path al archivo del shader, esta función lee su contenido y devuelve el código fuente como una cadena de caracteres.
 		/// @param shaderPath Donde se encuentra el archivo del shader que se desea cargar.

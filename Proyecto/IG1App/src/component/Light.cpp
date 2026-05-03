@@ -4,46 +4,75 @@
 #include <component/Transform.h>
 #include <core/serialize/JsonSerializer.h>
 #include <component/MeshRenderer.h>
+#include <managers/LightManager.h>
 
 namespace cme {
-	std::vector<Light*> Light::_allLights;
+    Light::~Light() {
+        if (_lightIndex >= 0) {
+            lightM().removeLight(_lightIndex);
+            _lightIndex = -1;
+        }
+    }
 
-	Light::~Light() {
-		auto it = std::find(_allLights.begin(), _allLights.end(), this);
-		if (it != _allLights.end())
-			_allLights.erase(it);
-	}
+    void Light::initComponent() {
+        if (auto entitySp = _entity.lock()) {
+            _tr = entitySp->getComponent<Transform>();
+            assert(_tr != nullptr && "El transform de un Light es null");
 
-	void Light::initComponent() {
-		if (auto entitySp = _entity.lock()) {
-			_tr = entitySp->getComponent<Transform>();
-			auto mesh = entitySp->getComponent<MeshRenderer>();
+            // Sincronizamos la posicion inicial antes de registrar
+            _pointLight.position = _tr->getPosition();
 
-			assert(_tr != nullptr && "El transform de un light source es null");
+            // Registramos la luz en el manager y guardamos el indice
+            _lightIndex = lightM().addLight(_pointLight);
 
-			if (mesh) mesh->setLightSource(true);
+            // Si la entidad tiene mesh, la marcamos como fuente de luz visual
+            if (auto mesh = entitySp->getComponent<MeshRenderer>())
+                mesh->setLightSource(true);
+        }
+    }
 
-			_allLights.push_back(this);
-		}
-	}
+    void Light::update() {
+        // Mantenemos la posicion sincronizada con el Transform en cada frame
+        if (_lightIndex >= 0) {
+            _pointLight.position = _tr->getPosition();
+            lightM().setLight(_lightIndex, _pointLight);
+        }
+    }
 
-	void Light::drawOnInspector() {
-		if (ImGui::CollapsingHeader("Light")) {
-			ImGui::ColorEdit3("Light Color", glm::value_ptr(_color));
-			ImGui::InputFloat("Light Intensity", &_intensity);
-			ImGui::InputFloat("Ambient Strength", &_ambienteStrength);
-		}
-	}
+    void Light::drawOnInspector() {
+        if (ImGui::CollapsingHeader("Light")) {
+            bool changed = false;
 
-	void Light::serialize(JsonSerializer& s) const {
-		s.write("color", _color);
-		s.write("intensity", _intensity);
-		s.write("ambientStrength", _ambienteStrength);
-	}
+            changed |= ImGui::ColorEdit3("Color", glm::value_ptr(_pointLight.color));
+            changed |= ImGui::DragFloat("Intensity", &_pointLight.intensity, 0.01f, 0.0f, 100.0f);
 
-	void Light::deserialize(JsonSerializer& s) {
-		_color = s.readVec3("color");
-		_intensity = s.readFloat("intensity");
-		_ambienteStrength = s.readFloat("ambientStrength");
-	}
+            if (ImGui::TreeNode("Atenuacion")) {
+                changed |= ImGui::DragFloat("Constant", &_pointLight.constant, 0.001f, 0.0f, 10.0f);
+                changed |= ImGui::DragFloat("Linear", &_pointLight.linear, 0.001f, 0.0f, 10.0f);
+                changed |= ImGui::DragFloat("Quadratic", &_pointLight.quadratic, 0.001f, 0.0f, 10.0f);
+                ImGui::TreePop();
+            }
+
+            // Actualizamos el manager solo si algo cambio en el inspector
+            if (changed && _lightIndex >= 0)
+                lightM().setLight(_lightIndex, _pointLight);
+        }
+    }
+
+    void Light::serialize(JsonSerializer& s) const {
+        s.write("color", _pointLight.color);
+        s.write("intensity", _pointLight.intensity);
+        s.write("constant", _pointLight.constant);
+        s.write("linear", _pointLight.linear);
+        s.write("quadratic", _pointLight.quadratic);
+    }
+
+    void Light::deserialize(JsonSerializer& s) {
+        _pointLight.color = s.readVec3("color");
+        _pointLight.intensity = s.readFloat("intensity");
+        _pointLight.constant = s.readFloat("constant");
+        _pointLight.linear = s.readFloat("linear");
+        _pointLight.quadratic = s.readFloat("quadratic");
+        // La posicion se sincroniza en initComponent/update, no se serializa
+    }
 }

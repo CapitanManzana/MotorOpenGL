@@ -2,43 +2,39 @@
 #include <ec/component.h>
 #include <glm/vec4.hpp> 
 #include <component/Transform.h>
+#include <core/lighting/PointLight.h>
 
 namespace cme {
 
-	/// @brief Componente que sirve para poner una luz en la escena
-	class Light : public ec::Component
-	{
-	private:
-		glm::vec3 _color = { 1.f, 1.f, 1.f };
-		float _intensity = 1.f;
-		float _ambienteStrength = 0.1f;
+    /// @brief Componente que registra una luz puntual en el LightManager.
+    ///        Requiere un Transform en la misma entidad.
+    class Light : public ec::Component, public ec::UpdateComponent
+    {
+    private:
+        PointLight  _pointLight;    // Datos de la luz (posicion se sincroniza cada frame)
+        int         _lightIndex = -1; // Indice en el LightManager (-1 = no registrada)
+        Transform* _tr = nullptr;
 
-		Transform* _tr;
+    public:
+        __CMPID_DECL__(ec::comp::LIGHT)
 
-		static std::vector<Light*> _allLights;
-	public:
-		__CMPID_DECL__(ec::comp::LIGHT)
+            Light() = default;
+        ~Light() override;
 
-		~Light();
-		void initComponent() override;
-		static const std::vector<Light*>& getAllLights() { return _allLights; }
+        void initComponent() override;
+        void update() override;  // Sincroniza la posicion con el Transform cada frame
 
+        void drawOnInspector() override;
 
-		void drawOnInspector() override;
+        void serialize(JsonSerializer& s) const override;
+        void deserialize(JsonSerializer& s)       override;
 
-		void serialize(JsonSerializer& s) const override;
-		void deserialize(JsonSerializer& s) override;
+        std::string serializeID() const override { return "Light"; }
 
-		std::string serializeID() const override { return "Light"; }
+        // --- Accessors ---
+        const PointLight& pointLight()  const { return _pointLight; }
+        PointLight& pointLight() { return _pointLight; }
 
-		const glm::vec3& color() const { return _color; }
-		float intensity() const { return _intensity; }
-		float ambientStrength() const { return _ambienteStrength; }
-
-		void setColor(const glm::vec4& color) { _color = color; }
-		void setIntensity(float intensity) { _intensity = intensity; }
-		void setAmbientStrength(float ams) { _ambienteStrength = ams; }
-
-		glm::vec3 getPosition() const { return _tr->getPosition(); }
-	};
+        glm::vec3 getPosition() const { return _tr->getPosition(); }
+    };
 }
