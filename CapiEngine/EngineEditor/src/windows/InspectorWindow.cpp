@@ -1,8 +1,8 @@
-#include "InspectorWindow.h"
+#include "windows/InspectorWindow.h"
 #include <glm/vec3.hpp>
 #include <glm/vec4.hpp>
 
-#include <core/GLApplication.h>
+#include <GLApplication.h>
 #include <managers/SceneManager.h>
 #include <core/Scene.h>
 #include <core/Camera.h>
@@ -10,7 +10,12 @@
 #include <component/MeshRenderer.h>
 #include <component/Light.h>
 
-namespace cme::ui {
+#include <drawGUI/material/MaterialGUI.h>
+#include <drawGUI/component/TransformGUI.h>
+#include <drawGUI/component/MeshRendererGUI.h>
+#include <drawGUI/component/LightGUI.h>
+
+namespace cme::editor {
 	void InspectorWindow::renderWindowContent() {
 		if (auto entitySp = _selectedEnt.lock()) {
 			ImGui::SeparatorText("GameObject");
@@ -29,8 +34,16 @@ namespace cme::ui {
 			ImGui::SeparatorText("Components");
 			for (auto& comp : entitySp->_components) {
 				if (comp) {
-					comp->drawOnInspector();
-					ImGui::Dummy(ImVec2(0, 5));
+					// Obtenemos el tipo real del componente
+					std::type_index type(typeid(*comp));
+
+					// Buscamos si el Editor sabe cómo dibujar este tipo
+					auto it = _componentUIRegistry.find(type);
+					if (it != _componentUIRegistry.end()) {
+						// ¡Lo encontramos! Llamamos a la función guardada pasándole el componente
+						it->second(comp);
+						ImGui::Dummy(ImVec2(0, 5));
+					}
 				}
 			}
 
@@ -54,7 +67,8 @@ namespace cme::ui {
 
 			ImGui::Separator();
 			if (auto m = entitySp->getComponent<MeshRenderer>()) {
-				m->material()->drawOnInspector();
+				MaterialGUI mat(m->material());
+				mat.drawOnInspector();
 			}
 		}
 		else {
@@ -71,5 +85,24 @@ namespace cme::ui {
 		float pitch = cam->getPitch();
 		float yaw = cam->getYaw();
 		ImGui::Text("Camera position: X: %.2f  Y: %.2f  Z: %.2f  (yaw: %.2f  pitch: %0.2f)", pos.x, pos.y, pos.z, yaw, pitch);
+	}
+
+	void InspectorWindow::registerUIComponents() {
+		// Registramos el Transform
+		_componentUIRegistry[typeid(cme::Transform)] = [](ec::Component* c) {
+			TransformGUI gui(static_cast<Transform*>(c));
+			gui.drawOnInspector();
+			};
+
+		// Registramos el MeshRenderer
+		_componentUIRegistry[typeid(cme::MeshRenderer)] = [](ec::Component* c) {
+			MeshRendererGUI gui(static_cast<MeshRenderer*>(c));
+			gui.drawOnInspector();
+			};
+
+		_componentUIRegistry[typeid(cme::Light)] = [](ec::Component* c) {
+			LightGUI gui(static_cast<Light*>(c));
+			gui.drawOnInspector();
+		};
 	}
 }

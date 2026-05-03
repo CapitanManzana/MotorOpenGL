@@ -108,7 +108,6 @@ namespace cme {
 	private:
 		InputManager();
 
-		void createShortcuts();
 		bool init();
 	};
 

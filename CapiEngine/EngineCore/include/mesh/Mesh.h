@@ -1,11 +1,12 @@
 #pragma once
+#include <glad/glad.h>
+
 #include <vector>
 #include <glm/vec3.hpp>
 #include <glm/vec4.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
-#include <glad/glad.h>
-#include <core/mesh/MeshID.h>
+#include <mesh/MeshID.h>
 
 namespace cme {
 	class Shader;
@@ -34,7 +35,7 @@ namespace cme {
 
 		bool _isLightSource = false;
 
-		glm::mat4 _model = glm::mat4(1.0f); // La matriz de modelado del mesh, que guarda su posición rotacion y escala en el mundo
+		glm::mat4 _model = glm::mat4(1.0f); // La matriz de modelado del mesh, que guarda su posiciï¿½n rotacion y escala en el mundo
 		glm::mat3 _normalMatrix;
 
 		meshID _id = None;
@@ -43,7 +44,7 @@ namespace cme {
 		Mesh() = default;
 		virtual ~Mesh();
 
-		/// @brief Genera el mesh colocando los vértices, colores, etc...
+		/// @brief Genera el mesh colocando los vï¿½rtices, colores, etc...
 		virtual void generateMesh() = 0;
 		/// @brief Renderiza el mesh
 		virtual void render() const;
@@ -54,7 +55,7 @@ namespace cme {
 		/// @brief Establece la matriz de modelado de la malla
 		/// @param model La nueva matriz
 		void setModelMatrix(glm::mat4 model);
-		/// @brief La matriz de modelado del mesh, que guarda su posición rotacion y escala en el mundo
+		/// @brief La matriz de modelado del mesh, que guarda su posiciï¿½n rotacion y escala en el mundo
 		/// @return La matriz de modelado
 		glm::mat4& modelMatrix() { return _model; }
 		/// @brief La matriz de normales del mesh, que es la inversa de la transpuesta de la matriz 3x3 superior izquierda de la de modelado

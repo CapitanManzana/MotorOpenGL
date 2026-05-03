@@ -3,6 +3,7 @@
 #include <functional>
 #include <sstream>
 #include <utils/Singleton.h>
+#include <format>
 
 namespace cme {
     /// @brief Se encarga de mandar mensajes a la consola y a la ventana "ConsoleWindow" del motor

@@ -1,10 +1,10 @@
-#include "SceneWindow.h"
+#include "windows/SceneWindow.h"
 #include <managers/SceneManager.h>
 #include <core/Scene.h>
 #include <utils/logger.h>
 #include <format>
 
-namespace cme::ui {
+namespace cme::editor {
 	void SceneWindow::renderWindowContent() {
 		Scene* scene = sceneM().activeScene();
 		int groupId = 0;

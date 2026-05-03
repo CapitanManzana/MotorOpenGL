@@ -1,11 +1,11 @@
-﻿#include "Camera.h"
-#include <core/GLApplication.h>
-#include <core/Shader.h>
+﻿#include "core/Camera.h"
+#include <GLApplication.h>
+#include <surface/Shader.h>
 #include <utils/logger.h>
 #include <managers/ResourceManager.h>
-#include <core/Mesh.h>
+#include <mesh/Mesh.h>
 #include <component/Light.h>
-#include <core/Material.h>
+#include <surface/Material.h>
 
 namespace cme {
 	Camera::Camera() {

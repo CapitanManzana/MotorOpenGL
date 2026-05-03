@@ -3,7 +3,7 @@
 #include <vector>
 #include <functional>
 #include <ec/ec.h>
-#include <core/serialize/Serializable.h>
+#include <serialize/Serializable.h>
 #include <string>
 #include <memory>
 

@@ -7,9 +7,9 @@
 #include <iostream>
 #endif // _DEBUG
 
-#include <core/serialize/JsonSerializer.h>
-#include <core/serialize/Serializable.h>
-#include <core/register/ComponentRegistry.h>
+#include <serialize/JsonSerializer.h>
+#include <serialize/Serializable.h>
+#include <register/ComponentRegistry.h>
 
 namespace cme {
 	class Scene;

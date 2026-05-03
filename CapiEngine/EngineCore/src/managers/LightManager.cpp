@@ -1,5 +1,5 @@
-#include "LightManager.h"
-#include <core/Shader.h>
+#include "managers/LightManager.h"
+#include <surface/Shader.h>
 #include <utils/logger.h>
 #include <format>
 

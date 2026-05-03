@@ -1,6 +1,6 @@
-#include "CubeMesh.h"
-#include <core/Shader.h>
-#include <core/Material.h>
+#include "mesh/CubeMesh.h"
+#include <surface/Shader.h>
+#include <surface/Material.h>
 
 namespace cme {
 	CubeMesh::CubeMesh() {

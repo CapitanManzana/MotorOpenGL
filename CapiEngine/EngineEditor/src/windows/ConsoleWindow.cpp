@@ -1,6 +1,6 @@
-#include "ConsoleWindow.h"
+#include "windows/ConsoleWindow.h"
 
-namespace cme::ui {
+namespace cme::editor {
 	void ConsoleWindow::renderWindowContent() {
         if (ImGui::Button("Clear")) {
             const_cast<ConsoleWindow*>(this)->_logs.clear();

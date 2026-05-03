@@ -13,9 +13,8 @@
 #include <managers/InputManager.h>
 #include <core/Scene.h>
 #include <core/Camera.h>
-#include <core/ui/UIManager.h>
 
-#include <core/register/ComponentRegistry.h>
+#include <register/ComponentRegistry.h>
 #include <component/Transform.h>
 #include <component/MeshRenderer.h>
 #include <component/Light.h>
@@ -38,7 +37,6 @@ namespace cme {
 			InputManager::Release();
 		}
 
-		delete _interface;
 		glfwDestroyWindow(_window);
 		glfwTerminate();
 	}
@@ -111,56 +109,52 @@ namespace cme {
 
 		glfwSetCursorPosCallback(_window, inpM().mouseCallback);
 
-		_interface = new ui::UIManager();
-		if (!_interface->initCoreUI(_window)) {
-			LOG_ERROR("Error al inicializar la interfaz del motor");
-			return false;
-		}
-
 		// Registrar Componentes
 		ComponentRegistry::registerComponent<Transform>("Transform");
 		ComponentRegistry::registerComponent<MeshRenderer>("MeshRenderer");
 		ComponentRegistry::registerComponent<Light>("Light");
 
-		// Registrar Callbacks interfaz
-		_interface->setCreateCubeCallback([]() {
-			sceneM().activeScene()->addCubeToScene();
-			});
 
 		return true;
 	}
 
+	void GLApplication::run() {
+		start();
+		while (!glfwWindowShouldClose(_window))
+		{
+			update();
+			render();
+			swapAndTime();
+		}
+	}
+
+	void GLApplication::update() {
+		inpM().proccessInput();
+
+		glClearColor(0.3f, 0.3f, 0.3f, 1.0f);
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+		glEnable(GL_DEPTH_TEST);
+
+		sceneM().update();
+	}
+
+	void GLApplication::render() const {
+		sceneM().render();
+	}
+
 	void GLApplication::start() {
 		sceneM().start();
-		_interface->start();
 
 		glEnable(GL_BLEND);
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	}
 
-		while (!glfwWindowShouldClose(_window))
-		{
-			inpM().proccessInput();
+	void GLApplication::swapAndTime() {
+		glfwSwapBuffers(_window);
+		glfwPollEvents();
 
-			glClearColor(0.3f, 0.3f, 0.3f, 1.0f);
-			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-			glEnable(GL_DEPTH_TEST);
-
-			sceneM().update();
-
-			// Se hace bind y un bind para que se renderice en el FBO
-			_interface->bind();
-			sceneM().render();
-			_interface->unbind();
-
-			// Se renderiza la interfaz
-			_interface->render();
-
-			glfwSwapBuffers(_window);
-			glfwPollEvents();
-
-			float currentFrame = glfwGetTime();
-			_deltaTime = currentFrame - _lastFrame;
-			_lastFrame = currentFrame;
-		}
+		float currentFrame = glfwGetTime();
+		_deltaTime = currentFrame - _lastFrame;
+		_lastFrame = currentFrame;
 	}
 }

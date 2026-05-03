@@ -1,16 +1,16 @@
 #pragma once
-#include <core/ui/Window.h>
+#include <windows/Window.h>
 #include <string>
 #include <vector>
 
-namespace cme::ui {
+namespace cme::editor {
 	/// @brief Ventana que sirve para mostrar los logs del motor.
 	class ConsoleWindow : public Window
 	{
 	private:
 		std::vector<std::string> _logs;
 	public:
-		WINDOW_ID(ui::windowGroupID::CONSOLE)
+		WINDOW_ID(windowGroupID::CONSOLE)
 		ConsoleWindow(const char* name, ImGuiWindowFlags flags = ImGuiWindowFlags_NoCollapse) :
 			Window(name, flags) { }
 

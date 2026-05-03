@@ -1,8 +1,8 @@
 #ifndef _H_Texture_H_
 #define _H_Texture_H_
+#include <glad/glad.h>
 
 #include <glm/glm.hpp>
-#include <glad/glad.h>
 #include <string>
 
 namespace cme {

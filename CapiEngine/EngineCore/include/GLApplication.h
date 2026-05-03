@@ -12,9 +12,6 @@ struct GLFWwindow;
 namespace cme {
 	class Camera;
 	class Scene;
-	namespace ui {
-		class UIManager;
-	}
 
 	/**
 	 * @brief Clase principal que maneja el ciclo de vida de la aplicación.
@@ -26,7 +23,6 @@ namespace cme {
 		friend class Singleton<GLApplication>;
 	private:
 		GLFWwindow* _window = nullptr;		// Puntero a la ventana de openGL
-		ui::UIManager* _interface = nullptr;		// Puntero a la interfaz del motor
 		float _width = 800;
 		float _height = 600;
 
@@ -47,6 +43,11 @@ namespace cme {
 
 		/// @brief Inicializa el bucle de la applicación
 		void start();
+		void update();
+		void render() const;
+		void run();
+
+		void swapAndTime();
 
 		/// @brief El ancho de la pantalla
 		/// @return El ancho de la pantalla
@@ -71,7 +72,6 @@ namespace cme {
 
 		GLFWwindow* window() { return _window; }
 
-		ui::UIManager* getUIManager() { return _interface; }
 	private:
 		GLApplication() = default;
 

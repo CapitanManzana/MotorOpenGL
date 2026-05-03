@@ -1,8 +1,8 @@
-#include "Mesh.h"
-#include "Shader.h"
+#include <mesh/Mesh.h>
+#include <surface/Material.h>
 #include <utils/logger.h>
 #include <managers/ResourceManager.h>
-#include <core/Material.h>
+#include <surface/Material.h>
 
 namespace cme {
     Mesh::~Mesh() {

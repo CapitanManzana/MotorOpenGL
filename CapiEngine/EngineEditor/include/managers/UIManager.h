@@ -1,11 +1,11 @@
 #pragma once
 #include <GLFW/glfw3.h>
-#include <core/ui/UIGroups.h>
+#include "../windows/UIGroups.h"
 #include <vector>
 #include <memory>
 #include <functional>
 
-namespace cme::ui {
+namespace cme::editor {
 	class Window;
 
 	/// @brief Se encarga de controlar las centanas y la interfaz de usuario del motor
@@ -38,7 +38,7 @@ namespace cme::ui {
 			auto window = std::make_unique<T>(std::forward<Args>(args)...);
 			T* ptr = window.get();
 
-			constexpr ui::windowGroupID id = static_cast<ui::windowGroupID>(ui::getWindowID<T>);
+			constexpr windowGroupID id = static_cast<windowGroupID>(getWindowID<T>);
 			_windows[id] = std::move(window);
 			return ptr;
 		}

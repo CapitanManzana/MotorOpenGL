@@ -1,13 +1,13 @@
-#include "Scene.h"
+#include "core/Scene.h"
 #include <ec/entity.h>
 #include <core/Camera.h>
 #include <managers/ResourceManager.h>
 #include <ec/component.h>
 #include <component/Transform.h>
 #include <component/MeshRenderer.h>
-#include <core/mesh/QuadMesh.h>
-#include <core/mesh/CubeMesh.h>
-#include <core/lighting/GlobalLight.h>
+#include <mesh/QuadMesh.h>
+#include <mesh/CubeMesh.h>
+#include <lighting/GlobalLight.h>
 #include <managers/LightManager.h>
 
 namespace cme {

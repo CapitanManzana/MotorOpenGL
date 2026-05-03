@@ -1,7 +1,5 @@
-#include "Transform.h"
-#include <core/serialize/JsonSerializer.h>
-#include <imgui.h>
-#include <utils/ImGuiUtils.h>
+#include "component/Transform.h"
+#include <serialize/JsonSerializer.h>
 
 namespace cme {
 	glm::mat4 Transform::getModelMatrix() const {
@@ -12,7 +10,7 @@ namespace cme {
 		model = glm::rotate(model, glm::radians(_rotation.x), glm::vec3(1, 0, 0));
 		model = glm::rotate(model, glm::radians(_rotation.y), glm::vec3(0, 1, 0));
 		model = glm::rotate(model, glm::radians(_rotation.z), glm::vec3(0, 0, 1));
-		// Por último escalar
+		// Por ï¿½ltimo escalar
 		model = glm::scale(model, _scale);
 		return model;
 	}
@@ -27,16 +25,5 @@ namespace cme {
 		_position = s.readVec3("position");
 		_scale = s.readVec3("scale");
 		_rotation = s.readVec3("rotation");
-	}
-
-	void Transform::drawOnInspector() {
-		if (ImGui::CollapsingHeader("Transform")) {
-			if (ImGui::BeginTable("TransformTable", 4)) {
-				cme::ui::vec3Row("Position", _position, "p");
-				cme::ui::vec3Row("Scale", _scale, "s");
-				cme::ui::vec3Row("Rotation", _rotation, "r");
-				ImGui::EndTable();
-			}
-		}
 	}
 }

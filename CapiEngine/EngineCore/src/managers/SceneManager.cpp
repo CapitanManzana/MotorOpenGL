@@ -1,11 +1,11 @@
-#include "SceneManager.h"
+#include "managers/SceneManager.h"
 #include <core/Scene.h>
 #include <ec/entity.h>
 #include <component/Transform.h>
 #include <component/MeshRenderer.h>
-#include <core/mesh/CubeMesh.h>
+#include <mesh/CubeMesh.h>
 #include <managers/ResourceManager.h>
-#include <core/serialize/JsonSerializer.h>
+#include <serialize/JsonSerializer.h>
 
 namespace cme {
 	SceneManager::~SceneManager() {

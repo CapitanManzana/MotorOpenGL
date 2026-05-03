@@ -1,7 +1,7 @@
 #pragma once
-#include <core/ui/Window.h>
+#include <windows/Window.h>
 
-namespace cme::ui {
+namespace cme::editor {
 	/// @brief Ventana que se encarga de renderizar el viewport
 	class ViewportWindow : public Window
 	{
@@ -12,7 +12,7 @@ namespace cme::ui {
 		float _width = 800;
 		float _height = 600;
 	public:
-		WINDOW_ID(ui::windowGroupID::VIEWPORT)
+		WINDOW_ID(windowGroupID::VIEWPORT)
 		ViewportWindow(const char* name);
 
 		~ViewportWindow();

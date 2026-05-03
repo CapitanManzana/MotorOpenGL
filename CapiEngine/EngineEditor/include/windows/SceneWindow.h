@@ -1,15 +1,15 @@
 #pragma once
-#include <core/ui/Window.h>
+#include <windows/Window.h>
 #include <ec/entity.h>
 
-namespace cme::ui {
+namespace cme::editor {
 	/// @brief Ventana que se encarga de mostrar la jerarquia de entidades de la escena y permite seleccionar una entidad para mostrarla en el inspector
 	class SceneWindow : public Window
 	{
 	private:
 		std::function<void(std::weak_ptr<ec::Entity>)> _selectedEntCallback = nullptr;
 	public:
-		WINDOW_ID(ui::windowGroupID::SCENE)
+		WINDOW_ID(windowGroupID::SCENE)
 
 		SceneWindow(const char* name, ImGuiWindowFlags flags = ImGuiWindowFlags_NoCollapse) :
 			Window(name, flags) {

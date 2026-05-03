@@ -1,6 +1,6 @@
-#include "TriangleMesh.h"
-#include <core/Shader.h>
-#include <core/Material.h>
+#include "mesh/TriangleMesh.h"
+#include <surface/Shader.h>
+#include <surface/Material.h>
 
 namespace cme {
 	TriangleMesh::TriangleMesh() {

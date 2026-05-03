@@ -1,15 +1,15 @@
-#include "UIManager.h"
+#include "managers/UIManager.h"
 
 #include <imgui.h>
 #include <imgui_impl_glfw.h>
 #include <imgui_impl_opengl3.h>
 
-#include <core/ui/Window.h>
-#include <core/ui/windows/InspectorWindow.h>
-#include <core/ui/windows/ViewportWindow.h>
-#include <core/ui/windows/SceneWindow.h>
-#include <core/ui/windows/ConsoleWindow.h>
-#include <core/ui/windows/LightingWindow.h>
+#include <windows/Window.h>
+#include <windows/InspectorWindow.h>
+#include <windows/ViewportWindow.h>
+#include <windows/SceneWindow.h>
+#include <windows/ConsoleWindow.h>
+#include <windows/LightingWindow.h>
 
 #include <managers/SceneManager.h>
 

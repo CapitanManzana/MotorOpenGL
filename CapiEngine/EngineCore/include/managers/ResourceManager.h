@@ -1,8 +1,8 @@
 #pragma once
 #include <unordered_map>
 #include <utils/Singleton.h>
-#include <core/Shader.h>
-#include <core/Texture.h>
+#include <surface/Shader.h>
+#include <surface/Texture.h>
 
 namespace cme {
 

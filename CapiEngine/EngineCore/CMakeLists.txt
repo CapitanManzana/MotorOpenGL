@@ -16,6 +16,21 @@ add_library(EngineCore STATIC
 target_include_directories(EngineCore PUBLIC 
     include
     ../vendor/glad/include
+    ../vendor/glad/include
+    ../vendor/glm/include
+    ../vendor/stb_image/include
+    ../vendor/glfw/include
 )
 
-target_link_libraries(EngineCore PUBLIC glfw)
+target_compile_definitions(EngineCore PUBLIC GLFW_INCLUDE_NONE)
+
+target_link_libraries(EngineCore PUBLIC 
+    "${CMAKE_SOURCE_DIR}/vendor/glfw/lib/glfw3dll.lib"  # ← nombre correcto
+)
+
+# Copiar la DLL al lado del ejecutable automáticamente
+add_custom_command(TARGET EngineCore POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E copy_if_different
+        "${CMAKE_SOURCE_DIR}/vendor/glfw/bin/glfw3.dll"
+        "$<TARGET_FILE_DIR:EngineEditor>"
+)

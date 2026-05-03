@@ -1,8 +1,9 @@
 ﻿#pragma once
+#include <glad/glad.h>
+
 #include <string>
 #include <glm/fwd.hpp>
 #include <unordered_map>
-#include <glad/glad.h>
 
 namespace cme {
 

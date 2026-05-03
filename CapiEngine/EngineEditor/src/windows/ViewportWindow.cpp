@@ -1,13 +1,14 @@
-﻿#include "ViewportWindow.h"
-#include <glad/glad.h>
+﻿#include <glad/glad.h>
+
+#include "windows/ViewportWindow.h"
 #include <GLFW/glfw3.h>
 #include <managers/SceneManager.h>
 #include <core/Scene.h>
 #include <core/Camera.h>
 #include <managers/InputManager.h>
-#include <core/GLApplication.h>
+#include <GLApplication.h>
 
-namespace cme::ui {
+namespace cme::editor {
     ViewportWindow::ViewportWindow(const char* name) : Window(name) {
         initFBO();
     }

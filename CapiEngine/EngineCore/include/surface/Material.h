@@ -3,7 +3,7 @@
 #include <string>
 #include <unordered_map>
 #include <variant>
-#include <core/serialize/Serializable.h>
+#include <serialize/Serializable.h>
 #include <unordered_set>
 #include <vector>
 
@@ -32,7 +32,7 @@ namespace cme {
     };
 
     class Material : public Serializable {
-    private:
+    public:
         Shader* _shader = nullptr;
         std::unordered_map<std::string, MaterialProperty> _properties;
         std::unordered_map<std::string, Texture*>         _textures;
@@ -40,7 +40,6 @@ namespace cme {
         static const std::unordered_set<std::string> CAMERA_UNIFORMS;
         static const std::vector<std::string> CAMERA_UNIFORMS_PREFIX;
 
-    public:
         Material();
 
         // --- Shader ---
@@ -59,8 +58,6 @@ namespace cme {
 
         // --- Sube todo al shader ---
         void apply() const;
-
-        void drawOnInspector();
 
         void serialize(JsonSerializer& s) const override;
         void deserialize(JsonSerializer& s) override;

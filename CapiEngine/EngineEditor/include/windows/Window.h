@@ -1,10 +1,10 @@
 #pragma once
 #include <imgui.h>
-#include <core/ui/UIGroups.h>
+#include <windows/UIGroups.h>
 #include <functional>
 #include <string>
 
-namespace cme::ui {
+namespace cme::editor {
 	/// @brief Interfaz para crear ventanas y añadirlas al render del CoreUI
 	class Window
 	{

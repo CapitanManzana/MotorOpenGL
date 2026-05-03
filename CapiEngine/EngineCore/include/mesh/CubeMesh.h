@@ -1,5 +1,5 @@
 #pragma once
-#include <core/Mesh.h>
+#include <mesh/Mesh.h>
 
 namespace cme {
 	/// @brief Genera una mesh de tipo cubo

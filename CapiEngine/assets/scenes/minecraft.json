@@ -1,0 +1,342 @@
+{
+    "name": "Default",
+    "entities_groups": [
+        {
+            "group": 0,
+            "entities": [
+                {
+                    "name": "Cube",
+                    "components": [
+                        {
+                            "type": "Transform",
+                            "data": {
+                                "position": [
+                                    0.0,
+                                    0.0,
+                                    0.0
+                                ],
+                                "scale": [
+                                    16.0,
+                                    1.0,
+                                    16.0
+                                ],
+                                "rotation": [
+                                    0.0,
+                                    0.0,
+                                    0.0
+                                ]
+                            }
+                        },
+                        {
+                            "type": "MeshRenderer",
+                            "data": {
+                                "mesh": 3,
+                                "material": {
+                                    "type": 1,
+                                    "uniforms": {
+                                        "material.diffuse": [
+                                            0.800000011920929,
+                                            0.800000011920929,
+                                            0.800000011920929
+                                        ],
+                                        "albedo": [
+                                            1.0,
+                                            1.0,
+                                            1.0,
+                                            1.0
+                                        ],
+                                        "useAlbedoTex": 1,
+                                        "material.shininess": 32.0,
+                                        "material.ambient": [
+                                            0.10000000149011612,
+                                            0.10000000149011612,
+                                            0.10000000149011612
+                                        ],
+                                        "material.specular": [
+                                            0.5,
+                                            0.5,
+                                            0.5
+                                        ]
+                                    },
+                                    "textures": [
+                                        {
+                                            "uniformName": "albedoMap",
+                                            "textureName": "grass"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "Cube",
+                    "components": [
+                        {
+                            "type": "Transform",
+                            "data": {
+                                "position": [
+                                    0.0,
+                                    1.0,
+                                    0.0
+                                ],
+                                "scale": [
+                                    1.0,
+                                    1.0,
+                                    1.0
+                                ],
+                                "rotation": [
+                                    0.0,
+                                    0.0,
+                                    0.0
+                                ]
+                            }
+                        },
+                        {
+                            "type": "MeshRenderer",
+                            "data": {
+                                "mesh": 3,
+                                "material": {
+                                    "type": 1,
+                                    "uniforms": {
+                                        "material.diffuse": [
+                                            0.800000011920929,
+                                            0.800000011920929,
+                                            0.800000011920929
+                                        ],
+                                        "albedo": [
+                                            1.0,
+                                            1.0,
+                                            1.0,
+                                            1.0
+                                        ],
+                                        "useAlbedoTex": 1,
+                                        "material.shininess": 32.0,
+                                        "material.ambient": [
+                                            0.10000000149011612,
+                                            0.10000000149011612,
+                                            0.10000000149011612
+                                        ],
+                                        "material.specular": [
+                                            0.5,
+                                            0.5,
+                                            0.5
+                                        ]
+                                    },
+                                    "textures": [
+                                        {
+                                            "uniformName": "albedoMap",
+                                            "textureName": "cobblestone"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "Cube",
+                    "components": [
+                        {
+                            "type": "Transform",
+                            "data": {
+                                "position": [
+                                    0.0,
+                                    1.0,
+                                    3.0
+                                ],
+                                "scale": [
+                                    1.0,
+                                    1.0,
+                                    1.0
+                                ],
+                                "rotation": [
+                                    0.0,
+                                    0.0,
+                                    0.0
+                                ]
+                            }
+                        },
+                        {
+                            "type": "MeshRenderer",
+                            "data": {
+                                "mesh": 3,
+                                "material": {
+                                    "type": 1,
+                                    "uniforms": {
+                                        "material.diffuse": [
+                                            0.800000011920929,
+                                            0.800000011920929,
+                                            0.800000011920929
+                                        ],
+                                        "albedo": [
+                                            1.0,
+                                            1.0,
+                                            1.0,
+                                            1.0
+                                        ],
+                                        "useAlbedoTex": 1,
+                                        "material.shininess": 32.0,
+                                        "material.ambient": [
+                                            0.10000000149011612,
+                                            0.10000000149011612,
+                                            0.10000000149011612
+                                        ],
+                                        "material.specular": [
+                                            0.5,
+                                            0.5,
+                                            0.5
+                                        ]
+                                    },
+                                    "textures": [
+                                        {
+                                            "uniformName": "albedoMap",
+                                            "textureName": "netherrack"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "Cube",
+                    "components": [
+                        {
+                            "type": "Transform",
+                            "data": {
+                                "position": [
+                                    -3.0,
+                                    1.0,
+                                    1.0
+                                ],
+                                "scale": [
+                                    1.0,
+                                    1.0,
+                                    1.0
+                                ],
+                                "rotation": [
+                                    0.0,
+                                    0.0,
+                                    0.0
+                                ]
+                            }
+                        },
+                        {
+                            "type": "MeshRenderer",
+                            "data": {
+                                "mesh": 3,
+                                "material": {
+                                    "uniforms": {
+                                        "material.diffuse": [
+                                            0.800000011920929,
+                                            0.800000011920929,
+                                            0.800000011920929
+                                        ],
+                                        "albedo": [
+                                            1.0,
+                                            1.0,
+                                            1.0,
+                                            1.0
+                                        ],
+                                        "useAlbedoTex": 1,
+                                        "material.shininess": 32.0,
+                                        "material.ambient": [
+                                            0.10000000149011612,
+                                            0.10000000149011612,
+                                            0.10000000149011612
+                                        ],
+                                        "material.specular": [
+                                            0.5,
+                                            0.5,
+                                            0.5
+                                        ]
+                                    },
+                                    "textures": [
+                                        {
+                                            "uniformName": "albedoMap",
+                                            "textureName": "glowstone"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "Cube",
+                    "components": [
+                        {
+                            "type": "Transform",
+                            "data": {
+                                "position": [
+                                    5.0,
+                                    1.0,
+                                    -2.0
+                                ],
+                                "scale": [
+                                    1.0,
+                                    1.0,
+                                    1.0
+                                ],
+                                "rotation": [
+                                    0.0,
+                                    0.0,
+                                    0.0
+                                ]
+                            }
+                        },
+                        {
+                            "type": "MeshRenderer",
+                            "data": {
+                                "mesh": 3,
+                                "material": {
+                                    "type": 0,
+                                    "uniforms": {
+                                        "lightColor": [
+                                            0.0,
+                                            0.23529410362243652,
+                                            1.0
+                                        ]
+                                    },
+                                    "textures": []
+                                }
+                            }
+                        },
+                        {
+                            "type": "Light",
+                            "data": {
+                                "color": [
+                                    0.0,
+                                    0.5000002384185791,
+                                    1.0
+                                ],
+                                "intensity": 1.0,
+                                "constant": 0.06599999964237213,
+                                "linear": 0.11299999803304672,
+                                "quadratic": 0.03700000047683716
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "group": 1,
+            "entities": []
+        }
+    ],
+    "globalLight": {
+        "lightColor": [
+            1.0,
+            0.9896193742752075,
+            0.9607843160629272
+        ],
+        "lightDir": [
+            0.7610269784927368,
+            -0.6374239921569824,
+            -0.12053481489419937
+        ],
+        "lightIntensity": 1.0
+    }
+}

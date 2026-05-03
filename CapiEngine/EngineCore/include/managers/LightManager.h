@@ -1,6 +1,6 @@
 #pragma once
 #include <vector>
-#include <core/lighting/PointLight.h>
+#include <lighting/PointLight.h>
 
 namespace cme {
 

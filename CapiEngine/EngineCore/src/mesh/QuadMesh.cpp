@@ -1,6 +1,6 @@
-#include "QuadMesh.h"
-#include <core/Shader.h>
-#include <core/Material.h>
+#include <mesh/QuadMesh.h>
+#include <surface/Shader.h>
+#include <surface/Material.h>
 
 namespace cme {
 	QuadMesh::QuadMesh() {

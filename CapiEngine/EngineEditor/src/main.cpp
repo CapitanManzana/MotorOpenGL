@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <crtdbg.h>
 
-#include <core/GLApplication.h>
+#include "EditorApp.h"
 #include <iostream>
 #include <utils/logger.h>
 #include <filesystem>
@@ -15,12 +15,13 @@ int main(int argc, char* argv[]) {
 	std::filesystem::path carpetaExe = rutaExe.parent_path();
 	std::filesystem::current_path(carpetaExe);
 
-	if (!cme::GLApplication::Init()) {
-		LOG_ERROR("No se pudo inicializar GLApplication");
+	cme::editor::EditorApp* app = new cme::editor::EditorApp();
+	if (!app->init()) {
+		LOG_ERROR("No se pudo inicializar el motor");
 		return -1;
 	}
-	cme::gla().start();
-	cme::gla().Release();
+	app->run();
+	delete app;
 
 	return 0;
 }

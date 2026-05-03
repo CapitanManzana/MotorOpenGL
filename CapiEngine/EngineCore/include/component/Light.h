@@ -2,7 +2,7 @@
 #include <ec/component.h>
 #include <glm/vec4.hpp> 
 #include <component/Transform.h>
-#include <core/lighting/PointLight.h>
+#include <lighting/PointLight.h>
 
 namespace cme {
 
@@ -10,21 +10,18 @@ namespace cme {
     ///        Requiere un Transform en la misma entidad.
     class Light : public ec::Component, public ec::UpdateComponent
     {
-    private:
+    public:
         PointLight  _pointLight;    // Datos de la luz (posicion se sincroniza cada frame)
         int         _lightIndex = -1; // Indice en el LightManager (-1 = no registrada)
         Transform* _tr = nullptr;
 
-    public:
         __CMPID_DECL__(ec::comp::LIGHT)
 
-            Light() = default;
+        Light() = default;
         ~Light() override;
 
         void initComponent() override;
         void update() override;  // Sincroniza la posicion con el Transform cada frame
-
-        void drawOnInspector() override;
 
         void serialize(JsonSerializer& s) const override;
         void deserialize(JsonSerializer& s)       override;

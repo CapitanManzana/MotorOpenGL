@@ -1,11 +1,13 @@
-#include "Raycast.h"
+#include "utils/Raycast.h"
+#include <GLFW/glfw3.h>
+
 #include <algorithm>
 #include <managers/InputManager.h>
-#include <core/GLApplication.h>
+#include <GLApplication.h>
 #include <managers/SceneManager.h>
 #include <core/Scene.h>
 #include <core/Camera.h>
-#include <core/Mesh.h>
+#include <mesh/Mesh.h>
 #include <component/Transform.h>
 #include <component/MeshRenderer.h>
 #include <ec/component.h>
@@ -70,6 +72,20 @@ namespace cme {
 	}
 
 	std::weak_ptr<ec::Entity> Raycast::castRay() {
+		float x, y;
+		if (inpM().isViewportHovered()) {
+			// Si hay un Editor informando que estamos en el Viewport...
+			x = inpM().getViewportMouseX();
+			y = inpM().getViewportMouseY();
+		}
+		else {
+			// Si es el JUEGO FINAL, usamos la posición de GLFW directa
+			double mouseX, mouseY;
+			glfwGetCursorPos(gla().window(), &mouseX, &mouseY);
+			x = (float)mouseX;
+			y = (float)mouseY;
+		}
+
 		glm::vec4 viewPort(0, 0, gla().viewportWidth(), gla().viewportHeight());
 		Camera* cam = sceneM().activeScene()->getCamera();
 

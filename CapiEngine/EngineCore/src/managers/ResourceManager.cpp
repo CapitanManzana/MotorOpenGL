@@ -1,7 +1,7 @@
-#include "ResourceManager.h"
+#include "managers/ResourceManager.h"
 #include <filesystem>
 #include <utils/logger.h>
-#include <core/Texture.h>
+#include <surface/Texture.h>
 
 namespace fs = std::filesystem;
 

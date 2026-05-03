@@ -6,7 +6,7 @@
 #include <glm/gtc/type_ptr.hpp>
 
 namespace cme {
-    /// @brief Componente que controla la posición, rotacion y escala en el mundo de la entidad
+    /// @brief Componente que controla la posiciï¿½n, rotacion y escala en el mundo de la entidad
     class Transform : public ec::Component {
     private:
         glm::vec3 _position = glm::vec3(0.0f);
@@ -32,8 +32,6 @@ namespace cme {
         void setPosition(const glm::vec3& pos) { _position = pos; }
         void setScale(const glm::vec3& scale) { _scale = scale; }
         void setRotation(const glm::vec3& rot) { _rotation = rot; }
-
-        void drawOnInspector() override;
 
         void serialize(JsonSerializer& s) const override;
         void deserialize(JsonSerializer& s) override;
