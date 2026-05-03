@@ -44,7 +44,6 @@ uniform PointLight  pointLights[MAX_POINT_LIGHTS];
 uniform int         numPointLights;
 
 uniform Material    material;
-uniform vec4        albedo;
 uniform sampler2D   albedoMap;
 uniform bool        useAlbedoTex;
 uniform vec3        cameraPos;
@@ -96,7 +95,7 @@ vec3 calcPointLight(PointLight light, vec3 norm, vec3 viewDir, vec3 baseColor) {
 // Main
 // -------------------------------------------------------
 void main() {
-    vec4 baseColor = useAlbedoTex ? texture(albedoMap, vTexCoords) : albedo;
+    vec4 baseColor = useAlbedoTex ? texture(albedoMap, vTexCoords) : vec4(material.diffuse, 1);
     vec3 norm      = normalize(Normal);
     vec3 viewDir   = normalize(cameraPos - FragPos);
 
@@ -110,4 +109,5 @@ void main() {
     }
 
     FragColor = vec4(result, 1.0);
+    //FragColor = numPointLights > 0 ? vec4(1.0, 0.0, 0.0, 1.0) : vec4(0.0, 0.0, 1.0, 1.0);
 }

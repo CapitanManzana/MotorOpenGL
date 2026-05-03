@@ -4,6 +4,8 @@
 #include <unordered_map>
 #include <variant>
 #include <core/serialize/Serializable.h>
+#include <unordered_set>
+#include <vector>
 
 namespace cme {
     class Shader;
@@ -35,6 +37,9 @@ namespace cme {
         std::unordered_map<std::string, MaterialProperty> _properties;
         std::unordered_map<std::string, Texture*>         _textures;
 
+        static const std::unordered_set<std::string> CAMERA_UNIFORMS;
+        static const std::vector<std::string> CAMERA_UNIFORMS_PREFIX;
+
     public:
         Material();
 
@@ -63,5 +68,6 @@ namespace cme {
     private:
         // Rellena _properties con los uniforms por defecto del shader
         void populateFromShader();
+        bool isUniform(const std::string& name) const;
     };
 }

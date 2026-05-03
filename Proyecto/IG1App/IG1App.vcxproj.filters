@@ -36,6 +36,7 @@
     <ClCompile Include="src\core\Material.cpp" />
     <ClCompile Include="src\core\ui\windows\LightingWindow.cpp" />
     <ClCompile Include="src\core\lighting\GlobalLight.cpp" />
+    <ClCompile Include="src\managers\LightManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\core\Camera.h" />
@@ -87,5 +88,7 @@
     <ClInclude Include="src\utils\ImGuiUtils.h" />
     <ClInclude Include="src\core\ui\windows\LightingWindow.h" />
     <ClInclude Include="src\core\lighting\GlobalLight.h" />
+    <ClInclude Include="src\managers\LightManager.h" />
+    <ClInclude Include="src\core\lighting\PointLight.h" />
   </ItemGroup>
 </Project>

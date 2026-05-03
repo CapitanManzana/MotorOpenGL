@@ -14,8 +14,8 @@ namespace cme {
 	class Scene : public Serializable
 	{
 	private:
-		/// @param gameObjectsByLayer vectores de objetos según la layer a la que pertencen
-		/// El vector de gameObjectsByLayer[n] tendría todos los objetos pertencientes a la layer n 
+		/// @param gameObjectsByLayer vectores de objetos segï¿½n la layer a la que pertencen
+		/// El vector de gameObjectsByLayer[n] tendrï¿½a todos los objetos pertencientes a la layer n 
 		std::array<std::vector<ec::entity_t>, ec::ent::maxGroupLayer> _gameObjectsByGroup;
 		std::vector<ec::entity_t> _gizmos;
 
@@ -28,13 +28,13 @@ namespace cme {
 
 		virtual ~Scene();
 
-		/// @brief renderiza todos los objetos de la escena según la layer y posteriormente renderiza la UI
+		/// @brief renderiza todos los objetos de la escena segï¿½n la layer y posteriormente renderiza la UI
 		void render() const;
 
 		/// @brief actualiza todos los objetos de la escena
 		void update();
 
-		/// @brief quita todos los objetos que no estén activos de la escena
+		/// @brief quita todos los objetos que no estï¿½n activos de la escena
 		void refresh();
 
 		/// @brief Crea la cuadricula en el plano y = 0
@@ -42,8 +42,8 @@ namespace cme {
 
 		void addCubeToScene();
 
-		/// @brief permite añadir objetos a la escena
-		/// @param grID Grupo al que añadir al objeto creado
+		/// @brief permite aï¿½adir objetos a la escena
+		/// @param grID Grupo al que aï¿½adir al objeto creado
 		std::shared_ptr<ec::Entity> addGameObject(Scene* scene, std::string name, ec::ent::groupID grID = ec::ent::None);
 		ec::entity_t addGizmos();
 
