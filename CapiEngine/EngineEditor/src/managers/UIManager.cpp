@@ -17,6 +17,8 @@
 #include <utils/FileExplorer.h>
 #include <core/Scene.h>
 
+#include <EditorApp.h>
+
 namespace cme::editor {
 	UIManager::UIManager() {
 		_windows.resize(windowGroupID::NUM_GROUP);
@@ -146,6 +148,8 @@ namespace cme::editor {
 					FileExplorer fe;
 					std::string path = fe.fileDialog(FileDialogMode::Open);
 					sceneM().loadScene(path);
+
+					EditorApp::createGizmos();
 				}
 				ImGui::EndMenu();
 			}

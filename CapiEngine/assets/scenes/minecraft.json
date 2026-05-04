@@ -32,6 +32,7 @@
                             "data": {
                                 "mesh": 3,
                                 "material": {
+                                    "shaderName" : "default",
                                     "type": 0,
                                     "uniforms": {
                                         "useAlbedoTex": 1,
@@ -97,6 +98,7 @@
                             "data": {
                                 "mesh": 3,
                                 "material": {
+                                    "shaderName" : "default",
                                     "type": 0,
                                     "uniforms": {
                                         "useAlbedoTex": 1,
@@ -162,6 +164,7 @@
                             "data": {
                                 "mesh": 3,
                                 "material": {
+                                    "shaderName" : "default",
                                     "type": 0,
                                     "uniforms": {
                                         "useAlbedoTex": 1,
@@ -227,6 +230,7 @@
                             "data": {
                                 "mesh": 3,
                                 "material": {
+                                    "shaderName" : "default",
                                     "type": 0,
                                     "uniforms": {
                                         "useAlbedoTex": 1,
@@ -292,6 +296,7 @@
                             "data": {
                                 "mesh": 3,
                                 "material": {
+                                    "shaderName" : "light",
                                     "type": 0,
                                     "uniforms": {
                                         "lightColor": [

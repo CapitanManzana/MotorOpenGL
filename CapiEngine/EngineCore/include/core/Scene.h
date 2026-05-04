@@ -1,7 +1,6 @@
 #pragma once
 #include <array>
 #include <vector>
-#include <functional>
 #include <ec/ec.h>
 #include <serialize/Serializable.h>
 #include <string>
@@ -37,9 +36,6 @@ namespace cme {
 
 		/// @brief quita todos los objetos que no est�n activos de la escena
 		void refresh();
-
-		/// @brief Crea la cuadricula en el plano y = 0
-		void createGrid();
 
 		void addCubeToScene();
 

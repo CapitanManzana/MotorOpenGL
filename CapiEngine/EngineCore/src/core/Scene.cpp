@@ -14,7 +14,6 @@ namespace cme {
 	Scene::Scene(std::string name) : _name(name) {
 		_cam = new Camera();
 		_globalLight = new GlobalLight();
-		createGrid();
 	}
 
 	Scene::~Scene() {
@@ -70,19 +69,6 @@ namespace cme {
 		auto shPtr = std::make_shared<ec::Entity>((ec::ent::groupID)0, this, "");
 		_gizmos.push_back(shPtr);
 		return shPtr;
-	}
-
-	void Scene::createGrid() {
-		Shader* gridShader = rscrM().getShader("grid");
-		// 2. Crear la entidad
-		ec::entity_t gridEntity = addGizmos();
-
-		auto tr = gridEntity->addComponent<Transform>();
-		tr->setPosition(glm::vec3(0.0f, 0.0f, 0.0f));
-		tr->setScale(glm::vec3(500.0f, 500.0f, 1.0f)); // Un plano muy grande
-		tr->setRotation(glm::vec3(-90.0f, 0.0f, 0.0f)); // Rotarlo para que acueste en Y=0 (depende de tu QuadMesh)
-
-		gridEntity->addComponent<MeshRenderer>(new QuadMesh(gridShader));
 	}
 
 	void Scene::addCubeToScene() {

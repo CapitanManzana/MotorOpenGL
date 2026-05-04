@@ -10,6 +10,10 @@
 #include <utils/FileExplorer.h>
 
 #include <managers/UIManager.h>
+#include <managers/ResourceManager.h>
+#include <component/Transform.h>
+#include <component/MeshRenderer.h>
+#include <mesh/QuadMesh.h>
 #include <windows/InspectorWindow.h>
 
 namespace cme::editor {
@@ -39,6 +43,7 @@ namespace cme::editor {
 
 		createShortcuts();
 		stateChangers();
+		createGizmos();
 
 		while (!glfwWindowShouldClose(gla().window())) {
 			gla().update();
@@ -51,6 +56,19 @@ namespace cme::editor {
 
 			gla().swapAndTime();
 		}
+	}
+
+	void EditorApp::createGizmos() {
+		Shader* gridShader = rscrM().getShader("grid");
+		// 2. Crear la entidad
+		ec::entity_t gridEntity = sceneM().activeScene()->addGizmos();
+
+		auto tr = gridEntity->addComponent<Transform>();
+		tr->setPosition(glm::vec3(0.0f, 0.0f, 0.0f));
+		tr->setScale(glm::vec3(500.0f, 500.0f, 1.0f)); // Un plano muy grande
+		tr->setRotation(glm::vec3(-90.0f, 0.0f, 0.0f)); // Rotarlo para que acueste en Y=0 (depende de tu QuadMesh)
+
+		gridEntity->addComponent<MeshRenderer>(new QuadMesh(gridShader));
 	}
 
 	void EditorApp::createShortcuts() {
@@ -68,6 +86,7 @@ namespace cme::editor {
 			FileExplorer f;
 			std::string path = f.fileDialog(FileDialogMode::Open);
 			if (path != "") sceneM().loadScene(path);
+			EditorApp::createGizmos();
 			}, CME_STATE_NORMAL);
 		inpM().addShortcut(loadFile);
 

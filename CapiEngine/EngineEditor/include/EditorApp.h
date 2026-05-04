@@ -1,6 +1,5 @@
 #pragma once
 #include <GLApplication.h>
-#include "managers/UIManager.h"
 #include <managers/SceneManager.h>
 #include <managers/InputManager.h>
 
@@ -8,6 +7,7 @@
 #include <utils/logger.h>
 
 namespace cme::editor {
+	class UIManager;
 	class EditorApp {
 	private:
 		std::shared_ptr<UIManager> _ui;
@@ -25,5 +25,7 @@ namespace cme::editor {
 
 		void createShortcuts();
 		void stateChangers();
+
+		static void createGizmos();
 	};
 }
