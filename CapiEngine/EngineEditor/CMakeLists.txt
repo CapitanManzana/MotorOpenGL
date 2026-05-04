@@ -41,5 +41,9 @@ target_include_directories(EngineEditor PRIVATE
 
 target_compile_definitions(EngineEditor PRIVATE GLFW_INCLUDE_NONE)
 
+target_compile_definitions(EngineEditor PRIVATE
+    CMAKE_SOURCE_DIR="${CMAKE_SOURCE_DIR}"
+)
+
 # 6. Enlazar con el Core
 target_link_libraries(EngineEditor PRIVATE EngineCore)

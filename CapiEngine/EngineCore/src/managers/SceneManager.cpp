@@ -29,7 +29,7 @@ namespace cme {
 	}
 
 	void SceneManager::start() {
-		_currentScene = new Scene("Default");
+		if (!_currentScene) _currentScene = new Scene("Default");
 	}
 
 	void SceneManager::loadScene(std::string& path) {
@@ -38,6 +38,7 @@ namespace cme {
 		if (_currentScene) delete _currentScene;
 
 		_currentScene = new Scene("");
+		_currentScene->setPath(path);
 		_currentScene->deserialize(serializer);
 	}
 

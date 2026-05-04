@@ -4,6 +4,7 @@
 #include <vector>
 #include <memory>
 #include <functional>
+#include <string>
 
 namespace cme::editor {
 	class Window;
@@ -31,6 +32,7 @@ namespace cme::editor {
 	private:
 		bool initImgui(GLFWwindow* window);
 		void renderMenuBar() const;
+		void launchRuntime(const std::string& scenePath) const;
 
 	public:
 		template<typename T, typename... Args>

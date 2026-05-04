@@ -70,4 +70,14 @@ namespace cme {
 			inpM()._mouseY = static_cast<float>(ypos);
 		}
 	}
+
+	bool InputManager::isKeyPressed(int key) const {
+		return glfwGetKey(gla().window(), key) == GLFW_PRESS;
+	}
+	bool InputManager::isKeyReleased(int key) const {
+		return glfwGetKey(gla().window(), key) == GLFW_RELEASE;
+	}
+	bool InputManager::isMouseButtonPressed(int button) const {
+		return glfwGetMouseButton(gla().window(), button) == GLFW_PRESS;
+	}
 }

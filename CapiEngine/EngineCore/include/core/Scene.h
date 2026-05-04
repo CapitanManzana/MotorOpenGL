@@ -21,6 +21,7 @@ namespace cme {
 
 		Camera* _cam = nullptr;
 		std::string _name = "Scene";
+		std::string _sceneDataPath = "";
 
 		GlobalLight* _globalLight = nullptr;
 	public:
@@ -56,6 +57,10 @@ namespace cme {
 		void deserialize(JsonSerializer& s) override;
 
 		GlobalLight* globalLight() { return _globalLight; }
+
+		void setPath(std::string path) { _sceneDataPath = path; }
+		std::string getPath() { return _sceneDataPath; }
+
 	private:
 		/// @brief inicializa la escena creando todos los objetos que vayan a haber en la misma
 		virtual void init() {};

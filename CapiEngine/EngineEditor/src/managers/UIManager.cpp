@@ -15,6 +15,7 @@
 
 #include <utils/logger.h>
 #include <utils/FileExplorer.h>
+#include <core/Scene.h>
 
 namespace cme::editor {
 	UIManager::UIManager() {
@@ -166,7 +167,47 @@ namespace cme::editor {
 				}
 				ImGui::EndMenu();
 			}
+
+			if (ImGui::BeginMenu("Run")) {
+				if (ImGui::MenuItem("Play")) {
+					launchRuntime(sceneM().activeScene()->getPath());
+				}
+				
+				ImGui::EndMenu();
+			}
+
 			ImGui::EndMainMenuBar();
 		}
+	}
+
+	void UIManager::launchRuntime(const std::string& scenePath) const{
+		std::string runtimeExe = CMAKE_SOURCE_DIR "/out/build/x64-Debug/Runtime/EngineRuntime.exe";
+		std::string args = runtimeExe + " " + scenePath;
+		std::string workingDir = CMAKE_SOURCE_DIR;
+
+		STARTUPINFOA si = { sizeof(si) };
+		PROCESS_INFORMATION pi;
+
+		BOOL ok = CreateProcessA(
+			runtimeExe.c_str(),
+			args.data(),
+			nullptr, nullptr,
+			FALSE, 0,
+			nullptr, 
+			workingDir.c_str(),
+			&si, &pi
+		);
+
+		if (!ok) {
+			DWORD error = GetLastError();
+			LOG_ERROR("Error al lanzar runtime. Codigo: " + std::to_string(error));
+			return;
+		}
+
+		LOG_INFO("Runtime lanzado correctamente");
+
+		// Guardar el handle por si quieres cerrarlo después
+		CloseHandle(pi.hThread);
+		CloseHandle(pi.hProcess);
 	}
 }

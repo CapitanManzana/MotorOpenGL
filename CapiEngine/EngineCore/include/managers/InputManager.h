@@ -105,9 +105,13 @@ namespace cme {
 		void setViewportMouseX(float mouse) { _viewportMouseX = mouse; }
 		void setViewportMouseY(float mouse) { _viewportMouseY = mouse; }
 
+		// InputManager.h
+		bool isKeyPressed(int key) const;
+		bool isKeyReleased(int key) const;
+		bool isMouseButtonPressed(int button) const;
+
 	private:
 		InputManager();
-
 		bool init();
 	};
 
