@@ -47,3 +47,20 @@ target_compile_definitions(EngineEditor PRIVATE
 
 # 6. Enlazar con el Core
 target_link_libraries(EngineEditor PRIVATE EngineCore)
+
+add_custom_command(TARGET EngineEditor POST_BUILD
+    # Primero borra el destino
+    COMMAND ${CMAKE_COMMAND} -E rm -rf
+        "$<TARGET_FILE_DIR:EngineRuntime>/assets"
+    # Luego copia desde cero
+    COMMAND ${CMAKE_COMMAND} -E copy_directory
+        "${CMAKE_SOURCE_DIR}/assets"
+        "$<TARGET_FILE_DIR:EngineRuntime>/assets"
+    COMMENT "Copiando assets..."
+)
+
+add_custom_command(TARGET EngineEditor POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E copy_if_different
+        "${CMAKE_SOURCE_DIR}/vendor/glfw/bin/glfw3.dll"
+        "$<TARGET_FILE_DIR:EngineRuntime>"
+)

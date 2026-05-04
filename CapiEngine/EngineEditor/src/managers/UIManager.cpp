@@ -10,6 +10,7 @@
 #include <windows/SceneWindow.h>
 #include <windows/ConsoleWindow.h>
 #include <windows/LightingWindow.h>
+#include <windows/ProjectWindow.h>
 
 #include <managers/SceneManager.h>
 
@@ -81,6 +82,7 @@ namespace cme::editor {
 		auto hierarchy = addWindow<SceneWindow>("Scene");
 		auto console = addWindow<ConsoleWindow>("Console");
 		addWindow<LightingWindow>("Lighting");
+		addWindow<ProjectWindow>("Project");
 
 		hierarchy->setCallback([inspector](std::weak_ptr<ec::Entity> e) {
 			inspector->changeDisplayEntity(e);
@@ -101,6 +103,7 @@ namespace cme::editor {
 		ImGui_ImplGlfw_NewFrame();
 		ImGui::NewFrame();
 
+		assert(ImGui::GetCurrentContext() != nullptr && "ImGui context no inicializado");
 		ImGuiViewport* viewport = ImGui::GetMainViewport();
 		ImGui::SetNextWindowPos(viewport->Pos);
 		ImGui::SetNextWindowSize(viewport->Size);

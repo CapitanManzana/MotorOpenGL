@@ -9,9 +9,14 @@ target_link_libraries(EngineRuntime PRIVATE EngineCore)
 
 # Copiar assets al lado del exe al compilar
 add_custom_command(TARGET EngineRuntime POST_BUILD
+    # Primero borra el destino
+    COMMAND ${CMAKE_COMMAND} -E rm -rf
+        "$<TARGET_FILE_DIR:EngineRuntime>/assets"
+    # Luego copia desde cero
     COMMAND ${CMAKE_COMMAND} -E copy_directory
         "${CMAKE_SOURCE_DIR}/assets"
         "$<TARGET_FILE_DIR:EngineRuntime>/assets"
+    COMMENT "Copiando assets..."
 )
 
 add_custom_command(TARGET EngineRuntime POST_BUILD
