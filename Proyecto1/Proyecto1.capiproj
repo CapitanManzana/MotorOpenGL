@@ -1,0 +1,11 @@
+{
+    "name": "MiJuego",
+    "version": "1.0",
+    "engineVersion": "0.1.0",
+    "startScene": "scenes/minecraft.json",
+    "assetDirectory": "assets",
+    "buildSettings": {
+        "target": "Windows",
+        "outputDir": "build"
+    }
+}

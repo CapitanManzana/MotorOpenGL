@@ -3,6 +3,9 @@
 #include <utils/Singleton.h>
 #include <surface/Shader.h>
 #include <surface/Texture.h>
+#include <filesystem>
+
+namespace fs = std::filesystem;
 
 namespace cme {
 
@@ -12,13 +15,11 @@ namespace cme {
 		friend class Singleton<ResourceManager>;
 	private:
 		// ----- SHADERS -----
-		const char* SHADERS_PATH = "assets/shaders";
 		std::unordered_map<std::string, std::unique_ptr<Shader>> _shadersMap;
 		std::vector<Shader*> _shaders;
 		std::vector<std::string> _shaderNames;
 
 		// ----- TEXTURAS -----
-		const char* TEXTURES_PATH = "assets/textures";
 		std::unordered_map<std::string, std::unique_ptr<Texture>> _texturesMap;
 		std::vector<std::string> _texturesNames;
 
@@ -45,16 +46,32 @@ namespace cme {
 		std::vector<std::string> getAllShaderNames();
 
 		std::vector<std::string> getAllTextureNames();
-
 	private:
 		ResourceManager() = default;
 
-		void loadShaders();
-		void loadTextures();
+		void loadShader(fs::path file);
+		void loadTexture(fs::path file);
 
 		/// @brief Inicializa el Resource Manager
 		/// @return False si falla
 		bool init();
+	public:
+		template<typename T>
+		void loadResource(const fs::path& file) {
+			std::string name = file.stem().string(); // nombre sin extensión
+
+			if constexpr (std::is_same_v<T, Shader>) {
+				if (_shaders.count(name)) return; // ya cargado
+				loadShaders(file);
+			}
+			else if constexpr (std::is_same_v<T, Texture>) {
+				if (_textures.count(name)) return;
+				loadTexture(file);
+			}
+			else {
+				static_assert(!sizeof(T), "Tipo de recurso no soportado");
+			}
+		}
 	};
 
 	/// @brief Devuelve la instancia de ResourceManager mediante el uso del patrón Singleton

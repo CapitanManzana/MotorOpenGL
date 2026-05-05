@@ -41,8 +41,17 @@ namespace cme::editor {
 	bool UIManager::initImgui(GLFWwindow* window) {
 		IMGUI_CHECKVERSION();
 		ImGui::CreateContext();
+
 		ImGuiIO& io = ImGui::GetIO(); (void)io;
-		io.IniFilename = "imgui.ini";
+
+		static auto imguiIniPath = (EditorApp::getEngineDataPath() / "imgui.ini").string();
+		std::error_code ec;
+		fs::create_directories(EditorApp::getEngineDataPath(), ec);
+		if (ec) LOG_WARN(std::format("No se pudo crear el directorio de config: {}", ec.message()));
+
+		LOG_INFO(std::format("ImGuiPath: {}", imguiIniPath.c_str()));
+
+		io.IniFilename = imguiIniPath.c_str();
 		io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
 		io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;
 
@@ -152,7 +161,7 @@ namespace cme::editor {
 					std::string path = fe.fileDialog(FileDialogMode::Open);
 					sceneM().loadScene(path);
 
-					EditorApp::createGizmos();
+					editor().createGizmos();
 				}
 				ImGui::EndMenu();
 			}

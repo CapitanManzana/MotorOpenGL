@@ -32,7 +32,5 @@ namespace cme::editor {
 	private:
 		FileNode buildFileTree(const fs::path root);
 		void drawFileNode(const FileNode& node, fs::path& selectedFile);
-
-		fs::path getExeDir();
 	};
 }

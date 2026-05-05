@@ -1,20 +1,16 @@
 #include "windows/ProjectWindow.h"
-#ifdef _WIN32
-#include <windows.h>
-#elif __APPLE__
-#include <mach-o/dyld.h>
-#endif
+#include <EditorApp.h>
 
 #include <utils/logger.h>
 
 namespace cme::editor {
 	ProjectWindow::ProjectWindow(const char* name) : Window(name) {
-		_rootPath = getExeDir() / "assets";
+		_rootPath = EditorApp::getExeDir() / "assets";
 		LOG_INFO(std::format("ExeDir: {}", _rootPath.string()));
 
 		if (!fs::exists(_rootPath)) {
 			LOG_WARN(std::format("La carpeta assets no existe en: {}", _rootPath.string()));
-			_rootPath = getExeDir(); // fallback a la carpeta del exe
+			_rootPath = EditorApp::getExeDir(); // fallback a la carpeta del exe
 		}
 
 		_rootNode = buildFileTree(_rootPath);
@@ -109,29 +105,5 @@ namespace cme::editor {
 				drawFileNode(child, selectedFile);
 			ImGui::TreePop();
 		}
-	}
-
-	fs::path ProjectWindow::getExeDir() {
-#ifdef _WIN32
-		wchar_t buf[MAX_PATH] = {};
-		GetModuleFileNameW(nullptr, buf, MAX_PATH);
-		return fs::path(buf).parent_path();
-
-#elif __APPLE__
-		char buf[PATH_MAX] = {};
-		uint32_t size = sizeof(buf);
-		if (_NSGetExecutablePath(buf, &size) != 0)
-			return fs::current_path(); // fallback
-		return fs::canonical(buf).parent_path();
-
-#elif __linux__
-		std::error_code ec;
-		fs::path p = fs::canonical("/proc/self/exe", ec);
-		if (ec) return fs::current_path(); // fallback si falla
-		return p.parent_path();
-
-#else
-		return fs::current_path(); // fallback genérico
-#endif
 	}
 }

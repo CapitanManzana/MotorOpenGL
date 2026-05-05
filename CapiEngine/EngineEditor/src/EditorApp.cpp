@@ -3,6 +3,13 @@
 #include <glm/vec3.hpp>
 #include <glm/vec4.hpp>
 #include <glm/gtc/type_ptr.hpp>
+#include <cstdlib>
+
+#ifdef _WIN32
+#include <windows.h>
+#elif __APPLE__
+#include <mach-o/dyld.h>
+#endif
 
 #include <core/Scene.h>
 #include <core/Camera.h>
@@ -17,7 +24,7 @@
 #include <windows/InspectorWindow.h>
 
 namespace cme::editor {
-	bool EditorApp::init() {
+	bool EditorApp::init(fs::path enginePath, fs::path projectPath) {
 		if (!GLApplication::Init()) {
 			LOG_ERROR("Error al inicializar el GLApplication");
 			return false;
@@ -33,6 +40,9 @@ namespace cme::editor {
 		_ui->setCreateCubeCallback([]() {
 			sceneM().activeScene()->addCubeToScene();
 			});
+
+		_engineDir = enginePath;
+		_projectDir = projectPath;
 
 		return true;
 	}
@@ -82,11 +92,11 @@ namespace cme::editor {
 		inpM().addShortcut(saveFile);
 
 		std::vector<int> loadFileKeys = { GLFW_KEY_LEFT_CONTROL, GLFW_KEY_L };
-		Shortcut loadFile(loadFileKeys, []() {
+		Shortcut loadFile(loadFileKeys, [this]() {
 			FileExplorer f;
 			std::string path = f.fileDialog(FileDialogMode::Open);
 			if (path != "") sceneM().loadScene(path);
-			EditorApp::createGizmos();
+			createGizmos();
 			}, CME_STATE_NORMAL);
 		inpM().addShortcut(loadFile);
 
@@ -192,6 +202,59 @@ namespace cme::editor {
 
 			inpM().addStateChanger(toMoving);
 			inpM().addStateChanger(toNormal);
+	}
+
+	fs::path EditorApp::getEngineDataPath() {
+		// Dev: variable de entorno override
+		if (const char* dev = std::getenv("ENGINE_DATA_PATH"))
+			return fs::path(dev);
+
+#ifdef _WIN32
+		// C:/Users/Usuario/AppData/Roaming/TuEngine
+		const char* appdata = std::getenv("APPDATA");
+		if (appdata) return fs::path(appdata) / "CapiEngine";
+
+#elif __APPLE__
+		// /Users/Usuario/Library/Application Support/TuEngine
+		const char* home = std::getenv("HOME");
+		if (home) return fs::path(home) / "Library" / "Application Support" / "CapiEngine";
+
+#elif __linux__
+		// Sigue el estándar XDG: ~/.local/share/TuEngine
+		// Pero respeta si el usuario tiene XDG_DATA_HOME personalizado
+		const char* xdg = std::getenv("XDG_DATA_HOME");
+		if (xdg) return fs::path(xdg) / "CapiEngine";
+
+		const char* home = std::getenv("HOME");
+		if (home) return fs::path(home) / ".local" / "share" / "CapiEngine";
+#endif
+
+		// Fallback universal: junto al exe
+		return EditorApp::getExeDir() / "engine";
+	}
+
+	fs::path EditorApp::getExeDir() {
+#ifdef _WIN32
+		wchar_t buf[MAX_PATH] = {};
+		GetModuleFileNameW(nullptr, buf, MAX_PATH);
+		return fs::path(buf).parent_path();
+
+#elif __APPLE__
+		char buf[PATH_MAX] = {};
+		uint32_t size = sizeof(buf);
+		if (_NSGetExecutablePath(buf, &size) != 0)
+			return fs::current_path(); // fallback
+		return fs::canonical(buf).parent_path();
+
+#elif __linux__
+		std::error_code ec;
+		fs::path p = fs::canonical("/proc/self/exe", ec);
+		if (ec) return fs::current_path(); // fallback si falla
+		return p.parent_path();
+
+#else
+		return fs::current_path(); // fallback genérico
+#endif
 	}
 
 }
