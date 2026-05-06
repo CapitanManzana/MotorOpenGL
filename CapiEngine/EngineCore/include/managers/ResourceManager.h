@@ -61,11 +61,11 @@ namespace cme {
 			std::string name = file.stem().string(); // nombre sin extensión
 
 			if constexpr (std::is_same_v<T, Shader>) {
-				if (_shaders.count(name)) return; // ya cargado
-				loadShaders(file);
+				if (std::find(_shaderNames.begin(), _shaderNames.end(), name) != _shaderNames.end()) return; // ya cargado
+				loadShader(file);
 			}
 			else if constexpr (std::is_same_v<T, Texture>) {
-				if (_textures.count(name)) return;
+				if (std::find(_texturesNames.begin(), _texturesNames.end(), name) != _texturesNames.end()) return;
 				loadTexture(file);
 			}
 			else {

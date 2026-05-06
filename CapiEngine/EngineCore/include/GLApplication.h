@@ -75,7 +75,7 @@ namespace cme {
 	private:
 		GLApplication() = default;
 
-		bool init();
+		bool init(std::string name);
 		/// @brief Carga las instancias de los managers
 		/// @return True si se carga correctamente
 		bool loadManagers();

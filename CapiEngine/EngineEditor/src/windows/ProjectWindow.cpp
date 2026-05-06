@@ -1,109 +1,76 @@
 #include "windows/ProjectWindow.h"
 #include <EditorApp.h>
-
+#include <windows/FileExplorerWindow.h>
 #include <utils/logger.h>
+#include <surface/Texture.h>
+#include <managers/ResourceManager.h>
 
 namespace cme::editor {
-	ProjectWindow::ProjectWindow(const char* name) : Window(name) {
-		_rootPath = EditorApp::getExeDir() / "assets";
-		LOG_INFO(std::format("ExeDir: {}", _rootPath.string()));
-
-		if (!fs::exists(_rootPath)) {
-			LOG_WARN(std::format("La carpeta assets no existe en: {}", _rootPath.string()));
-			_rootPath = EditorApp::getExeDir(); // fallback a la carpeta del exe
-		}
-
-		_rootNode = buildFileTree(_rootPath);
-	}
+	ProjectWindow::ProjectWindow(const char* name, FileNode& fileN) : _rootNode(&fileN), _selectedNode(&fileN), Window(name) { }
 
 	void ProjectWindow::renderWindowContent() {
-		// Cabecera con ruta actual y botón de refresco
-		ImGui::TextDisabled("%s", _rootPath.u8string().c_str());
-		ImGui::SameLine();
-		if (ImGui::SmallButton("Refresh")) {
-			_rootNode = buildFileTree(_rootPath);
-		}
-
+		ImGui::Text("Ventana de PRoyecto");
 		ImGui::Separator();
 
-		if (ImGui::BeginChild("##fileTree", ImVec2(0, -ImGui::GetFrameHeightWithSpacing()), true)) {
-			if (!_rootNode.name.empty())
-				drawFileNode(_rootNode, _selectedFile);
-		}
-		ImGui::EndChild();
+		if (ImGui::BeginChild("##gallery", ImVec2(0, 0), false)) {
+			float panelWidth = ImGui::GetContentRegionAvail().x;
+			float cellWidth = _cellSize + 8.f;
+			int columns = std::max(1, (int)(panelWidth / cellWidth));
 
-		ImGui::Separator();
-		if (!_selectedFile.empty()) {
-			ImGui::TextUnformatted("Selected:");
-			ImGui::SameLine();
-			ImGui::TextColored(ImVec4(0.4f, 0.9f, 0.4f, 1.f),
-				"%s", _selectedFile.filename().string().c_str());
-		}
-		else {
-			ImGui::TextDisabled("No file selected");
-		}
-	}
+			int i = 0;
+			FileNode* nodeToChange;
+			bool changeNode = false;
+			for(auto it = _selectedNode->children.begin(); it != _selectedNode->children.end(); ++it) {
+				FileNode& node = *it;
+				int col = i % columns;
+				if (col != 0) ImGui::SameLine();
 
-	FileNode ProjectWindow::buildFileTree(const fs::path root) {
-		FileNode node;
-		node.name = root.filename().string();
-		node.fullPath = root;
-		node.isDirectory = fs::is_directory(root);
+				ImGui::BeginGroup();
 
-		if (node.isDirectory) {
-			std::vector<FileNode> dirs, files;
-			std::error_code ec;
-			for (const auto& entry : fs::directory_iterator(root)) {
-				if (ec) {
-					LOG_WARN(std::format("Error iterando: {}", ec.message()));
-					break;
+				// Imagen clickeable
+				//bool selected = (_selectedTex == tex);
+				//if (selected) ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0.3f, 0.5f, 0.9f, 1.f));
+
+				Texture* icon = nullptr;
+				if (node.isDirectory) icon = rscrM().getTexture("folder");
+				else icon = rscrM().getTexture("file");
+				if (!icon) {
+					LOG_WARN(std::format("Icono no encontrado para: {}", node.name));
+					i++;
+					ImGui::EndGroup();
+					continue;
 				}
 
-				FileNode child = buildFileTree(entry);
-				if (child.isDirectory) dirs.push_back(child);
-				else files.push_back(child);
+				ImGui::PushID(i);
+				if (ImGui::ImageButton("##img", (ImTextureID)(intptr_t)icon->id(), ImVec2(_cellSize, _cellSize))) {
+					if (node.isDirectory) {
+						nodeToChange = &*it;
+						changeNode = true;
+					}
+				};
+				ImGui::PopID();
+
+				//if (selected) ImGui::PopStyleColor();
+
+				// Nombre truncado debajo
+				std::string name = node.name;
+				if (name.size() > 10) name = name.substr(0, 9) + "...";
+				ImGui::TextUnformatted(name.c_str());
+
+				// Tooltip con nombre completo
+				if (ImGui::IsItemHovered())
+					ImGui::SetTooltip("%s", node.name.c_str());
+
+				ImGui::EndGroup();
+
+				i++;
 			}
 
-			auto byName = [](const FileNode& a, const FileNode& b) {
-				return a.name < b.name;
-				};
-
-			std::sort(dirs.begin(), dirs.end(), byName);
-			std::sort(files.begin(), files.end(), byName);
-
-			node.children.insert(node.children.end(), dirs.begin(), dirs.end());
-			node.children.insert(node.children.end(), files.begin(), files.end());
+			if (changeNode) {
+				_selectedNode = nodeToChange;
+			}
 		}
 
-		return node;
-	}
-
-	void ProjectWindow::drawFileNode(const FileNode& node, fs::path& selectedFile) {
-		ImGuiTreeNodeFlags flags = ImGuiTreeNodeFlags_SpanAvailWidth;
-
-		if (!node.isDirectory)
-			flags |= ImGuiTreeNodeFlags_Leaf | ImGuiTreeNodeFlags_NoTreePushOnOpen;
-
-		if (selectedFile == node.fullPath)
-			flags |= ImGuiTreeNodeFlags_Selected;
-
-		// Icono simple según tipo
-		const char* icon = node.isDirectory ? "📁 " : "📄 ";
-		std::string label = icon + node.name;
-
-		bool opened = ImGui::TreeNodeEx(label.c_str(), flags);
-
-		if (ImGui::IsItemClicked() && !node.isDirectory)
-			selectedFile = node.fullPath;
-
-		// Tooltip con la ruta completa
-		if (ImGui::IsItemHovered())
-			ImGui::SetTooltip("%s", node.fullPath.string().c_str());
-
-		if (node.isDirectory && opened) {
-			for (const auto& child : node.children)
-				drawFileNode(child, selectedFile);
-			ImGui::TreePop();
-		}
+		ImGui::EndChild();
 	}
 }

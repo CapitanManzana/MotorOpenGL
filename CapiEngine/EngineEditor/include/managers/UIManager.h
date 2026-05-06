@@ -5,7 +5,9 @@
 #include <memory>
 #include <functional>
 #include <string>
+#include <filesystem>
 
+namespace fs = std::filesystem;
 namespace cme::editor {
 	class Window;
 
@@ -15,10 +17,12 @@ namespace cme::editor {
 	private:
 		std::vector<std::shared_ptr<Window>> _windows;
 		std::function<void()> _createCubeCallback;
+
+		fs::path _dataPath;
 	public:
 		UIManager();
 		~UIManager();
-		bool initCoreUI(GLFWwindow* window);
+		bool initCoreUI(GLFWwindow* window, fs::path dataPath);
 
 		void render() const;
 		void start();

@@ -12,6 +12,7 @@ namespace fs = std::filesystem;
 
 namespace cme::editor {
 	class UIManager;
+	class ProjectFileData;
 
 	class EditorApp : public Singleton<EditorApp>{
 		friend class Singleton<EditorApp>;
@@ -19,12 +20,12 @@ namespace cme::editor {
 		std::shared_ptr<UIManager> _ui;
 		fs::path _projectPath;
 		fs::path _enginePath;
+
+		fs::path _projectFile;
+
+		ProjectFileData* _projectData;
 	public:
-		~EditorApp() {
-			if (GLApplication::HasInstance()) {
-				GLApplication::Release();
-			}
-		}
+		~EditorApp();
 
 		EditorApp(EditorApp&) = delete;
 		EditorApp(EditorApp&&) = delete;
@@ -39,14 +40,15 @@ namespace cme::editor {
 		void createGizmos();
 
 		// Metodos de direcciones
-		static fs::path getExeDir();
-		static fs::path getEngineDataPath();
+		fs::path getEngineDataPath();
 
 		fs::path projectPath() { return _projectPath; }
 		fs::path enginePath() { return _enginePath; }
 
+		ProjectFileData* projectData() { return _projectData; }
 	private:
-		bool init(fs::path enginePath, fs::path projectPath);
+		EditorApp() = default;
+		bool init(fs::path enginePath, fs::path projectPath, fs::path projFile);
 	};
 
 	inline EditorApp& editor() {

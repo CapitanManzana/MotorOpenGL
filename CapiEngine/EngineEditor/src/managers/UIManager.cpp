@@ -11,6 +11,7 @@
 #include <windows/ConsoleWindow.h>
 #include <windows/LightingWindow.h>
 #include <windows/ProjectWindow.h>
+#include <windows/FileExplorerWindow.h>
 
 #include <managers/SceneManager.h>
 
@@ -32,7 +33,8 @@ namespace cme::editor {
 		ImGui::DestroyContext();
 	}
 
-	bool UIManager::initCoreUI(GLFWwindow* window) {
+	bool UIManager::initCoreUI(GLFWwindow* window, fs::path dataPath) {
+		_dataPath = dataPath;
 		if (!initImgui(window)) return false;
 
 		return true;
@@ -44,9 +46,9 @@ namespace cme::editor {
 
 		ImGuiIO& io = ImGui::GetIO(); (void)io;
 
-		static auto imguiIniPath = (EditorApp::getEngineDataPath() / "imgui.ini").string();
+		static auto imguiIniPath = (_dataPath / "imgui.ini").string();
 		std::error_code ec;
-		fs::create_directories(EditorApp::getEngineDataPath(), ec);
+		fs::create_directories(_dataPath, ec);
 		if (ec) LOG_WARN(std::format("No se pudo crear el directorio de config: {}", ec.message()));
 
 		LOG_INFO(std::format("ImGuiPath: {}", imguiIniPath.c_str()));
@@ -91,7 +93,8 @@ namespace cme::editor {
 		auto hierarchy = addWindow<SceneWindow>("Scene");
 		auto console = addWindow<ConsoleWindow>("Console");
 		addWindow<LightingWindow>("Lighting");
-		addWindow<ProjectWindow>("Project");
+		auto fe =addWindow<FileExplorerWindow>("File Explorer");
+		addWindow<ProjectWindow>("Project", fe->fileNode());
 
 		hierarchy->setCallback([inspector](std::weak_ptr<ec::Entity> e) {
 			inspector->changeDisplayEntity(e);

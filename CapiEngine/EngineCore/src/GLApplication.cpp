@@ -41,7 +41,7 @@ namespace cme {
 		glfwTerminate();
 	}
 
-	bool GLApplication::init() {
+	bool GLApplication::init(std::string name) {
 		// inicializar GLFW
 		if (glfwInit() == GLFW_FALSE) {
 			return false;
@@ -52,7 +52,7 @@ namespace cme {
 		glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
 		glfwWindowHint(GLFW_MAXIMIZED, GLFW_TRUE);
-		_window = glfwCreateWindow(_width, _height, "Capi Engine", NULL, NULL);
+		_window = glfwCreateWindow(_width, _height, std::string("Capi Engine - " + name).c_str(), NULL, NULL);
 		if (_window == NULL)
 		{
 			LOG_ERROR("Failed to create GLFW window");

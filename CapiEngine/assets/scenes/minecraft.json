@@ -32,8 +32,7 @@
                             "data": {
                                 "mesh": 3,
                                 "material": {
-                                    "shaderName" : "default",
-                                    "type": 0,
+                                    "type": 1,
                                     "uniforms": {
                                         "useAlbedoTex": 1,
                                         "material.shininess": 32.0,
@@ -62,7 +61,7 @@
                                     "textures": [
                                         {
                                             "uniformName": "albedoMap",
-                                            "textureName": "grass"
+                                            "textureName": "grassMinecraft"
                                         }
                                     ]
                                 }
@@ -98,8 +97,7 @@
                             "data": {
                                 "mesh": 3,
                                 "material": {
-                                    "shaderName" : "default",
-                                    "type": 0,
+                                    "type": 1,
                                     "uniforms": {
                                         "useAlbedoTex": 1,
                                         "material.shininess": 32.0,
@@ -164,8 +162,7 @@
                             "data": {
                                 "mesh": 3,
                                 "material": {
-                                    "shaderName" : "default",
-                                    "type": 0,
+                                    "type": 1,
                                     "uniforms": {
                                         "useAlbedoTex": 1,
                                         "material.shininess": 32.0,
@@ -173,12 +170,6 @@
                                             0.10000000149011612,
                                             0.10000000149011612,
                                             0.10000000149011612
-                                        ],
-                                        "albedo": [
-                                            1.0,
-                                            1.0,
-                                            1.0,
-                                            1.0
                                         ],
                                         "material.diffuse": [
                                             0.800000011920929,
@@ -230,8 +221,7 @@
                             "data": {
                                 "mesh": 3,
                                 "material": {
-                                    "shaderName" : "default",
-                                    "type": 0,
+                                    "type": 1,
                                     "uniforms": {
                                         "useAlbedoTex": 1,
                                         "material.shininess": 32.0,
@@ -275,9 +265,9 @@
                             "type": "Transform",
                             "data": {
                                 "position": [
-                                    -3.0,
-                                    2.0,
-                                    1.0
+                                    5.0,
+                                    1.0,
+                                    -2.0
                                 ],
                                 "scale": [
                                     1.0,
@@ -296,7 +286,6 @@
                             "data": {
                                 "mesh": 3,
                                 "material": {
-                                    "shaderName" : "light",
                                     "type": 0,
                                     "uniforms": {
                                         "lightColor": [
@@ -313,9 +302,9 @@
                             "type": "Light",
                             "data": {
                                 "color": [
-                                    0.8480392098426819,
-                                    0.5729399919509888,
-                                    0.2244809865951538
+                                    0.0,
+                                    0.5000002384185791,
+                                    1.0
                                 ],
                                 "intensity": 1.0,
                                 "constant": 0.06599999964237213,
@@ -334,14 +323,14 @@
     ],
     "globalLight": {
         "lightColor": [
-            0.14489619433879852,
-            0.30175045132637024,
-            0.44117647409439087
+            1.0,
+            0.9896193742752075,
+            0.9607843160629272
         ],
         "lightDir": [
-            -0.8318008184432983,
-            -0.5548444390296936,
-            0.015971383079886436
+            0.7610269784927368,
+            -0.6374239921569824,
+            -0.12053481489419937
         ],
         "lightIntensity": 1.0
     }

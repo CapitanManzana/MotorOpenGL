@@ -2,35 +2,24 @@
 #include <windows/Window.h>
 #include <memory>
 #include <filesystem>
+#include <optional>
 
 namespace cme::editor {
-
-	namespace fs = std::filesystem;
-
-	struct FileNode {
-		std::string name;
-		fs::path fullPath;
-		bool isDirectory;
-		std::vector<FileNode> children;
-	};
+	struct FileNode;
 
 	/// @brief Ventana que se encarga de renderizar el viewport
 	class ProjectWindow : public Window
 	{
 	private:
-		FileNode _rootNode;
-		fs::path _rootPath;
-		fs::path _selectedFile;
+		FileNode* _rootNode = nullptr;
+		FileNode* _selectedNode = nullptr;
 
+		int _cellSize = 80;
 	public:
 		WINDOW_ID(windowGroupID::PROJECT)
-		ProjectWindow(const char* name);
+		ProjectWindow(const char* name, FileNode& fileN);
 
 	protected:
 		void renderWindowContent() override;
-
-	private:
-		FileNode buildFileTree(const fs::path root);
-		void drawFileNode(const FileNode& node, fs::path& selectedFile);
 	};
 }

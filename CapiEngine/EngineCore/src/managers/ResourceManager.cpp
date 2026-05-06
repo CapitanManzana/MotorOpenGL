@@ -9,8 +9,12 @@ namespace cme {
 	ResourceManager::~ResourceManager() {}
 
 	bool ResourceManager::init() {
-		loadShaders();
-		loadTextures();
+		_shadersMap.clear();
+		_shaders.clear();
+		_shaderNames.clear();
+
+		_texturesMap.clear();
+		_texturesNames.clear();
 
 		return true;
 	}
@@ -38,11 +42,11 @@ namespace cme {
 	void ResourceManager::loadShader(fs::path file) {
 
 		if (!fs::exists(file) || fs::is_directory(file)) {
-			LOG_ERROR(std::format("No existe el path de shaders: {}. Buscando desde: {}", file.c_str(), fs::current_path()));
+			LOG_ERROR(std::format("No existe el path de shaders: {}. Buscando desde: {}", file.string(), fs::current_path().string()));
 		}
 
 		auto extension = file.extension();
-		auto name = file.filename();
+		auto name = file.stem();
 		auto root = file.parent_path();
 
 		// Recorremos cada archivo de la carpeta
@@ -61,8 +65,9 @@ namespace cme {
 							shaderData.fragmentShaderPath = archivo.path().string();
 						}
 						else {
-							shaderData.vertexShaderPath = file.string();
-							shaderData.fragmentShaderPath = archivo.path().string();
+							// ¡Aquí está la magia! Los invertimos:
+							shaderData.vertexShaderPath = archivo.path().string();
+							shaderData.fragmentShaderPath = file.string();
 						}
 
 						if (shaderData.isValid()) {
@@ -84,7 +89,7 @@ namespace cme {
 
 	void ResourceManager::loadTexture(fs::path file) {
 		if (!fs::exists(file) || fs::is_directory(file)) {
-			LOG_ERROR(std::format("No existe el path de textures: {}. Buscando desde: {}", file.c_str(), fs::current_path()));
+			LOG_ERROR(std::format("No existe el path de textures: {}. Buscando desde: {}", file.string(), fs::current_path().string()));
 		}
 
 		// Extraemos la información usando las utilidades de filesystem

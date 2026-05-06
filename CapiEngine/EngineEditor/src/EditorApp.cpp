@@ -22,16 +22,33 @@
 #include <component/MeshRenderer.h>
 #include <mesh/QuadMesh.h>
 #include <windows/InspectorWindow.h>
+#include <project/ProjectLoader.h>
+#include <project/ProjectFileData.h>
 
 namespace cme::editor {
-	bool EditorApp::init(fs::path enginePath, fs::path projectPath) {
-		if (!GLApplication::Init()) {
+
+	EditorApp::~EditorApp() {
+		if (GLApplication::HasInstance()) {
+			GLApplication::Release();
+		}
+
+		if (ProjectLoader::HasInstance()) {
+			ProjectLoader::Release();
+		}
+
+		delete _projectData;
+	}
+
+	bool EditorApp::init(fs::path enginePath, fs::path projectPath, fs::path projFile) {
+		_projectData = new ProjectFileData(projFile);
+
+		if (!GLApplication::Init(_projectData->projectData().name)) {
 			LOG_ERROR("Error al inicializar el GLApplication");
 			return false;
 		}
 
 		_ui = std::make_shared<UIManager>();
-		if (!_ui->initCoreUI(gla().window())) {
+		if (!_ui->initCoreUI(gla().window(), getEngineDataPath())) {
 			LOG_ERROR("Error al inicializar la interfaz del motor");
 			return false;
 		}
@@ -41,15 +58,23 @@ namespace cme::editor {
 			sceneM().activeScene()->addCubeToScene();
 			});
 
-		_engineDir = enginePath;
-		_projectDir = projectPath;
+		_enginePath = enginePath;
+		_projectPath = projectPath;
+		_projectFile = projFile;
 
 		return true;
 	}
 
 	void EditorApp::run() {
+		if (!ProjectLoader::Init()) {
+			LOG_ERROR("Error al inicializar el Proyecto (ProjectLoader");
+			return;
+		}
+
 		gla().start();
 		_ui->start();
+
+		sceneM().loadScene(_projectData->projectData().startScene);
 
 		createShortcuts();
 		stateChangers();
@@ -230,31 +255,6 @@ namespace cme::editor {
 #endif
 
 		// Fallback universal: junto al exe
-		return EditorApp::getExeDir() / "engine";
+		return _enginePath;
 	}
-
-	fs::path EditorApp::getExeDir() {
-#ifdef _WIN32
-		wchar_t buf[MAX_PATH] = {};
-		GetModuleFileNameW(nullptr, buf, MAX_PATH);
-		return fs::path(buf).parent_path();
-
-#elif __APPLE__
-		char buf[PATH_MAX] = {};
-		uint32_t size = sizeof(buf);
-		if (_NSGetExecutablePath(buf, &size) != 0)
-			return fs::current_path(); // fallback
-		return fs::canonical(buf).parent_path();
-
-#elif __linux__
-		std::error_code ec;
-		fs::path p = fs::canonical("/proc/self/exe", ec);
-		if (ec) return fs::current_path(); // fallback si falla
-		return p.parent_path();
-
-#else
-		return fs::current_path(); // fallback genérico
-#endif
-	}
-
 }
