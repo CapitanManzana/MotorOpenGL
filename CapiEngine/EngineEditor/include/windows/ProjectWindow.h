@@ -11,13 +11,14 @@ namespace cme::editor {
 	class ProjectWindow : public Window
 	{
 	private:
-		FileNode* _rootNode = nullptr;
-		FileNode* _selectedNode = nullptr;
+		std::shared_ptr<FileNode> _rootNode = nullptr;
+		FileNode* _selectedNode;
 
 		int _cellSize = 80;
 	public:
 		WINDOW_ID(windowGroupID::PROJECT)
-		ProjectWindow(const char* name, FileNode& fileN);
+		ProjectWindow(const char* name, std::shared_ptr<FileNode> fileN);
+		~ProjectWindow() {}
 
 	protected:
 		void renderWindowContent() override;

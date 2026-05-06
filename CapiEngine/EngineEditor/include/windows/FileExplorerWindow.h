@@ -17,15 +17,16 @@ namespace cme::editor {
 	class FileExplorerWindow : public Window
 	{
 	private:
-		FileNode _rootNode;
+		std::shared_ptr<FileNode> _rootNode;
 		fs::path _rootPath;
 		fs::path _selectedFile;
 
 	public:
 		WINDOW_ID(windowGroupID::FILE_EXPLORER)
 		FileExplorerWindow(const char* name);
+		~FileExplorerWindow() {}
 
-		FileNode& fileNode() { return _rootNode; }
+		std::shared_ptr<FileNode> fileNode() { return _rootNode; }
 	protected:
 		void renderWindowContent() override;
 

@@ -6,7 +6,7 @@
 #include <managers/ResourceManager.h>
 
 namespace cme::editor {
-	ProjectWindow::ProjectWindow(const char* name, FileNode& fileN) : _rootNode(&fileN), _selectedNode(&fileN), Window(name) { }
+	ProjectWindow::ProjectWindow(const char* name, std::shared_ptr<FileNode> fileN) : _rootNode(fileN), _selectedNode(fileN.get()), Window(name) { }
 
 	void ProjectWindow::renderWindowContent() {
 		ImGui::Text("Ventana de PRoyecto");

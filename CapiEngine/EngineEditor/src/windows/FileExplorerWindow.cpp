@@ -13,7 +13,7 @@ namespace cme::editor {
 			assert("No es compatible el project path");
 		}
 
-		_rootNode = buildFileTree(_rootPath);
+		_rootNode = std::make_shared<FileNode>(buildFileTree(_rootPath));
 	}
 
 	void FileExplorerWindow::renderWindowContent() {
@@ -21,14 +21,14 @@ namespace cme::editor {
 		ImGui::TextDisabled("%s", _rootPath.u8string().c_str());
 		ImGui::SameLine();
 		if (ImGui::SmallButton("Refresh")) {
-			_rootNode = buildFileTree(_rootPath);
+			_rootNode = std::make_shared<FileNode>(buildFileTree(_rootPath));
 		}
 
 		ImGui::Separator();
 
 		if (ImGui::BeginChild("##fileTree", ImVec2(0, -ImGui::GetFrameHeightWithSpacing()), true)) {
-			if (!_rootNode.name.empty())
-				drawFileNode(_rootNode, _selectedFile);
+			if (!_rootNode->name.empty())
+				drawFileNode(*_rootNode, _selectedFile);
 		}
 		ImGui::EndChild();
 
