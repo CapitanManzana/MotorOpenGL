@@ -18,7 +18,7 @@ using namespace cme;
 void inputs();
 
 int main(int argc, char* argv[]) {
-	if (!cme::GLApplication::Init()) {
+	if (!cme::GLApplication::Init("")) {
 		LOG_ERROR("No se pudo inicializar GLApplication");
 		return -1;
 	}

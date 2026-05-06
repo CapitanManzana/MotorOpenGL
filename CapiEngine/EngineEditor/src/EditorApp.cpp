@@ -66,7 +66,9 @@ namespace cme::editor {
 	}
 
 	void EditorApp::run() {
-		if (!ProjectLoader::Init()) {
+		auto ep = enginePath();
+		auto pp = projectPath();
+		if (!ProjectLoader::Init(ep, pp)) {
 			LOG_ERROR("Error al inicializar el Proyecto (ProjectLoader");
 			return;
 		}

@@ -3,11 +3,11 @@
 #include <EditorApp.h>
 
 namespace cme::editor {
-	bool ProjectLoader::init() {
+	bool ProjectLoader::init(fs::path enginePath, fs::path projectPath) {
 		// Load engine resources
-		loadFilesRecursive(editor().enginePath() / "resources");
+		loadFilesRecursive(enginePath / "resources");
 		// load project resources
-		loadFilesRecursive(editor().projectPath() / "assets");
+		loadFilesRecursive(projectPath / "assets");
 
 		return true;
 	}

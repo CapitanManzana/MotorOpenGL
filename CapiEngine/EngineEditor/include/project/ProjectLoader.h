@@ -33,7 +33,7 @@ namespace cme::editor {
 		
 	private:
 		ProjectLoader() = default;
-		bool init();
+		bool init(fs::path enginePath, fs::path projectPath);
 
 		void loadFilesRecursive(const fs::path& root);
 		void addResourceToCore(const ResourceType& type, const fs::path& file);

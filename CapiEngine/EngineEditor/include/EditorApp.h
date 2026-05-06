@@ -42,8 +42,9 @@ namespace cme::editor {
 		// Metodos de direcciones
 		fs::path getEngineDataPath();
 
-		fs::path projectPath() { return _projectPath; }
-		fs::path enginePath() { return _enginePath; }
+		const fs::path& projectPath() const { return _projectPath; }
+		const fs::path& enginePath() const { return _enginePath; }
+		const fs::path& projectFile() const { return _projectFile; }
 
 		ProjectFileData* projectData() { return _projectData; }
 	private:
