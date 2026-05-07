@@ -49,13 +49,16 @@ namespace cme::editor {
 					// Buscamos si el Editor sabe cómo dibujar este tipo
 					auto it = _componentUIRegistry.find(type);
 					if (it != _componentUIRegistry.end()) {
-						// ¡Lo encontramos! Llamamos a la función guardada pasándole el componente
-						ImGui::PushID(i);
-						if (ImGui::Button("Erase")) {
-							compToErase.push_back(comp);
+
+						if (comp->getID() != ec::comp::cmpID::TRANSFORM) {
+							ImGui::PushID(i);
+							if (ImGui::Button("Erase")) {
+								compToErase.push_back(comp);
+							}
+							ImGui::PopID();
+							ImGui::SameLine();
 						}
-						ImGui::PopID();
-						ImGui::SameLine();
+						
 						it->second(comp);
 						ImGui::Dummy(ImVec2(0, 5));
 					}

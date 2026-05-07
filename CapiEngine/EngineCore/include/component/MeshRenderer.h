@@ -13,7 +13,7 @@ namespace cme {
 	/// @brief Componente que se encarga de renderizar a partir de una malla dada
 	class MeshRenderer : public ec::Component, public ec::RenderComponent {
 	public:
-		Mesh* _mesh = nullptr;
+		std::unique_ptr<Mesh> _mesh = nullptr;
 		Camera* _cam = nullptr;
 		Transform* _tr = nullptr;
 		std::string _currentMeshType;
@@ -21,10 +21,8 @@ namespace cme {
 
 		__CMPID_DECL__(ec::comp::MESH_RENDERER)
 
-		MeshRenderer() : _mesh(nullptr) {}
-
+		MeshRenderer();
 		MeshRenderer(Mesh* mesh);
-		~MeshRenderer();
 
 		void render() const override;
 

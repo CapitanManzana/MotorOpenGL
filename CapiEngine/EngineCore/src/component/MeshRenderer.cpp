@@ -14,11 +14,11 @@
 #include <managers/ResourceManager.h>
 
 namespace cme {
-	MeshRenderer::MeshRenderer(Mesh* mesh) : _mesh(mesh) {
+	MeshRenderer::MeshRenderer() {
+		_mesh = std::make_unique<CubeMesh>();
 	}
 
-	MeshRenderer::~MeshRenderer() {
-		delete _mesh; // Esto invocará Mesh::~Mesh() y liberará VBOs/VAOs y memoria
+	MeshRenderer::MeshRenderer(Mesh* mesh) : _mesh(mesh) {
 	}
 
 	void MeshRenderer::render() const {
@@ -26,7 +26,7 @@ namespace cme {
 		_mesh->setModelMatrix(_tr->getModelMatrix());
 
 		if (auto ent = _entity.lock()) {
-			_cam->uploadToGPU(_mesh, ent);
+			_cam->uploadToGPU(_mesh.get(), ent);
 		}
 		_mesh->render();
 	}
@@ -72,9 +72,9 @@ namespace cme {
 	void MeshRenderer::deserialize(JsonSerializer& s) {
 		int meshID = s.readInt("mesh");
 
-		if (meshID == 1)      _mesh = new TriangleMesh();
-		else if (meshID == 2) _mesh = new QuadMesh();
-		else if (meshID == 3) _mesh = new CubeMesh();
+		if (meshID == 1)      _mesh = std::make_unique<TriangleMesh>();
+		else if (meshID == 2) _mesh = std::make_unique<QuadMesh>();
+		else if (meshID == 3) _mesh = std::make_unique<CubeMesh>();
 
 		if (!_mesh) {
 			LOG_ERROR("La mesh es nula despues de cargarla del archivo");
