@@ -30,6 +30,9 @@ namespace cme::editor {
 		void bind() const;
 		void unbind() const;
 
+		void saveSceneFileContext() const;
+		void loadSceneFileContext() const;
+
 		void setCreateCubeCallback(std::function<void()> call) { _createCubeCallback = call; }
 
 		std::weak_ptr<Window> getWindow(windowGroupID windowID) { return _windows[windowID]; }

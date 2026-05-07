@@ -2,7 +2,7 @@
     "name": "MiJuego",
     "version": "1.0",
     "engineVersion": "0.1.0",
-    "startScene": "scenes/minecraft.json",
+    "startScene": "scenes/minecraft.scene",
     "assetDirectory": "assets",
     "buildSettings": {
         "target": "Windows",

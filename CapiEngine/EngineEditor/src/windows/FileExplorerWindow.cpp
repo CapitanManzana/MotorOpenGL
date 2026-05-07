@@ -2,6 +2,7 @@
 #include <windows/ProjectWindow.h>
 #include <utils/logger.h>
 #include <EditorApp.h>
+#include <project/ProjectLoader.h>
 
 namespace cme::editor {
 	FileExplorerWindow::FileExplorerWindow(const char* name) : Window(name) {
@@ -63,6 +64,7 @@ namespace cme::editor {
 		node.name = root.filename().string();
 		node.fullPath = root;
 		node.isDirectory = fs::is_directory(root);
+		node.fileType = getFileType(root);
 
 		if (node.isDirectory) {
 			std::vector<FileNode> dirs, files;
@@ -93,28 +95,45 @@ namespace cme::editor {
 	}
 
 	void FileExplorerWindow::drawFileNode(const FileNode& node, fs::path& selectedFile) {
-		ImGuiTreeNodeFlags flags = ImGuiTreeNodeFlags_SpanAvailWidth;
+		if (!node.isDirectory) return;
 
-		if (!node.isDirectory)
-			flags |= ImGuiTreeNodeFlags_Leaf | ImGuiTreeNodeFlags_NoTreePushOnOpen;
+		ImGuiTreeNodeFlags flags = ImGuiTreeNodeFlags_SpanAvailWidth;
 
 		if (selectedFile == node.fullPath)
 			flags |= ImGuiTreeNodeFlags_Selected;
 
-		// Icono simple según tipo
 		bool opened = ImGui::TreeNodeEx(node.name.c_str(), flags);
 
-		if (ImGui::IsItemClicked() && !node.isDirectory)
+		if (ImGui::IsItemClicked()) {
 			selectedFile = node.fullPath;
+			if (_clickDirCallback) _clickDirCallback(node.fullPath);
+		}
 
-		// Tooltip con la ruta completa
 		if (ImGui::IsItemHovered())
-			ImGui::SetTooltip("%s", node.fullPath.string().c_str());
+			ImGui::SetTooltip("%s", node.fullPath.u8string().c_str());
 
-		if (node.isDirectory && opened) {
+		if (opened) {
 			for (const auto& child : node.children)
 				drawFileNode(child, selectedFile);
 			ImGui::TreePop();
 		}
+	}
+
+	FileType FileExplorerWindow::getFileType(fs::path file) {
+		if (!fs::is_directory(file)) {
+			auto extension = file.extension().string();
+
+			if (extension == ".scene") {
+				return FileType::Scene;
+			}
+			if (std::count(SHADER_EXTENSIONS.begin(), SHADER_EXTENSIONS.end(), extension)) {
+				return FileType::Shader;
+			}
+			else if (std::count(IMAGE_EXTENSIONS.begin(), IMAGE_EXTENSIONS.end(), extension)) {
+				return FileType::Texture;
+			}
+		}
+
+		return FileType::None;
 	}
 }

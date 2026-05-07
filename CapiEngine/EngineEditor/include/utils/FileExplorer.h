@@ -12,7 +12,10 @@ namespace cme {
 
         /// @brief Abre la ventana para seleccionar una ruta o archivo
         /// @return La ruta seleccionada
-        std::string fileDialog(FileDialogMode mode, const char* filter = "Scene Files\0*.json\0All Files\0*.*\0") {
+        std::string fileDialog(FileDialogMode mode,
+            const char* filter = "Scene Files\0*.json\0All Files\0*.*\0",
+            const char* defaultExt = "json")
+        {
             OPENFILENAMEA ofn;
             char filePath[MAX_PATH] = "";
 
@@ -22,13 +25,13 @@ namespace cme {
             ofn.lpstrFile = filePath;
             ofn.nMaxFile = MAX_PATH;
             ofn.lpstrFilter = filter;
+            ofn.lpstrDefExt = defaultExt; 
             ofn.Flags = OFN_PATHMUSTEXIST | OFN_FILEMUSTEXIST;
 
             if (mode == FileDialogMode::Open) {
                 if (GetOpenFileNameA(&ofn)) return filePath;
             }
             else {
-                ofn.lpstrDefExt = "json"; // extensión por defecto al guardar
                 if (GetSaveFileNameA(&ofn)) return filePath;
             }
 

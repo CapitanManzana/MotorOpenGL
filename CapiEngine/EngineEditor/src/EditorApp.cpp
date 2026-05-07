@@ -111,20 +111,15 @@ namespace cme::editor {
 	void EditorApp::createShortcuts() {
 		// ----- ATAJOS VENTANA MOTOR -----
 		std::vector<int> saveFileKeys = { GLFW_KEY_LEFT_CONTROL, GLFW_KEY_S };
-		Shortcut saveFile(saveFileKeys, []() {
-			FileExplorer f;
-			std::string path = f.fileDialog(FileDialogMode::Save);
-			if (path != "") sceneM().saveActiveScene(path);
-			}, CME_STATE_NORMAL);
+		Shortcut saveFile(saveFileKeys, [this]() {
+			_ui->saveSceneFileContext();
+		}, CME_STATE_NORMAL);
 		inpM().addShortcut(saveFile);
 
 		std::vector<int> loadFileKeys = { GLFW_KEY_LEFT_CONTROL, GLFW_KEY_L };
 		Shortcut loadFile(loadFileKeys, [this]() {
-			FileExplorer f;
-			std::string path = f.fileDialog(FileDialogMode::Open);
-			if (path != "") sceneM().loadScene(path);
-			createGizmos();
-			}, CME_STATE_NORMAL);
+			_ui->loadSceneFileContext();
+		}, CME_STATE_NORMAL);
 		inpM().addShortcut(loadFile);
 
 		// ----- MOVIMIENTO DEL VIEWPORT -----

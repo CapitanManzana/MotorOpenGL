@@ -94,7 +94,11 @@ namespace cme::editor {
 		auto console = addWindow<ConsoleWindow>("Console");
 		addWindow<LightingWindow>("Lighting");
 		auto fe =addWindow<FileExplorerWindow>("File Explorer");
-		addWindow<ProjectWindow>("Project", fe->fileNode());
+		auto project = addWindow<ProjectWindow>("Project", fe->fileNode());
+
+		fe->cickCallback([project](fs::path path) {
+			project->changeToPath(path);
+		});
 
 		hierarchy->setCallback([inspector](std::weak_ptr<ec::Entity> e) {
 			inspector->changeDisplayEntity(e);
@@ -153,19 +157,9 @@ namespace cme::editor {
 		{
 			if (ImGui::BeginMenu("File"))
 			{
-				if (ImGui::MenuItem("Save Scene", "Ctrl+S")) {
-					FileExplorer fe;
-					std::string path = fe.fileDialog(FileDialogMode::Save);
-					sceneM().saveActiveScene(path);
-				}
+				if (ImGui::MenuItem("Save Scene", "Ctrl+S")) saveSceneFileContext();
 
-				if (ImGui::MenuItem("Load Scene", "Ctrl+L")) {
-					FileExplorer fe;
-					std::string path = fe.fileDialog(FileDialogMode::Open);
-					sceneM().loadScene(path);
-
-					editor().createGizmos();
-				}
+				if (ImGui::MenuItem("Load Scene", "Ctrl+L")) loadSceneFileContext();
 				ImGui::EndMenu();
 			}
 			if (ImGui::BeginMenu("Edit"))
@@ -228,5 +222,19 @@ namespace cme::editor {
 		// Guardar el handle por si quieres cerrarlo después
 		CloseHandle(pi.hThread);
 		CloseHandle(pi.hProcess);
+	}
+
+	void UIManager::saveSceneFileContext() const {
+		FileExplorer fe;
+		std::string path = fe.fileDialog(FileDialogMode::Save, "Scene Files\0*.scene\0All Files\0*.*\0", "scene");
+		sceneM().saveActiveScene(path);
+	}
+
+	void UIManager::loadSceneFileContext() const{
+		FileExplorer fe;
+		std::string path = fe.fileDialog(FileDialogMode::Open, "Scene Files\0*.json\0All Files\0*.*\0", "scene");
+		sceneM().loadScene(path);
+
+		editor().createGizmos();
 	}
 }
