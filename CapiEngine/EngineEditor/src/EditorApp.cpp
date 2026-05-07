@@ -90,6 +90,7 @@ namespace cme::editor {
 			_ui->unbind();
 
 			_ui->render();
+			sceneM().activeScene()->refresh();
 
 			gla().swapAndTime();
 		}

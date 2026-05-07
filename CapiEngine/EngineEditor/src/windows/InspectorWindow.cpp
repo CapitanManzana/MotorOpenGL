@@ -30,8 +30,17 @@ namespace cme::editor {
 				name = buffer;
 			}
 
+			ImGui::SameLine();
+
+			if (ImGui::Button("Erase")) {
+				entitySp->setIsAlive(false);
+			}
+
 			ImGui::Dummy(ImVec2(0, 10));
 			ImGui::SeparatorText("Components");
+			int i = 0;
+
+			std::vector<ec::Component*> compToErase;
 			for (auto& comp : entitySp->_components) {
 				if (comp) {
 					// Obtenemos el tipo real del componente
@@ -41,11 +50,24 @@ namespace cme::editor {
 					auto it = _componentUIRegistry.find(type);
 					if (it != _componentUIRegistry.end()) {
 						// ¡Lo encontramos! Llamamos a la función guardada pasándole el componente
+						ImGui::PushID(i);
+						if (ImGui::Button("Erase")) {
+							compToErase.push_back(comp);
+						}
+						ImGui::PopID();
+						ImGui::SameLine();
 						it->second(comp);
 						ImGui::Dummy(ImVec2(0, 5));
 					}
+
+					i++;
 				}
 			}
+
+			for (auto& comp : compToErase) {
+				entitySp->removeComponent(comp->getID());
+			}
+			compToErase.clear();
 
 			if (ImGui::Button("Add Component")) {
 				ImGui::OpenPopup("add_component_popup");

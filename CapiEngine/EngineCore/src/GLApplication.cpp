@@ -124,6 +124,7 @@ namespace cme {
 		{
 			update();
 			render();
+			sceneM().activeScene()->refresh();
 			swapAndTime();
 		}
 	}

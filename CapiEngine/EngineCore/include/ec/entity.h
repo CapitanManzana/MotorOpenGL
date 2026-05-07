@@ -204,24 +204,24 @@ namespace ec
 		template<typename T>
 		inline void removeComponent()
 		{
-			// Comprobar en tiempo de ejecucion si T es un componente
-			static_assert(std::is_base_of<Component, T>::value, "No es un componente");
-
-			// Obtener el ID del componente T, si no esta registrado
 			constexpr comp::cmpID id = static_cast<comp::cmpID>(ec::getComponentID<T>);
+			removeComponent(id);
+		}
 
+		void removeComponent(ec::cmpID_t id) {
 			auto component = _components[id];
+			if (!component) return;
 
+			// Borra de _renderComponents si aplica
+			if (auto* r = component->getAsRender()) {
+				auto it = std::find(_renderComponents.begin(), _renderComponents.end(), r);
+				if (it != _renderComponents.end()) _renderComponents.erase(it);
+			}
 
-			/*
-				Aqui deberia poder comprobar que componente especial es, y borrarlo de su lista correspondiente mediante el iterador, pero no me sale...
-			*/
-
-			//if constexpr (std::is_base_of_v<UpdateComponent, T>)
-			//{
-			//	static_cast<UpdateComponent*>(component);
-			//	_updateComponents.erase(component->getUpdateIterator());
-			//}
+			// Borra de _updateComponents si aplica
+			if (auto* u = component->getAsUpdate()) {
+				_updateComponents.erase(u->getUpdateIterator());
+			}
 
 			delete _components[id];
 			_components[id] = nullptr;
@@ -260,6 +260,8 @@ namespace ec
 		/// @brief Getter de si el componente esta "vivo"
 		/// @return 
 		bool isAlive() { return _alive; }
+
+		void setIsAlive(bool alive) { _alive = alive; }
 
 		/// @brief Getter si el componente esta activo
 		/// @return 
