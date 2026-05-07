@@ -1,7 +1,7 @@
 #pragma once
 #include <cstdint> // wtf
 #include <memory>
-#define _CMPS_LIST_ TRANSFORM, MESH_RENDERER, LIGHT, NUM_COMPONENTS
+#define _CMPS_LIST_ TRANSFORM, MESH_RENDERER, LIGHT, LUA_SCRIPT, NUM_COMPONENTS
 #define _GRPS_LIST_ TRANSPARENT, NUM_GROUP
 
 namespace ec

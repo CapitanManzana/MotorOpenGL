@@ -1,31 +1,56 @@
-# 1. Buscar todos los .cpp dentro de src y sus subcarpetas
-file(GLOB_RECURSE CORE_SOURCES "src/*.cpp")
+# COMPILAR LUA COMO LIBRERÍA ESTÁTICA
+set(LUA_DIR "${CMAKE_SOURCE_DIR}/vendor/lua/src")
 
-# 2. Buscar todos los .h y .hpp dentro de include y sus subcarpetas
-# (Añadimos .hpp por si acaso, ya que json.hpp lo usa)
-file(GLOB_RECURSE CORE_HEADERS "include/*.h" "include/*.hpp")
+# Recoger todos los archivos .c de Lua
+file(GLOB LUA_SOURCES "${LUA_DIR}/*.c")
 
-# 3. Crear la librería incluyendo los sources Y los headers
-add_library(EngineCore STATIC 
-    ${CORE_SOURCES} 
-    ${CORE_HEADERS}
-    ../vendor/glad/src/glad.c  # Mantenemos glad
+# Excluir los ejecutables standalone de Lua 
+# porque tienen funciones main() y romperían la compilación.
+list(REMOVE_ITEM LUA_SOURCES 
+    "${LUA_DIR}/lua.c" 
+    "${LUA_DIR}/luac.c"
 )
 
-# 4. Exponer la carpeta include públicamente
+# Crear la librería estática de Lua
+add_library(lua_static STATIC ${LUA_SOURCES})
+
+# Decirle a la librería dónde están sus propios headers
+target_include_directories(lua_static PUBLIC ${LUA_DIR})
+set_target_properties(lua_static PROPERTIES LINKER_LANGUAGE C)
+
+# CONFIGURACIÓN ENGINECORE
+# Buscar todos los .cpp dentro de src y sus subcarpetas
+file(GLOB_RECURSE CORE_SOURCES "src/*.cpp")
+
+# Buscar todos los .h y .hpp dentro de include y sus subcarpetas
+file(GLOB_RECURSE CORE_HEADERS "include/*.h" "include/*.hpp")
+
+# Crear la librería incluyendo los sources Y los headers
+add_library(EngineCore STATIC 
+    ${CORE_SOURCES}
+    ${CORE_HEADERS}
+    ../vendor/glad/src/glad.c
+)
+
+# Exponer la carpeta include públicamente
 target_include_directories(EngineCore PUBLIC 
     include
-    ../vendor/glad/include
     ../vendor/glad/include
     ../vendor/glm/include
     ../vendor/stb_image/include
     ../vendor/glfw/include
+    ../vendor/sol/include
+    ../vendor/lua/src
 )
 
-target_compile_definitions(EngineCore PUBLIC GLFW_INCLUDE_NONE)
+target_compile_definitions(EngineCore PUBLIC 
+    GLFW_INCLUDE_NONE
+    SOL_ALL_SAFETIES_ON=1
+)
 
 target_link_libraries(EngineCore PUBLIC 
-    "${CMAKE_SOURCE_DIR}/vendor/glfw/lib/glfw3dll.lib"  # ← nombre correcto
+    "${CMAKE_SOURCE_DIR}/vendor/glfw/lib/glfw3dll.lib" 
+    lua_static                  # Enlazamos la librería que acabamos de compilar arriba
 )
 
 # Copiar la DLL al lado del ejecutable automáticamente

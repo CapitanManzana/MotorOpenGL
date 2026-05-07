@@ -21,6 +21,30 @@ namespace cme {
 		delete _globalLight;
 	}
 
+	void Scene::initLua() {
+		_lua.open_libraries(
+			sol::lib::base,
+			sol::lib::math,
+			sol::lib::string,
+			sol::lib::table
+		);
+
+		// Exponer glm::vec3
+		_lua.new_usertype<glm::vec3>("Vec3",
+			sol::constructors<glm::vec3(float, float, float)>(),
+			"x", &glm::vec3::x,
+			"y", &glm::vec3::y,
+			"z", &glm::vec3::z
+		);
+
+		// Exponer Transform
+		_lua.new_usertype<Transform>("Transform",
+			"position", sol::property(&Transform::getPosition, &Transform::setPosition),
+			"rotate", &Transform::rotate,
+			"scale", sol::property(&Transform::getScale, &Transform::setScale)
+		);
+	}
+
 	void Scene::refresh() {
 		for (ec::groupID_t gId = 0; gId < ec::ent::maxGroupLayer; gId++) {
 			auto& grpEnts = _gameObjectsByGroup[gId];

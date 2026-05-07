@@ -19,6 +19,8 @@
 #include <component/MeshRenderer.h>
 #include <component/Light.h>
 
+#include <sol/sol.hpp>
+
 namespace cme {
 	GLApplication::~GLApplication() {
 		if (ResourceManager::HasInstance()) {
@@ -106,6 +108,12 @@ namespace cme {
 			LOG_ERROR("Error al inicializar el Scene Manager");
 			return false;
 		}
+
+		sol::state lua;
+		lua.open_libraries(sol::lib::base); // Carga las funciones básicas de Lua como 'print'
+
+		// Ejecutamos código Lua directamente desde un string de C++
+		lua.script("print('¡Hola desde Lua dentro de mi motor!')");
 
 		glfwSetCursorPosCallback(_window, inpM().mouseCallback);
 

@@ -5,6 +5,7 @@
 #include <serialize/Serializable.h>
 #include <string>
 #include <memory>
+#include <sol/sol.hpp>
 
 namespace cme {
 	class Camera;
@@ -23,6 +24,8 @@ namespace cme {
 		std::string _sceneDataPath = "";
 
 		GlobalLight* _globalLight = nullptr;
+
+		sol::state _lua;
 	public:
 		Scene(std::string name);
 
@@ -36,8 +39,8 @@ namespace cme {
 
 		/// @brief quita todos los objetos que no est�n activos de la escena
 		void refresh();
-
 		void addCubeToScene();
+		void initLua();
 
 		/// @brief permite a�adir objetos a la escena
 		/// @param grID Grupo al que a�adir al objeto creado
@@ -56,6 +59,8 @@ namespace cme {
 
 		void setPath(std::string path) { _sceneDataPath = path; }
 		std::string getPath() { return _sceneDataPath; }
+
+		sol::state& getLuaState() { return _lua; }
 
 	private:
 		/// @brief inicializa la escena creando todos los objetos que vayan a haber en la misma

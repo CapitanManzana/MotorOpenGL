@@ -7,8 +7,7 @@
 #include <imgui.h>
 
 namespace cme::editor {
-	MeshRendererGUI::MeshRendererGUI(MeshRenderer* meshRenderer) : _meshRenderer(meshRenderer) {
-	}
+	MeshRendererGUI::MeshRendererGUI(MeshRenderer* meshRenderer) : _meshRenderer(meshRenderer) {}
 
 	void MeshRendererGUI::drawOnInspector() {
 		if (ImGui::CollapsingHeader("Mesh Renderer")) {
@@ -25,15 +24,15 @@ namespace cme::editor {
 						if (ImGui::Selectable(opcion, isSelected)) {
 							_meshRenderer->_currentMeshType = opcion;
 
-							delete _meshRenderer->_mesh;
+							_meshRenderer->_mesh.release();
 							if (_meshRenderer->_currentMeshType == _meshRenderer->MESH_T_NAMES[1]) {
-								_meshRenderer->_mesh = new TriangleMesh();
+								_meshRenderer->_mesh = std::make_unique<TriangleMesh>();
 							}
 							else if (_meshRenderer->_currentMeshType == _meshRenderer->MESH_T_NAMES[2]) {
-								_meshRenderer->_mesh = new QuadMesh();
+								_meshRenderer->_mesh = std::make_unique<QuadMesh>();
 							}
 							else if (_meshRenderer->_currentMeshType == _meshRenderer->MESH_T_NAMES[3]) {
-								_meshRenderer->_mesh = new CubeMesh();
+								_meshRenderer->_mesh = std::make_unique<CubeMesh>();
 							}
 							else {
 								_meshRenderer->_mesh = nullptr;
